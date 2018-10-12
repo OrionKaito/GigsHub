@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/view_border_radius">
+
+    <ImageView
+        android:id="@+id/iv_gigs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/tv_gigs_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_gigs"
+        android:paddingTop="10dp"
+        android:text="University graduation ceremony"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/rb_gigs_star"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gigs_title"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:paddingTop="5dp"
+        android:rating="4"
+        android:stepSize="0.1" />
+
+    <TextView
+        android:id="@+id/tv_gigs_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rb_gigs_star"
+        android:paddingTop="5dp"
+        android:text="353 people interested" />
+
+    <TextView
+        android:id="@+id/tv_gigs_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gigs_number"
+        android:drawableStart="@drawable/ic_event_place"
+        android:drawableRight="10dp"
+        android:paddingTop="5dp"
+        android:text="District 12, HCMC" />
+</RelativeLayout>
