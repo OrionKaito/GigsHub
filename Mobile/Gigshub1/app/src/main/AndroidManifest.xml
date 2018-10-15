@@ -11,7 +11,16 @@
         android:theme="@style/MyActionBar">
         <activity
             android:name=".CreateAndUpdateGigsActivity"
-            android:label="Gigshub"
+            android:theme="@style/MyActionBar.ActionBar">
+
+        </activity>
+        <activity
+            android:name=".ProfileActivity2"
+            android:label="@string/title_activity_profile2" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/MyActionBar.ActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,11 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ProfileActivity2"
-            android:label="@string/title_activity_profile2" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".HomeActivity" />
         <activity android:name=".DetailGigsActivity"></activity>
     </application>
 
