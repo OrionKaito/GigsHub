@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,5 +20,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fl_main, homeFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle(getResources().getString(R.string.app_name));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setIcon(R.drawable.ic_logo);
+        }
     }
 }
