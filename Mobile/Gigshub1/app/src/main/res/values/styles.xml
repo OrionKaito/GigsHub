@@ -18,6 +18,7 @@
         <item name="colorPrimaryDark">#ff8f00</item>
         <item name="colorAccent">#ff8f00</item>
     </style>
+
     <style name="MyActionBar.ActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -24,11 +24,28 @@ public class HomeFragment extends Fragment {
     private List<Gigs> gigsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private GigsAdapter mAdapter;
+    private String title;
+    private int page;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
+    public static HomeFragment newInstance(int page, String title) {
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        homeFragment.setArguments(args);
+        return homeFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
