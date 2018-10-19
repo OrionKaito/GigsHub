@@ -1,0 +1,16 @@
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Gigshub.Model.dll.config
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Gigshub.Model.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Gigshub.Model.pdb
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\EntityFramework.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Microsoft.AspNet.Identity.Core.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\EntityFramework.xml
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Microsoft.AspNet.Identity.Core.xml
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\obj\Release\Gigshub.Model.csprojAssemblyReference.cache
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\obj\Release\Gigshub.Model.csproj.CoreCompileInputs.cache
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\obj\Release\Gigshub.Model.csproj.CopyComplete
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\obj\Release\Gigshub.Model.dll
+C:\Users\AD\Documents\GitHub\GigsHub\Back-End\Gigshub\Gigshub.Model\obj\Release\Gigshub.Model.pdb
