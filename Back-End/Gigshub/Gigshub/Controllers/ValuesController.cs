@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Gigshub.Service;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace Gigshub.Controllers
 {
     public class ValuesController : ApiController
     {
+        private readonly ICustomerService CustomerService;
+
+        public ValuesController (ICustomerService CustomerService)
+        {
+            this.CustomerService = CustomerService;
+        }
+
         // GET api/values
         public IEnumerable<string> Get()
         {

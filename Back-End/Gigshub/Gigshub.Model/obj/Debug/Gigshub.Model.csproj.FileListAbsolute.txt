@@ -1,0 +1,16 @@
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Gigshub.Model.dll.config
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Gigshub.Model.dll
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Gigshub.Model.pdb
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\EntityFramework.dll
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\EntityFramework.xml
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\Project\C#\Gigshub\Gigshub.Model\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Project\C#\Gigshub\Gigshub.Model\obj\Debug\Gigshub.Model.csproj.CoreCompileInputs.cache
+D:\Project\C#\Gigshub\Gigshub.Model\obj\Debug\Gigshub.Model.csproj.CopyComplete
+D:\Project\C#\Gigshub\Gigshub.Model\obj\Debug\Gigshub.Model.dll
+D:\Project\C#\Gigshub\Gigshub.Model\obj\Debug\Gigshub.Model.pdb
+D:\Project\C#\Gigshub\Gigshub.Model\obj\Debug\Gigshub.Model.csprojAssemblyReference.cache

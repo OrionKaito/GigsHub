@@ -1,0 +1,49 @@
+﻿using Gigshub.Data.Infrastructure;
+using Gigshub.Data.Repositories;
+using Gigshub.Model.Model;
+
+namespace Gigshub.Service
+{
+    public interface ICustomerService
+    {
+        Customer GetByID(long id);
+        void Create(Customer customer);
+        void Save();
+    }
+
+    public class CustomerService : ICustomerService
+    {
+        #region Properties
+
+        private readonly ICustomerRepository customerRepository;
+        private readonly IUnitOfWork unitOfWork;
+
+        #endregion
+
+        public CustomerService(ICustomerRepository customerRepository,
+            IUnitOfWork unitOfWork)
+        {
+            this.customerRepository = customerRepository;
+            this.unitOfWork = unitOfWork;
+        }
+
+        #region ICustomerService Members
+
+        public Customer GetByID(long id)
+        {
+            return customerRepository.GetById(id);
+        }
+
+        public void Create(Customer customer)
+        {
+            customerRepository.Add(customer);
+        }
+
+        public void Save()
+        {
+            unitOfWork.Commit();
+        }
+
+        #endregion
+    }
+}

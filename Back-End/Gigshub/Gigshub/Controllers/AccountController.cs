@@ -1,4 +1,16 @@
-﻿using System;
+﻿using AutoMapper;
+using Gigshub.Model.Model;
+using Gigshub.Models;
+using Gigshub.Providers;
+using Gigshub.Results;
+using Gigshub.Service;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Claims;
@@ -6,16 +18,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OAuth;
-using Gigshub.Models;
-using Gigshub.Providers;
-using Gigshub.Results;
 
 namespace Gigshub.Controllers
 {
@@ -25,9 +27,16 @@ namespace Gigshub.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private readonly ICustomerService _customerService;
 
         public AccountController()
         {
+
+        }
+
+        public AccountController(ICustomerService _customerService)
+        {
+            this._customerService = _customerService;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -322,20 +331,27 @@ namespace Gigshub.Controllers
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        {
+        {   
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
+            var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
+
+            var RegisteredUser = UserManager.FindByName(model.UserName);
+            await UserManager.AddToRoleAsync(RegisteredUser.Id, "User");
+            var customer = new Customer();
+            Mapper.Map(model, customer);
+            customer.CreateDate = DateTime.Now;
+            _customerService.Create(customer);
+            _customerService.Save();
 
             return Ok();
         }
