@@ -23,6 +23,9 @@ namespace Gigshub.Data
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventImage> EventImages { get; set; }
+        public DbSet<Following> Followings { get; set; }
 
         public virtual void Commit()
         {
@@ -34,6 +37,12 @@ namespace Gigshub.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new CustomerConfiguration());
+
+            modelBuilder.Entity<Following>()
+                .HasOptional(f => f.Followee)
+                .WithMany(fl => f.Elders)
+                .HasForeignKey(f => f.ElderId)
+                .WillCascadeOnDelete(false);
         }
 
         public class GigshubEntitiesSeed : DropCreateDatabaseIfModelChanges<GigshubEntities>
@@ -67,7 +76,7 @@ namespace Gigshub.Data
                 userManager.SetLockoutEnabled(SeedUser.Id, false);
                 userManager.AddToRole(SeedUser.Id, "Admin");
 
-                GetCustomer().ForEach(c => context.Customers.Add(c));
+                GetCustomer().ForEach(k => context.Customers.Add(k));
                 base.Seed(context);
             }
 

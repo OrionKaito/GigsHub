@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form name="photo" id="imageUploadForm" enctype="multipart/form-data" action="api/event/create" method="post">
+        <label>Name</label><input type="text" name="Name" /><br />
+        <label>Title</label><input type="text" name="Title" /><br />
+        <label>Location</label><input type="text" name="Location" /><br />
+        <label>DateTime</label><input type="DateTime" name="DateTime" /><br />
+        <label>Description</label><input type="text" name="Description" /> <br />
+        <input type="file" id="ImageBrowse" name="image" /><br />
+        <input type="submit" name="upload" value="Upload" /><br />
+        <!--<img width="100" style="border:#000; z-index:1;position: relative; border-width:2px; float:left" height="100" id="thumbnail" />-->
+    </form>
+</body>
+</html>

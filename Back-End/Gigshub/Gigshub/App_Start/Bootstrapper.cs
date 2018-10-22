@@ -4,7 +4,6 @@ using Autofac.Integration.WebApi;
 using Gigshub.Data.Infrastructure;
 using Gigshub.Data.Repositories;
 using Gigshub.Service;
-using System.Linq;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -22,6 +21,7 @@ namespace Gigshub.App_Start
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 

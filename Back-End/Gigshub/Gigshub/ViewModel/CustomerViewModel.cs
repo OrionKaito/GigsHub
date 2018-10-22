@@ -1,18 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Gigshub.ViewModel
 {
-    public class CustomerViewModel
+    public class CustomerViewModel : CustomerCreateModel
     {
-        public string UserName { get; set; }
+        public long Id { get; set; }
     }
 
     public class CustomerCreateModel
     {
-        public string Username { get; set; }
+        public string UserName { get; set; }
+        public string Fullname { get; set; }
         public string Email { get; set; }
+        public string Phonenumber { get; set; }
+        public string Gender { get; set; }
+        public string Address { get; set; }
+        public DateTime DateOfBirth { get; set; }
+    }
+
+    public class CustomerUpdateModel
+    {
+        public string Fullname { get; set; }
+        public string Email { get; set; }
+        public string Phonenumber { get; set; }
+        public string Gender { get; set; }
+        public string Address { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

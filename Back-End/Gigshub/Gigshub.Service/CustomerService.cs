@@ -6,7 +6,8 @@ namespace Gigshub.Service
 {
     public interface ICustomerService
     {
-        Customer GetByID(long id);
+        Customer GetByID(long Id);
+        Customer GetByName(string name);
         void Create(Customer customer);
         void Save();
     }
@@ -29,9 +30,14 @@ namespace Gigshub.Service
 
         #region ICustomerService Members
 
-        public Customer GetByID(long id)
+        public Customer GetByID(long Id)
         {
-            return customerRepository.GetById(id);
+            return customerRepository.GetById(Id);
+        }
+
+        public Customer GetByName(string name)
+        {
+            return customerRepository.GetCustomerByName(name);
         }
 
         public void Create(Customer customer)

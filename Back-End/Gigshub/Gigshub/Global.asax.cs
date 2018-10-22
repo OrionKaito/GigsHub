@@ -12,6 +12,7 @@ namespace Gigshub
     {
         protected void Application_Start()
         {
+            Mapper.Initialize(k => k.AddProfile<MappingProfile>());
             //Init database
             System.Data.Entity.Database.SetInitializer(new GigshubEntitiesSeed());
 
@@ -23,7 +24,6 @@ namespace Gigshub
 
             //Autofac and Automapper configurations
             Bootstrapper.Run();
-            Mapper.Initialize(k => k.AddProfile<MappingProfile>());
         }
     }
 }

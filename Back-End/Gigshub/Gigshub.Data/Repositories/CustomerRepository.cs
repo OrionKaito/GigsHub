@@ -1,5 +1,6 @@
 ﻿using Gigshub.Data.Infrastructure;
 using Gigshub.Model.Model;
+using System.Linq;
 
 namespace Gigshub.Data.Repositories
 {
@@ -9,10 +10,18 @@ namespace Gigshub.Data.Repositories
         {
 
         }
+
+        public Customer GetCustomerByName(string name)
+        {
+            return this.DbContext.Customers
+                .Where(c => c.UserName == name)
+                .Where(c => c.IsDeleted != true)
+                .FirstOrDefault();
+        }
     }
 
     public interface ICustomerRepository : IRepository<Customer>
     {
-
+        Customer GetCustomerByName(string name);
     }
 }

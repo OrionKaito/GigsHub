@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventImage.cs" />
+    <Compile Include="Model\Following.cs" />
     <Compile Include="Model\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
