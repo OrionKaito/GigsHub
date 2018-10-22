@@ -48,6 +48,8 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         holder.number.setText(gigs.getGigsNumber() + " people will go");
         holder.star.setRating(gigs.getGigsStar());
         holder.image.setImageResource(gigs.getGigsImage());
+
+
     }
 
     @Override

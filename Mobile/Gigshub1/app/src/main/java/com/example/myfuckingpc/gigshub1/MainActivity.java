@@ -1,6 +1,8 @@
 package com.example.myfuckingpc.gigshub1;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,7 +19,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter fragmentPagerAdapter;
-
+    private ImageView createEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,5 +43,15 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        createEvent = findViewById(R.id.imgCreateEvent);
+        createEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ChooseEventTypeActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
