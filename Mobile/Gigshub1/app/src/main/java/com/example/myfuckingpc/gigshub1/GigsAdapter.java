@@ -45,7 +45,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         Gigs gigs = gigsList.get(position);
         holder.title.setText(gigs.getGigsTitle());
         holder.location.setText(gigs.getGigsLocation());
-        holder.number.setText(gigs.getGigsNumber() + " people interested");
+        holder.number.setText(gigs.getGigsNumber() + " people will go");
         holder.star.setRating(gigs.getGigsStar());
         holder.image.setImageResource(gigs.getGigsImage());
     }

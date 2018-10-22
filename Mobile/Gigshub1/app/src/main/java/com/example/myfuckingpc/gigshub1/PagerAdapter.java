@@ -9,7 +9,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 public class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
     private static int NUM_ITEMS = 3;
-    private int tabIcons[] = {R.drawable.ic_home, R.drawable.ic_search, R.drawable.ic_profile2};
+    private int tabIcons[] = {R.drawable.ic_home, R.drawable.ic_search, R.drawable.ic_personal};
 
     public PagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
