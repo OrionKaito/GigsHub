@@ -9,7 +9,7 @@
         android:id="@+id/tv_top_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
+        android:layout_weight="7"
         android:gravity="center"
         android:text="Hi, Thái"
         android:textColor="@color/black"
@@ -20,7 +20,7 @@
     <ImageView
         android:id="@+id/imgCreateEvent"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_list_gigs"

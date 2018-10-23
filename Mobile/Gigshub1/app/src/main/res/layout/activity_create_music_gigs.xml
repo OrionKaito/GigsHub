@@ -235,6 +235,7 @@
                 android:textColor="#ffffff"
                 android:background="#ff8f00"
                 android:textSize="16sp"
+                android:onClick="clickToResetForm"
                 />
             <Button
                 android:layout_margin="5dp"
@@ -247,6 +248,7 @@
                 android:textColor="#ffffff"
                 android:background="#ff8f00"
                 android:textSize="16sp"
+                android:onClick="clickToCancel"
                 />
 
         </LinearLayout>

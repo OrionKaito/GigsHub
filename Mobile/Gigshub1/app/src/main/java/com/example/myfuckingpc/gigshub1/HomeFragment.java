@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
+
     }
 
     @Override
