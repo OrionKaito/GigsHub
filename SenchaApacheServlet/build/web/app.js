@@ -1,4 +1,4 @@
-/*
+function _540497436b63938dd737658c43519c7d01b8a759(){};/*
     This file is generated and updated by Sencha Cmd. You can edit this file as
     needed for your application, but these edits will have to be merged by
     Sencha Cmd when it performs code generation tasks such as generating new

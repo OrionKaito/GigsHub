@@ -34,8 +34,6 @@ public class SearchAllController extends HttpServlet {
             JSONArray arrayObj = new JSONArray();
             RegistrationDAO dao = new RegistrationDAO();
             List<RegistrationDTO> result = dao.getAllAccount();
-            System.out.println(result.size());
-            log("cyka blyat " + result.size());
             for (int i = 0; i < result.size(); i++) {
                 RegistrationDTO account = result.get(i);
                 JSONObject itemObj = JSONObject.fromObject(account);

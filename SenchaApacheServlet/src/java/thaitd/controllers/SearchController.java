@@ -29,8 +29,8 @@ public class SearchController extends HttpServlet {
             String search = request.getParameter("search");
             JSONArray arrayObj = new JSONArray();
             RegistrationDAO dao = new RegistrationDAO();
-            List<RegistrationDTO> result = dao.findByFullname(search);
-            out.println("result = " + result.size());
+            log(search);
+            List<RegistrationDTO> result = dao.findByFullname(search);           
             for (int i = 0; i < result.size(); i++) {
                 RegistrationDTO account = result.get(i);
                 JSONObject itemObj = JSONObject.fromObject(account);
@@ -38,7 +38,6 @@ public class SearchController extends HttpServlet {
             }
             out.println(arrayObj.toString());
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,0 +1,96 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+MERGED from [:CordovaLib] E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\CordovaLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:20:1-27:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:1-34:12
+	package
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:3:5-41
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:6:5-32
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+	android:hardwareAccelerated
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:4:5-39
+	xmlns:android
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:5:5-32
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+supports-screens
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:8:5-14:40
+	android:largeScreens
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:10:9-36
+	android:smallScreens
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:13:9-36
+	android:normalScreens
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:11:9-37
+	android:xlargeScreens
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:14:9-37
+	android:resizeable
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:12:9-34
+	android:anyDensity
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:9:9-34
+uses-permission#android.permission.INTERNET
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:15:5-67
+	android:name
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:15:22-64
+application
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:16:5-33:19
+	android:supportsRtl
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:20:9-35
+	android:label
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:19:9-41
+	android:hardwareAccelerated
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:17:9-43
+	android:icon
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:18:9-36
+activity#com.example.seminarproject.MainActivity
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:21:9-32:20
+	android:label
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:24:13-50
+	android:launchMode
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:25:13-43
+	android:windowSoftInputMode
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:27:13-55
+	android:configChanges
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:23:13-90
+	android:theme
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:26:13-75
+	android:name
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:22:13-40
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:28:13-31:29
+	android:label
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:28:28-65
+action#android.intent.action.MAIN
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:29:17-69
+	android:name
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:29:25-66
+category#android.intent.category.LAUNCHER
+ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:30:17-77
+	android:name
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml:30:27-74
+uses-sdk
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+MERGED from [:CordovaLib] E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\CordovaLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:25:5-44
+MERGED from [:CordovaLib] E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\CordovaLib\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:25:5-44
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		ADDED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml
+		INJECTED from E:\Learn\PRM301\SourceCode\Sencha\SenchaApacheServlet\web\cordova\platforms\android\app\src\main\AndroidManifest.xml

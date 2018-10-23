@@ -10,7 +10,7 @@ Ext.define('MyAppServer.view.Main', {
         items: [
             {
                 title: 'Insert',
-                iconCls: 'action',
+                iconCls: 'home',
                 items: [
                     {
                         docked: 'top',
@@ -224,8 +224,7 @@ Ext.define('MyAppServer.view.Main', {
                                             url: './DeleteController', params: {
                                                 username: username
                                             },
-                                            method: 'GET', success: function (response) {
-                                                Ext.Msg.alert("successfully deleted " + response.status);
+                                            method: 'GET', success: function () {
                                                 window.location.reload();
                                             }, failure: function (response) {
                                                 Ext.Msg.alert("Failed " + response.status);
@@ -295,7 +294,7 @@ Ext.define('MyAppServer.view.Main', {
                 },
                 listeners: {
 
-                },
+                }
             }
         ]
     }

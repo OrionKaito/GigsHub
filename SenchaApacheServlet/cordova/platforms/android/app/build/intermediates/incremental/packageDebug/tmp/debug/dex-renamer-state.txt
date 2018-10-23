@@ -1,0 +1,4 @@
+#Tue Oct 23 14:30:28 ICT 2018
+base.0=E\:\\Learn\\PRM301\\SourceCode\\Sencha\\SenchaApacheServlet\\web\\cordova\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex
