@@ -6,6 +6,7 @@ namespace Gigshub.ViewModel
     {
         public long Id { get; set; }
         public string OwnerName { get; set; }
+        public string OwnerId { get; set; }
         public int NumberOfAttender { get; set; }
         public float Rate { get; set; }
     }

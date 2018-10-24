@@ -38,11 +38,11 @@ namespace Gigshub.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new CustomerConfiguration());
 
-            modelBuilder.Entity<Following>()
-                .HasOptional(f => f.Followee)
-                .WithMany(fl => f.Elders)
-                .HasForeignKey(f => f.ElderId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Following>()
+            //    .HasOptional(f => f.Followee)
+            //    .WithMany(fl => f.Elders)
+            //    .HasForeignKey(f => f.ElderId)
+            //    .WillCascadeOnDelete(false);
         }
 
         public class GigshubEntitiesSeed : DropCreateDatabaseIfModelChanges<GigshubEntities>

@@ -34,15 +34,13 @@ namespace Gigshub.Controllers
             var result = new EventViewModel();
             //begin get data
             var Event = _eventService.GetByID(Id);
-
             if (Event == null)
             {
                 return BadRequest("Event not exist"); //status code 400
             }
 
             Mapper.Map(Event, result);
-
-            var name = User.Identity.Name;
+            var name = _customerService.GetByID(Event.OwnerID).UserName;
             result.OwnerName = name;
             //end get data
             return Ok(result);
@@ -54,7 +52,7 @@ namespace Gigshub.Controllers
         {
             //begin create data
             var httpRequest = HttpContext.Current.Request;
-            var EventCreateModel = new EventCreateModel
+            var model = new EventCreateModel
             {
                 Name = httpRequest["Name"],
                 Title = httpRequest["Title"],
@@ -67,9 +65,10 @@ namespace Gigshub.Controllers
             long OwnerID = _customerService.GetByName(name).Id;
 
             var Event = new Event();
-            Mapper.Map(EventCreateModel, Event);
+            Mapper.Map(model, Event);
 
             Event.OwnerID = OwnerID;
+            //Event.OwnerID = 1; //for test only
             Event.CreateDate = DateTime.Now;
 
             try
@@ -79,7 +78,7 @@ namespace Gigshub.Controllers
             }
             catch (Exception)
             {
-                return BadRequest("Failed to create Event");
+                return BadRequest("Failed to create Event"); //status code 400
             }
 
             //begin upload image
@@ -115,8 +114,16 @@ namespace Gigshub.Controllers
                         ImagePath = relativePath,
                         EventId = Event.Id,
                     };
-                    _eventImageSerivce.Create(image);
-                    _eventImageSerivce.Save();
+
+                    try
+                    {
+                        _eventImageSerivce.Create(image);
+                        _eventImageSerivce.Save();
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Failed to create event's image"); //status code 400
+                    }
                 }
             }
             //end upload image
@@ -135,17 +142,17 @@ namespace Gigshub.Controllers
 
             //begin update data
             var httpRequest = HttpContext.Current.Request;
-            var EventUpdateModel = new EventUpdateModel
+            var model = new EventUpdateModel
             {
                 Id = Convert.ToInt64(httpRequest["Id"]),
-                DateTime = Convert.ToDateTime(httpRequest["Dateime"]),
+                DateTime = Convert.ToDateTime(httpRequest["Datetime"]),
                 Description = httpRequest["Description"],
                 Location = httpRequest["Location"],
                 Name = httpRequest["Name"],
                 Title = httpRequest["Title"],
             };
 
-            var EventInDb = _eventService.GetByID(EventUpdateModel.Id);
+            var EventInDb = _eventService.GetByID(model.Id);
             if (EventInDb == null)
             {
                 return NotFound(); //status code 404
@@ -161,16 +168,51 @@ namespace Gigshub.Controllers
 
             try
             {
-                Mapper.Map(EventUpdateModel, EventInDb);
+                Mapper.Map(model, EventInDb);
                 _eventService.Save();
             }
             catch (Exception)
             {
-                return BadRequest("Failed to update Event");
+                return BadRequest("Failed to update Event"); //status code 400
             }
 
+            //delete image 
+            if (httpRequest.Files.Count > 0)
+            {
+                _eventImageSerivce.DeleteByEventId(model.Id);
+            }
 
+            //upload image
+            if (httpRequest.Files.Count > 0)
+            {
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    //create customer name
+                    string imageName = new string(Path.GetFileNameWithoutExtension(postedFile.FileName)
+                        .Take(10).ToArray()).Replace(" ", "-");
+                    imageName = imageName + DateTime.Now.ToString("yy-mm-ss-ff") + Path.GetExtension(postedFile.FileName);
+                    var relativePath = DIRECTORY_PATH + imageName;
+                    var filePath = HttpContext.Current.Server.MapPath(relativePath);
+                    postedFile.SaveAs(filePath);
+                    //save to db
+                    EventImage image = new EventImage()
+                    {
+                        ImagePath = relativePath,
+                        EventId = model.Id,
+                    };
 
+                    try
+                    {
+                        _eventImageSerivce.Create(image);
+                        _eventImageSerivce.Save();
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Failed to update event's image"); //status code 400
+                    }
+                }
+            }
             //end update data
             return Ok("Success"); //status code 200
         }
@@ -186,8 +228,16 @@ namespace Gigshub.Controllers
                 return BadRequest("Event is not exist!"); //status code 400
             }
             //begin delete data
-            EventInDb.IsDelete = true;
-            _eventService.Save();
+            try
+            {
+                _eventImageSerivce.DeleteByEventId(Id);
+                EventInDb.IsDelete = true;
+                _eventService.Save();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to delete event"); //status code 400
+            }
             //end delete data
             return Ok("Success"); //status code 200
         }
