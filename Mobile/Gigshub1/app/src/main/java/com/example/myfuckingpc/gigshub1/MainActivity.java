@@ -17,9 +17,19 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
+import api.ApiUtils;
+import api.CustomerClient;
+import api.UserClient;
+import model.SavedToken;
+import model.UserInfomation;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter fragmentPagerAdapter;
     private ImageView createEvent;
+    CustomerClient customerClient = ApiUtils.getCustomerClient();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +60,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ChooseEventTypeActivity.class);
                 startActivity(intent);
+            }
+        });
+        String token = SavedToken.getUserToken(MainActivity.this);
+        String content_type = "application/json";
+        String accept = "application/json";
+        Call<UserInfomation> call = customerClient.getUserInfomation(token, content_type, accept);
+
+        call.enqueue(new Callback<UserInfomation>() {
+            @Override
+            public void onResponse(Call<UserInfomation> call, Response<UserInfomation> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, response.body().getUserName(), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Please NO!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfomation> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Please NO!", Toast.LENGTH_SHORT).show();
             }
         });
 
