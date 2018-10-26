@@ -4,14 +4,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="false"
+        android:icon="@drawable/ic_logo_apps"
         android:label="Gigshub"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyActionBar">
-        <activity
-            android:name=".CreateAndUpdateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".ProfileActivity2"
             android:label="@string/title_activity_profile2" />
@@ -19,14 +18,22 @@
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-
-        </activity>
-        <activity android:name=".DetailGigsActivity" />
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".DetailGigsActivity"
+            android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MyActionBar.ActionBar"
             android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity
+            android:name=".CreateGigsActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
