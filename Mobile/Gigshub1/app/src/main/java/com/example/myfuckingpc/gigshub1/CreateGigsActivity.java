@@ -4,14 +4,24 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.chabbal.slidingdotsplash.SlidingSplashView;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +38,7 @@ public class CreateGigsActivity extends AppCompatActivity {
     private int mHour;
     private int mMinute;
     private TimePickerDialog timePickerDialog;
+    private SlidingSplashView iv_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,7 @@ public class CreateGigsActivity extends AppCompatActivity {
                 datePicker();
             }
         });
+        iv_image = findViewById(R.id.ssv_create_gigs_image);
     }
 
     private void datePicker() {
@@ -97,8 +109,24 @@ public class CreateGigsActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setType("image/*");
-        startActivityForResult(intent,  123);
+        startActivityForResult(intent, 123);
 
     }
-    
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(CreateGigsActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+        }
+    }
 }
