@@ -17,6 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
+    <ImageView
+        android:id="@+id/iv_gigs_gif"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/ll_action_button"
         android:layout_width="match_parent"
@@ -97,12 +103,28 @@
 
             <TextView
                 android:id="@+id/tv_gigs_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FPT Event"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_gigs_details_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_comment" />
+
+            <ImageView
+                android:id="@+id/iv_gigs_details_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/iv_gigs_details_comment"
+                android:background="@drawable/ic_location" />
 
             <LinearLayout
                 android:id="@+id/ll_gigs_detail_time_and_place"
