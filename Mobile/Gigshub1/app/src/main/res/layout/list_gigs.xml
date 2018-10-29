@@ -81,6 +81,7 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/tv_gigs_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_place"
@@ -88,4 +89,28 @@
         android:text="Thursday, 13:00 20/12/2018"
         android:textColor="@color/black"
         android:textSize="15sp" />
+    <LinearLayout
+        android:layout_below="@+id/tv_gigs_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hosted by: "
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_hosted_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trần Đức Thái"
+            android:textColor="@color/black"/>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_verified_user"
+            android:visibility="visible"/>
+    </LinearLayout>
+
 </RelativeLayout>
