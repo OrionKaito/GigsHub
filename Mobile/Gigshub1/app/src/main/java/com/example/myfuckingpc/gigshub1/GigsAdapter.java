@@ -35,7 +35,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.gigs_list, parent, false);
+                .inflate(R.layout.list_gigs, parent, false);
 
         return new MyViewHolder(itemView);
     }

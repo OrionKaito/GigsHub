@@ -10,6 +10,7 @@
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/ic_logo_apps"
+        android:label="Gigshub"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -24,7 +25,7 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".DetailGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MyActionBar.ActionBar"
@@ -40,14 +41,19 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashscreenTheme"></activity>
-        <activity android:name=".CreateActivity"></activity>
+            android:theme="@style/SplashscreenTheme" />
+        <activity android:name=".CreateActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBr3iE5LmK3FjbXuQeWlqpMKm6hPns0y_4" />
 
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".MapsActivity" />
+        <activity
+            android:name=".NotificationActivity"
+            android:theme="@style/MyActionBar.ActionBar">
+
+        </activity>
     </application>
 
 </manifest>

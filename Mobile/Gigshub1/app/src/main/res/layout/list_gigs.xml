@@ -81,16 +81,11 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/tv_date_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_place"
-        android:text="Time/Date"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_date_title"
-        android:text="Thursday, 13:00 20/12/2018" />
+        android:paddingTop="5dp"
+        android:text="Thursday, 13:00 20/12/2018"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 </RelativeLayout>
