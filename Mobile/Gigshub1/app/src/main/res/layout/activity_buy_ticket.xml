@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BuyTicketActivity">
+
+    <TextView
+        android:id="@+id/tv_buy_ticket_event_name"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FPT EVENT"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_weight="4.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Price: "/>
+        <TextView
+            android:id="@+id/tv_buy_ticket_price"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_weight="5.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="200,000 VND "/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:gravity="right"
+            android:layout_weight="4.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Your Balance: "/>
+        <TextView
+            android:id="@+id/tv_buy_ticket_balance"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_weight="5.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="3,555,123 VND "/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_comfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:onClick="clicktoCancelPay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_black_border"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:onClick="clicktoCancelPay"
+                android:id="@+id/btn_not_going"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_close" />
+
+            <TextView
+                android:onClick="clicktoCancelPay"
+                android:id="@+id/tv_not_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ropa_sans"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:onClick="clickToPay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_orange_border"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:onClick="clickToPay"
+                android:id="@+id/btn_going"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_going" />
+
+            <TextView
+                android:onClick="clickToPay"
+                android:id="@+id/tv_join_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ropa_sans"
+                android:padding="10dp"
+                android:text="Pay"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

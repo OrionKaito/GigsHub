@@ -1,7 +1,9 @@
 package com.example.myfuckingpc.gigshub1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,4 +45,8 @@ public class DetailGigsActivity extends AppCompatActivity {
         return a;
     }
 
+    public void clickToBuyTicket(View view) {
+        Intent intent = new Intent(this, BuyTicketActivity.class);
+        startActivity(intent);
+    }
 }

@@ -128,6 +128,14 @@
                 android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@id/iv_gigs_details_comment"
                 android:background="@drawable/ic_location" />
+            <ImageView
+                android:id="@+id/iv_buy_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/iv_gigs_details_location"
+                android:background="@drawable/ic_money"
+                android:onClick="clickToBuyTicket"/>
 
             <LinearLayout
                 android:id="@+id/ll_gigs_detail_time_and_place"
