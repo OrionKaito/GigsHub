@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myfuckingpc.gigshub1">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -29,28 +31,31 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MyActionBar.ActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".CreateGigsActivity"
+            android:theme="@style/MyActionBar.ActionBar"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CreateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar" />
-        <activity
-            android:name=".SplashActivity"
-            android:theme="@style/SplashscreenTheme" />
-        <activity android:name=".CreateActivity" />
+        <activity android:name=".CreateActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBr3iE5LmK3FjbXuQeWlqpMKm6hPns0y_4" />
 
-        <activity android:name=".MapsActivity" />
         <activity
             android:name=".NotificationActivity"
+            android:theme="@style/MyActionBar.ActionBar"></activity>
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".UpdateGigsActivity"
             android:theme="@style/MyActionBar.ActionBar">
 
         </activity>
