@@ -46,7 +46,7 @@ public class DetailGigsActivity extends AppCompatActivity {
     }
 
     public void clickToBuyTicket(View view) {
-        Intent intent = new Intent(this, BuyTicketActivity.class);
+        Intent intent = new Intent(DetailGigsActivity.this, BuyTicketActivity.class);
         startActivity(intent);
     }
 }

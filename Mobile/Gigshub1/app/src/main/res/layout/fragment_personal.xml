@@ -18,13 +18,25 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="105dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/sample_ava"
+                app:civ_border_color="#FF000000"
+                android:id="@+id/civ_personal_avatar"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_budget3"
+                android:layout_alignParentRight="true"
+                android:id="@+id/im_add_budget"
+                />
+        </RelativeLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_personal"
-            app:civ_border_color="#FF000000" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
