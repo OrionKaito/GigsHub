@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:background="@color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_image_user"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:src="@drawable/sample_ava"
         app:civ_border_color="#FF000000" />
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/civ_name_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/civ_image_user"
+        android:layout_toRightOf="@id/civ_image_user"
         android:text="Đạt không chín"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -35,6 +37,7 @@
         android:textSize="15sp" />
 
     <ImageView
+        android:layout_marginTop="70dp"
         android:id="@+id/iv_gigs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_gigs"
         android:paddingTop="10dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -60,6 +64,7 @@
         android:isIndicator="true"
         android:numStars="5"
         android:paddingTop="5dp"
+        android:layout_marginLeft="10dp"
         android:stepSize="0.1" />
 
     <TextView
@@ -68,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rb_gigs_star"
         android:paddingTop="5dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -77,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_number"
         android:paddingTop="5dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="15sp" />
 
@@ -86,10 +93,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_place"
         android:paddingTop="5dp"
+        android:layout_marginLeft="10dp"
         android:text="Thursday, 13:00 20/12/2018"
         android:textColor="@color/black"
         android:textSize="15sp" />
     <LinearLayout
+        android:id="@+id/ll_owner"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/tv_gigs_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,6 +122,14 @@
             android:layout_height="18dp"
             android:src="@drawable/ic_verified_user"
             android:visibility="visible"/>
-    </LinearLayout>
 
+    </LinearLayout>
+    <View
+        android:layout_below="@+id/ll_owner"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>

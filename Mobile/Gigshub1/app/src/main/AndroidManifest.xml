@@ -54,6 +54,12 @@
             android:theme="@style/MyActionBar.ActionBar">
 
         </activity>
+        <activity android:name=".BuyTicketActivity"
+            android:theme="@style/MyActionBar.ActionBar">
+        </activity>
+        <activity android:name=".ChooseMethodToAddBudget"
+            android:theme="@style/MyActionBar.ActionBar"/>
+
     </application>
 
 </manifest>
