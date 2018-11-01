@@ -6,6 +6,7 @@ public class Gigs {
     private int gigsImage;
     private int gigsNumber;
 
+
     public Gigs(String gigsTitle, String gigsLocation, float gigsStar, int gigsImage, int gigsNumber) {
         this.gigsTitle = gigsTitle;
         this.gigsLocation = gigsLocation;

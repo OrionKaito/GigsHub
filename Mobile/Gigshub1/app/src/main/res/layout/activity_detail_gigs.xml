@@ -19,71 +19,119 @@
         android:layout_height="200dp"
         android:visibility="gone" />
 
+
     <LinearLayout
-        android:id="@+id/ll_action_button"
+        android:id="@+id/ll_bottom_action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="10dp"
-        android:weightSum="2">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/ll_update_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_black_border"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:visibility="gone"
+            android:paddingBottom="10dp">
 
-            <Button
-                android:id="@+id/btn_not_going"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_close" />
-
-            <TextView
-                android:id="@+id/tv_not_join"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ropa_sans"
-                android:padding="10dp"
-                android:text="Not interest"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_white_border"
+                android:gravity="center"
+                android:onClick="clickToUpdateEvent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_update_gigs"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_update" />
+
+                <TextView
+                    android:id="@+id/tv_update_gigs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Setting event"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/ll_action_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_orange_border"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:visibility="visible"
+            android:weightSum="2">
 
-            <Button
-                android:id="@+id/btn_going"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_going" />
-
-            <TextView
-                android:id="@+id/tv_join_event"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ropa_sans"
-                android:padding="10dp"
-                android:text="Join event"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_black_border"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_not_going"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_close" />
+
+                <TextView
+                    android:id="@+id/tv_not_join"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Not interest"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_orange_border"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_going"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_going" />
+
+                <TextView
+                    android:id="@+id/tv_join_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Join event"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -91,7 +139,7 @@
         android:id="@+id/sc_gigs_details_díplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/ll_action_button"
+        android:layout_above="@id/ll_bottom_action_bar"
         android:layout_below="@id/ssv_detail_gigs_image"
         android:layout_marginTop="10dp"
         android:fillViewport="true">

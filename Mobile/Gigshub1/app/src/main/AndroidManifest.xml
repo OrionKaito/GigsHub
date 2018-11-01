@@ -17,6 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyActionBar">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".ProfileActivity2"
             android:label="@string/title_activity_profile2" />
@@ -46,14 +50,14 @@
         </activity>
         <activity android:name=".CreateActivity"></activity>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBr3iE5LmK3FjbXuQeWlqpMKm6hPns0y_4" />
 
         <activity
             android:name=".NotificationActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
-        <activity android:name=".MapActivity" />
+        <activity android:name=".MapActivity"
+            android:theme="@style/MyActionBar.ActionBar">
+
+        </activity>
         <activity
             android:name=".UpdateGigsActivity"
             android:theme="@style/MyActionBar.ActionBar">

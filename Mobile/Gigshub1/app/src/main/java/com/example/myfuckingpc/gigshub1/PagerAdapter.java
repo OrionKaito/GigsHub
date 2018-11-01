@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.astuetz.PagerSlidingTabStrip;
 
 public class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTabStrip.IconTabProvider {
-    private static int NUM_ITEMS = 3;
-    private int tabIcons[] = {R.drawable.ic_home, R.drawable.ic_search, R.drawable.ic_personal};
+    private static int NUM_ITEMS = 4;
+    private int tabIcons[] = {R.drawable.ic_home, R.drawable.ic_search, R.drawable.ic_add_event, R.drawable.ic_personal};
 
     public PagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -21,9 +21,11 @@ public class PagerAdapter extends FragmentPagerAdapter implements PagerSlidingTa
             case 0:
                 return HomeFragment.newInstance(0, "Home");
             case 1:
-                return SearchFragment.newInstance(1, "Personal");
+                return SearchFragment.newInstance(1, "Search");
             case 2:
-                return PersonalFragment.newInstance(2, "Search");
+                return CreateFragment.newInstance(2, "Create");
+            case 3:
+                return PersonalFragment.newInstance(3, "Personal");
             default:
                 return null;
         }

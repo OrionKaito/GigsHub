@@ -18,7 +18,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.notificationList = notificationList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, time, detail;
         public CircleImageView image;
 
@@ -36,7 +36,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_notification, viewGroup, false);
-
         return new MyViewHolder(itemView);
     }
 

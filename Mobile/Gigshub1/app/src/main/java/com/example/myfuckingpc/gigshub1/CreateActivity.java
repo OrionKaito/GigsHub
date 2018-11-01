@@ -36,13 +36,9 @@ public class CreateActivity extends AppCompatActivity {
         btn_display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123);
-//
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(galleryIntent, 123);
             }
         });
@@ -59,28 +55,6 @@ public class CreateActivity extends AppCompatActivity {
 
         if (requestCode == 123) {
             if (resultCode == Activity.RESULT_OK) {
-//                if (data.getClipData() != null) {
-//                    int count = data.getClipData().getItemCount(); //evaluate the count before the for loop --- otherwise, the count is evaluated every loop.
-//                    for (int i = 0; i < count; i++) {
-//                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
-//                        InputStream imageStream = null;
-//                        try {
-//                            imageStream = getContentResolver().openInputStream(imageUri);
-//                        } catch (FileNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                        listImage.add(selectedImage);
-//                        mAdapter.notifyDataSetChanged();
-//                    }
-//                    //do something with the image (save it to some directory or whatever you need to do with it here)
-//                } else if (data.getData() != null) {
-//                    String imagePath = data.getData().getPath();
-//                    Bitmap myBitmap = BitmapFactory.decodeFile(imagePath);
-//                    listImage.add(myBitmap);
-//                    mAdapter.notifyDataSetChanged();
-//                    //do something with the image (save it to some directory or whatever you need to do with it here)
-//                }
                 if (resultCode == Activity.RESULT_OK) {
                     //pick image from gallery
                     Uri selectedImage = data.getData();

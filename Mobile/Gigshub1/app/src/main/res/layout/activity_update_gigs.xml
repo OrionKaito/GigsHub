@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ropa_sans"
             android:padding="10dp"
-            android:text="Create Event"
+            android:text="Update Event"
             android:textColor="@color/black"
             android:textSize="30sp" />
     </LinearLayout>
@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -69,9 +68,9 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/iv_create_gigs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_update_gigs_image"
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
                     android:layout_toRightOf="@id/ll_camera_create" />
             </RelativeLayout>
 
@@ -143,33 +142,70 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/background_orange_border"
-            android:gravity="center"
-            android:onClick="clickToAddEvent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/ic_going" />
-
-            <TextView
-                android:id="@+id/tv_save_event"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ropa_sans"
-                android:padding="10dp"
-                android:text="Save Events"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_orange_border"
+                android:gravity="center"
+                android:onClick="clickToUpdateEvent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_going" />
+
+                <TextView
+                    android:id="@+id/tv_save_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Update Events"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_black_border"
+                android:gravity="center"
+                android:onClick="clickToAddEvent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_close" />
+
+                    <TextView
+                    android:id="@+id/tv_delete_event"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Delete Events"
+                    android:textColor="@color/white"
+                    android:onClick="clickToDeleteEvent"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

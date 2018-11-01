@@ -1,19 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
-    <LinearLayout
-        android:id="@+id/ll_main_top_bar"
+    <RelativeLayout
+        android:id="@+id/ll_title_screeen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/main_top_bar_menu" />
+        <LinearLayout
+            android:id="@+id/ll_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_top_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:text="Search Event"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:queryHint="Search Event...." />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_type_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_top_bar"
+            android:layout_marginTop="10dp"
+            android:text="Event Type"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_type_title"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_rock">
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Event near you"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 </FrameLayout>
