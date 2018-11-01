@@ -101,7 +101,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .title("Hello world"));
 //            String url = getDirectionsUrl(myPosition, destination);
 //            DownloadTask downloadTask = new DownloadTask();
-//            // Start downloading json data from Google Directions API
 //            downloadTask.execute(url);
 
             return;
@@ -213,7 +212,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_server_key);
         return url;
     }
 

@@ -7,7 +7,7 @@
     tools:context=".SearchFragment">
 
     <RelativeLayout
-        android:id="@+id/ll_title_screeen"
+        android:id="@+id/rl_title_screeen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,17 +19,6 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_top_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:padding="10dp"
-                android:text="Search Event"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,41 +26,108 @@
                 android:queryHint="Search Event...." />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_type_title"
+        <LinearLayout
+            android:id="@+id/ll_type_music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_top_bar"
             android:layout_marginTop="10dp"
-            android:text="Event Type"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_type_title"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <RelativeLayout
+                android:id="@+id/rl_type_rock"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_rock">
 
+                <ImageView
+                    android:id="@+id/iv_guitar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_guitar" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_guitar"
+                    android:layout_centerHorizontal="true"
+                    android:text="Rock"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_type_pop"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_pop">
+
+                <ImageView
+                    android:id="@+id/iv_mic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_mic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_mic"
+                    android:layout_centerHorizontal="true"
+                    android:text="Pop"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_type_EDM"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_edm">
+
+                <ImageView
+                    android:id="@+id/iv_piano"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_disk" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_piano"
+                    android:layout_centerHorizontal="true"
+                    android:text="EDM"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </LinearLayout>
 
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Event near you"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_below="@id/ll_type_music">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_search_list_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
     </RelativeLayout>
+
+
 </FrameLayout>

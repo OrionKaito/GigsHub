@@ -28,7 +28,7 @@ public class DetailGigsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_gigs);
-        typeUser = ADMIN;
+        typeUser = USER;
         ssv_image = findViewById(R.id.ssv_detail_gigs_image);
         iv_gif = findViewById(R.id.iv_gigs_gif);
         ll_action = findViewById(R.id.ll_action_button);
@@ -56,6 +56,11 @@ public class DetailGigsActivity extends AppCompatActivity {
 
     public void clickToBuyTicket(View view) {
         Intent intent = new Intent(DetailGigsActivity.this, BuyTicketActivity.class);
+        startActivity(intent);
+    }
+
+    public void clickToOpenMap(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
 }
