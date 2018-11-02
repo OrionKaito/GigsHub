@@ -11,11 +11,35 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.UserClient;
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
+import com.example.myfuckingpc.gigshub1.model.User;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText et_username, et_password;
+    private String token;
     private PopupWindow pw;
     private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password ;
+
+    UserClient userClient = ApiUtils.getUserClient();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +47,58 @@ public class LoginActivity extends AppCompatActivity {
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //install lacking in device
+        try {
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void clickToLogin(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, MainActivity.class);
+        //startActivity(intent);
+
+        String username = et_username.getText().toString();
+        String password = et_password.getText().toString();
+
+        if(username.equals("")){
+            Toast.makeText(this, "Please input Username", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(password.equals("")){
+            Toast.makeText(this, "Please input Password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, String> fields = new HashMap<>();
+        fields.put("username", username );
+        fields.put("password", password);
+        fields.put("grant_type", "password");
+
+        Call<User> call = userClient.login(fields);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()){
+                    token = response.body().getAccessToken();
+                    SavedToken.setUserToken(LoginActivity.this, token);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Wrong Username or Password.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void clickToRegister(View view) {
@@ -51,5 +121,56 @@ public class LoginActivity extends AppCompatActivity {
         edt_register_confirm_password = v.findViewById(R.id.edt_register_confirm_password);
 
         String email = edt_register_email.getText().toString();
+        String username = edt_register_username.getText().toString();
+        String password = edt_register_password.getText().toString();
+        String confirmPassword = edt_register_confirm_password.getText().toString();
+
+        //validateRegister
+        if(email.equals("")){
+            Toast.makeText(this, "Please enter your Email", Toast.LENGTH_SHORT).show();
+        }
+        if (username.equals("")) {
+            Toast.makeText(this, "Please enter Username.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(password.equals("")){
+            Toast.makeText(this, "Please enter Password.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(password.length()<6){
+            Toast.makeText(this, "The Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (password.equals("")) {
+            Toast.makeText(this, "Please enter Confirm Password.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!password.equals(confirmPassword)){
+            Toast.makeText(this, "The password and confirmation password do not match.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        Call<ResponseBody> call = userClient.register(email, username,password,confirmPassword);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Invalid Email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
     }
+
+
 }
