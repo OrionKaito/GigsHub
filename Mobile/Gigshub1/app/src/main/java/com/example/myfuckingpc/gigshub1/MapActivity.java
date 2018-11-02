@@ -102,7 +102,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 //            String url = getDirectionsUrl(myPosition, destination);
 //            DownloadTask downloadTask = new DownloadTask();
 //            downloadTask.execute(url);
-
+//
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(destination, 15);
+            mMap.animateCamera(cameraUpdate);
             return;
         }
     }
@@ -178,7 +180,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     builder.include(position);
                 }
                 lineOptions.addAll(points);
-                lineOptions.width(12);
+                lineOptions.width(8);
                 lineOptions.color(Color.RED);
                 lineOptions.geodesic(true);
             }
@@ -212,7 +214,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_server_key);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
         return url;
     }
 

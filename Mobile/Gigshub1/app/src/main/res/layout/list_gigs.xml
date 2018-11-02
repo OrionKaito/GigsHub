@@ -5,39 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_image_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/sample_ava"
-        app:civ_border_color="#FF000000" />
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/civ_name_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/civ_image_user"
-        android:text="Đạt không chín"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/civ_time_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/civ_name_user"
-        android:layout_toEndOf="@id/civ_image_user"
-        android:text="30 min"
-        android:textColor="@color/black"
-        android:textSize="15sp" />
-
     <ImageView
-        android:layout_marginTop="70dp"
         android:id="@+id/iv_gigs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,32 +15,71 @@
         android:id="@+id/tv_gigs_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_gigs"
-        android:paddingTop="10dp"
+        android:layout_below="@+id/iv_gigs"
         android:layout_marginLeft="10dp"
+        android:paddingTop="10dp"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
-    <RatingBar
-        android:id="@+id/rb_gigs_star"
-        style="?android:attr/ratingBarStyleSmall"
+    <LinearLayout
+        android:id="@+id/ll_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_title"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hosted by: "
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_hosted_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trần Đức Thái"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_verified_user"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/rb_gigs_star"
+        style="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_gigs"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="-80dp"
+        android:background="@color/white"
         android:isIndicator="true"
         android:numStars="5"
         android:paddingTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:stepSize="0.1" />
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:stepSize="0.1"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp" />
 
     <TextView
         android:id="@+id/tv_gigs_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rb_gigs_star"
-        android:paddingTop="5dp"
+        android:layout_below="@id/ll_owner"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="15sp" />
@@ -82,7 +89,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_number"
-        android:paddingTop="5dp"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="15sp" />
@@ -92,44 +98,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_place"
-        android:paddingTop="5dp"
         android:layout_marginLeft="10dp"
         android:text="Thursday, 13:00 20/12/2018"
         android:textColor="@color/black"
         android:textSize="15sp" />
-    <LinearLayout
-        android:id="@+id/ll_owner"
-        android:paddingTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_below="@+id/tv_gigs_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hosted by: "
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tv_hosted_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Trần Đức Thái"
-            android:textColor="@color/black"/>
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_verified_user"
-            android:visibility="visible"/>
 
-    </LinearLayout>
     <View
-        android:layout_below="@+id/ll_owner"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/tv_gigs_time"
         android:background="@color/gray"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
 </RelativeLayout>

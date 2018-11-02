@@ -81,6 +81,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("TYPE", 1);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
 
@@ -99,9 +102,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setGigsList() {
-        Gigs gigs = new Gigs("FPT Graduation Ceremony", "District 12", (float) 3.5, R.drawable.event, 256);
+        gigsList.clear();
+        Gigs gigs= new Gigs("Ultra Music Festival", "Miami, USA", "Nguyễn Anh Kiệt", (float) 4.0, R.drawable.user_event_detail1, 3512);
         gigsList.add(gigs);
-        gigs = new Gigs("Sơn Tùng MTP", "Quân khu 7 Stadium", (float) 4.5, R.drawable.event2, 875);
+        gigs = new Gigs("FPT Graduation Ceremony", "District 12", "Nguyễn Anh Kiệt", (float) 3.5, R.drawable.event, 256);
+        gigsList.add(gigs);
+        gigs = new Gigs("Sơn Tùng MTP", "Quân khu 7 Stadium", "Lý Cao Kỳ", (float) 4.5, R.drawable.event2, 875);
         gigsList.add(gigs);
         mAdapter.notifyDataSetChanged();
     }

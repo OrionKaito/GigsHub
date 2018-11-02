@@ -18,7 +18,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, location, number;
+        public TextView title, location, number, hosted;
         public ImageView image;
         public RatingBar star;
 
@@ -29,6 +29,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
             number = view.findViewById(R.id.tv_gigs_number);
             star = view.findViewById(R.id.rb_gigs_star);
             image = view.findViewById(R.id.iv_gigs);
+            hosted = view.findViewById(R.id.tv_hosted_user);
         }
     }
 
@@ -48,7 +49,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         holder.number.setText(gigs.getGigsNumber() + " people will go");
         holder.star.setRating(gigs.getGigsStar());
         holder.image.setImageResource(gigs.getGigsImage());
-
+        holder.hosted.setText(gigs.getGigsHosted());
 
     }
 

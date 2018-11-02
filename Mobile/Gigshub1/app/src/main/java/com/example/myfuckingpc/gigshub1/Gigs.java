@@ -1,18 +1,27 @@
 package com.example.myfuckingpc.gigshub1;
 
 public class Gigs {
-    private String gigsTitle, gigsLocation;
+    private String gigsTitle, gigsLocation, gigsHosted;
     private float gigsStar;
     private int gigsImage;
     private int gigsNumber;
 
 
-    public Gigs(String gigsTitle, String gigsLocation, float gigsStar, int gigsImage, int gigsNumber) {
+    public Gigs(String gigsTitle, String gigsLocation, String gigsHosted, float gigsStar, int gigsImage, int gigsNumber) {
         this.gigsTitle = gigsTitle;
         this.gigsLocation = gigsLocation;
+        this.gigsHosted = gigsHosted;
         this.gigsStar = gigsStar;
         this.gigsImage = gigsImage;
         this.gigsNumber = gigsNumber;
+    }
+
+    public String getGigsHosted() {
+        return gigsHosted;
+    }
+
+    public void setGigsHosted(String gigsHosted) {
+        this.gigsHosted = gigsHosted;
     }
 
     public int getGigsNumber() {

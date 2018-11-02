@@ -35,10 +35,10 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MyActionBar.ActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".CreateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashscreenTheme">
@@ -48,27 +48,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateActivity"></activity>
-
-
+        <activity android:name=".CreateActivity" />
         <activity
             android:name=".NotificationActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".MapActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
-        <activity android:name=".MapActivity"
+        <activity
+            android:name=".UpdateGigsActivity"
+            android:theme="@style/MyActionBar.ActionBar"></activity>
+        <activity
+            android:name=".BuyTicketActivity"
             android:theme="@style/MyActionBar.ActionBar">
 
         </activity>
         <activity
-            android:name=".UpdateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-
-        </activity>
-        <activity android:name=".BuyTicketActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-        </activity>
-        <activity android:name=".ChooseMethodToAddBudget"
-            android:theme="@style/MyActionBar.ActionBar"/>
-
+            android:name=".ChooseMethodToAddBudget"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".CommentActivity"
+            android:theme="@style/MyActionBar.ActionBar"></activity>
     </application>
 
 </manifest>

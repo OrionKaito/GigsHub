@@ -31,7 +31,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/ic_add_event" />
+                android:src="@drawable/ic_add_event"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView

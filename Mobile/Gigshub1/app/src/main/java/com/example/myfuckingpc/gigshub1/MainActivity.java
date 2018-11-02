@@ -44,14 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        createEvent = findViewById(R.id.imgCreateEvent);
-//        createEvent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, ChooseEventTypeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 }
