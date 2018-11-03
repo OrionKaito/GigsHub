@@ -159,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
                 }
                 else {
+
                     Toast.makeText(LoginActivity.this, "Invalid Email.", Toast.LENGTH_SHORT).show();
                     return;
                 }

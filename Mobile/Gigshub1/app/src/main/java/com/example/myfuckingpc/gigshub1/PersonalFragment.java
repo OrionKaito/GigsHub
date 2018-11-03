@@ -1,5 +1,7 @@
 package com.example.myfuckingpc.gigshub1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +27,11 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class PersonalFragment extends Fragment {
-    ImageView addBudget;
+    ImageView addBudget, logout;
     private RecyclerView recyclerView;
     private List<EventSearch> listEvent;
     private EventSearchAdapter adapter;
+
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -86,6 +92,33 @@ public class PersonalFragment extends Fragment {
             }
         }));
         listFollow();
+        //log out
+        logout = getActivity().findViewById(R.id.iv_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                builder.setTitle("Logout:");
+                builder.setMessage("Do you want Logout?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("No, thanks", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SavedToken.setUserToken(getActivity(), "");
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                android.support.v7.app.AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     private void listFollow() {

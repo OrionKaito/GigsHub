@@ -14,18 +14,22 @@
         <LinearLayout
             android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/orange"
+            android:layout_height="50dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="6dp">
 
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:queryHint="Search Event...." />
-        </LinearLayout>
 
+        </LinearLayout>
+        <View
+            android:layout_below="@id/ll_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
         <LinearLayout
             android:id="@+id/ll_type_music"
             android:layout_width="match_parent"
