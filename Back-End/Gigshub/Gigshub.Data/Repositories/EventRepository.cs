@@ -11,17 +11,17 @@ namespace Gigshub.Data.Repositories
             
         }
 
-        public Event GetByName(string name)
+        public Event GetByTitle(string title)
         {
             return this.DbContext.Events
-                    .Where(k => k.Name == name)
-                    .Where(k => k.IsDelete != true)
+                    .Where(k => k.Title == title)
+                    .Where(k => k.IsDeleted != true)
                     .FirstOrDefault();
         }
     }
 
     public interface IEventRepository : IRepository<Event>
     {
-        Event GetByName(string name);
+        Event GetByTitle(string title);
     }
 }

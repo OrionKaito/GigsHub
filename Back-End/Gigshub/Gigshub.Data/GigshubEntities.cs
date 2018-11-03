@@ -26,6 +26,8 @@ namespace Gigshub.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<EventImage> EventImages { get; set; }
         public DbSet<Following> Followings { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<EventCategory> EventCategorys { get; set; }
 
         public virtual void Commit()
         {
@@ -37,12 +39,23 @@ namespace Gigshub.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Configurations.Add(new CustomerConfiguration());
+            modelBuilder.Configurations.Add(new EventConfiguration());
+            modelBuilder.Configurations.Add(new EventCategoryConfiguration());
 
-            //modelBuilder.Entity<Following>()
-            //    .HasOptional(f => f.Followee)
-            //    .WithMany(fl => f.Elders)
-            //    .HasForeignKey(f => f.ElderId)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Customer>()
+                .HasMany(k => k.Followers)
+                .WithRequired(k => k.Followee)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(k => k.Followees)
+                .WithRequired(k => k.Follower)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Attendance>()
+                .HasRequired(k => k.Event)
+                .WithMany()
+                .WillCascadeOnDelete(false);
         }
 
         public class GigshubEntitiesSeed : DropCreateDatabaseIfModelChanges<GigshubEntities>
@@ -90,6 +103,8 @@ namespace Gigshub.Data
                         Email = "admin@unknow.com",
                         CreateDate = DateTime.Now,
                         DateOfBirth = DateTime.Now,
+                        IsVerified = true,
+                        AccountBalance = 20000,
                     },
                 };
             }

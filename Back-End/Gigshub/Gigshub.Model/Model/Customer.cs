@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gigshub.Model.Model
 {
@@ -12,8 +14,13 @@ namespace Gigshub.Model.Model
         public string Phonenumber { get; set; }
         public string Gender { get; set; }
         public string Address { get; set; }
+        public double AccountBalance { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime CreateDate { get; set; }
         public Boolean IsDeleted { get; set; }
+        public Boolean IsVerified { get; set; }
+
+        public ICollection<Following> Followees { get; set; }
+        public ICollection<Following> Followers { get; set; }
     }
 }

@@ -1,13 +1,15 @@
 ﻿using Gigshub.Data.Infrastructure;
 using Gigshub.Data.Repositories;
 using Gigshub.Model.Model;
-using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gigshub.Service
 {
     public interface IEventImageService
     {
+        IEnumerable<string> GetAllByEventId(long eventId);
+        string GetOneByEventId(long eventId);
         void Create(EventImage image);
         void DeleteByEventId(long Id);
         void Save();
@@ -29,6 +31,16 @@ namespace Gigshub.Service
         }
 
         #region IEventImageSerivce Members
+
+        public IEnumerable<string> GetAllByEventId(long eventId)
+        {
+            return eventImageRepository.GetAll().Where(k => k.EventId == eventId).Select(k => k.ImagePath);
+        }
+
+        public string GetOneByEventId(long eventId)
+        {
+            return eventImageRepository.GetAll().Where(k => k.EventId == eventId).Select(k => k.ImagePath).Single();
+        }
 
         public void Create(EventImage image)
         {

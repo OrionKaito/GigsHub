@@ -88,10 +88,17 @@ namespace Gigshub.Controllers
             var customer = new Customer();
             //begin create data
             Mapper.Map(model, customer);
-            customer.DateOfBirth = DateTime.Now;
             customer.CreateDate = DateTime.Now;
-            _customerService.Create(customer);
-            _customerService.Save();
+            try
+            {
+                _customerService.Create(customer);
+                _customerService.Save();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Can't create customer"); //stastus code 400
+            }
             //end create data
             return CreatedAtRoute("GetCustomerById", new { customer.Id }, customer); //status code 201
         }
@@ -132,8 +139,15 @@ namespace Gigshub.Controllers
                 return BadRequest("Customer is not exist!"); //status code 400
             }
             //begin delete data
-            CusInDb.IsDeleted = true;
-            _customerService.Save();
+            try
+            {
+                CusInDb.IsDeleted = true;
+                _customerService.Save();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Can't delete customer"); //statis code 400
+            }
             //end delete data
             return Ok("Success"); //status code 200
         }

@@ -350,6 +350,7 @@ namespace Gigshub.Controllers
             var customer = new Customer();
             Mapper.Map(model, customer);
             customer.CreateDate = DateTime.Now;
+            customer.AccountBalance = 2200;
             _customerService.Create(customer);
             _customerService.Save();
 

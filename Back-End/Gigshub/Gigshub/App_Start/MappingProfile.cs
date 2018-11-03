@@ -29,6 +29,7 @@ namespace Gigshub.App_Start
 
             Mapper.CreateMap<Event, EventUpdateModel>();
             Mapper.CreateMap<EventUpdateModel, Event>();
+
         }
     }
 }

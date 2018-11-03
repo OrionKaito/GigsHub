@@ -1,13 +1,18 @@
 ﻿using Gigshub.Data.Infrastructure;
 using Gigshub.Data.Repositories;
 using Gigshub.Model.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gigshub.Service
 {
     public interface IEventService
     {
+        IEnumerable<Event> GetAll();
+        IEnumerable<Event> GetAllUserEvent(long Id);
         Event GetByID(long Id);
-        Event GetByName(string name);
+        Event GetByTitle(string name);
         void Create(Event Event);
         void Save();
     }
@@ -30,14 +35,29 @@ namespace Gigshub.Service
 
         #region IEventService Members
 
+        public IEnumerable<Event> GetAll()
+        {
+            return eventRepository.GetAll()
+                .Where(k => k.IsDeleted == false)
+                .Where(k => k.DateTime > DateTime.Now)
+                .OrderBy(k => k.DateTime);
+        }
+
+        public IEnumerable<Event> GetAllUserEvent(long Id)
+        {
+            return eventRepository.GetAll()
+                .Where(k => k.OwnerID == Id)
+                .OrderBy(k => k.DateTime);
+        }
+
         public Event GetByID(long Id)
         {
             return eventRepository.GetById(Id);
         }
 
-        public Event GetByName(string name)
+        public Event GetByTitle(string title)
         {
-            return eventRepository.GetByName(name);
+            return eventRepository.GetByTitle(title);
         }
         public void Create(Event Event)
         {

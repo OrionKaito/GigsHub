@@ -11,7 +11,6 @@ namespace Gigshub.Data.Configuration
         {
             ToTable("Events");
             Property(k => k.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(k => k.Name).IsRequired().HasMaxLength(50);
             Property(k => k.Title).IsRequired()
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true}))
                 .HasMaxLength(50);
