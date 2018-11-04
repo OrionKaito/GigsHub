@@ -17,15 +17,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.myfuckingpc.gigshub1.FileUtils.ReadPath;
+import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.FileUploadService;
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
+
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -35,6 +51,7 @@ public class CreateFragment extends Fragment {
 
     private ImageView iv_create_gigs_image;
     private TextView tv_gigs_create_date;
+    private EditText title, place, description;
     private String date_time = "";
     private int mYear;
     private int mMonth;
@@ -43,6 +60,9 @@ public class CreateFragment extends Fragment {
     private int mMinute;
     private TimePickerDialog timePickerDialog;
     private LinearLayout ll_camera_create;
+    private LinearLayout ll_create_event;
+    String IMAGE_PATH;
+    Uri selectedImage;
 
     public CreateFragment() {
         // Required empty public constructor
@@ -83,6 +103,64 @@ public class CreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 datePicker();
+            }
+        });
+
+        //create event handler
+        title = getActivity().findViewById(R.id.et_create_event_title);
+        place = getActivity().findViewById(R.id.et_create_event_place);
+        description = getActivity().findViewById(R.id.et_create_event_description);
+        ll_create_event = getActivity().findViewById(R.id.ll_create_event);
+        ll_create_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createGigs();
+            }
+        });
+    }
+
+    private void createGigs() {
+        String token = SavedToken.getUserToken(getActivity());
+        FileUploadService service = ApiUtils.createEventClient(token);
+
+
+        File file = new File(IMAGE_PATH);
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(selectedImage)),file);
+
+        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+
+        String idString = "4";
+        String nameString = title.getText().toString();
+        String titleString = "title1";
+        String locationString = place.getText().toString();
+        String descriptionString = description.getText().toString();
+        String datetimeString = tv_gigs_create_date.getText().toString().substring(6);
+
+        RequestBody id = RequestBody.create(okhttp3.MultipartBody.FORM, idString);
+        RequestBody name = RequestBody.create(okhttp3.MultipartBody.FORM, nameString);
+        RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
+        RequestBody location = RequestBody.create(okhttp3.MultipartBody.FORM, locationString);
+        RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
+        RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
+
+
+        Call<ResponseBody> call = service.upload(id,name,title,location,description,datetime,body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -139,7 +217,8 @@ public class CreateFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 if (resultCode == Activity.RESULT_OK) {
                     //pick image from gallery
-                    Uri selectedImage = data.getData();
+                    selectedImage = data.getData();
+                    IMAGE_PATH = ReadPath.getPath(getActivity(), selectedImage);
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     // Get the cursor
