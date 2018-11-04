@@ -27,6 +27,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -126,22 +128,45 @@ public class LoginActivity extends AppCompatActivity {
         String confirmPassword = edt_register_confirm_password.getText().toString();
 
         //validateRegister
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        int isHaveSpace;
+        Pattern pattern = Pattern.compile(regex);
+
+        Matcher matcher = pattern.matcher(email);
+        boolean emailMatcher = matcher.matches();
+
+
         if(email.equals("")){
             Toast.makeText(this, "Please enter your Email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!emailMatcher){
+            Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (username.equals("")) {
             Toast.makeText(this, "Please enter Username.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        isHaveSpace = username.indexOf(" ");
+        if(!(isHaveSpace==-1)){
+            Toast.makeText(this, "Username can't contain WHITE SPACE", Toast.LENGTH_SHORT).show();
             return;
         }
         if(password.equals("")){
             Toast.makeText(this, "Please enter Password.", Toast.LENGTH_SHORT).show();
             return;
         }
+        isHaveSpace = password.indexOf(" ");
+        if(!(isHaveSpace==-1)){
+            Toast.makeText(this, "Password can't contain WHITE SPACE", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(password.length()<6){
             Toast.makeText(this, "The Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (password.equals("")) {
+        if (confirmPassword.equals("")) {
             Toast.makeText(this, "Please enter Confirm Password.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -157,10 +182,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
+                    pw.dismiss();
                 }
                 else {
 
-                    Toast.makeText(LoginActivity.this, "Invalid Email.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Username is existed, please choose another one.", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

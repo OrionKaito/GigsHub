@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ll_create_top_bar"
         android:background="@color/white"
         android:orientation="vertical">
@@ -37,120 +37,208 @@
             android:layout_height="1dp"
             android:background="@color/gray"
             />
-        <LinearLayout
+        <ScrollView
             android:layout_below="@+id/v_create_divider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/tv_gigs_create_picture"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="57dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Picture"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:id="@+id/ll_camera_create"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:background="@drawable/background_orange_border">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_camera" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_create_gigs"
+                <TextView
+                    android:id="@+id/tv_gigs_create_picture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/ll_camera_create" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_gigs_create_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Title"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_create_event_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input your event title"
-                android:maxLines="3" />
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Date"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_gigs_create_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="Tap to edit date of event" />
-
-            <TextView
-                android:id="@+id/tv_gigs_create_place"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Place"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_create_event_place"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="ex: Quang Trung Software City"
-                android:maxLines="1" />
-
-            <TextView
-                android:id="@+id/tv_gigs_create_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Description"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                    android:text="Picture"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
 
-            <EditText
-                android:id="@+id/et_create_event_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input your event details"
-                android:maxLines="10" />
-        </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_camera_create"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        android:background="@drawable/background_orange_border">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_camera" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_create_gigs"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_toRightOf="@id/ll_camera_create" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_gigs_create_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Title"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_create_event_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input your event title (Can't edit after created)"
+                    android:maxLines="3" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Date"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_gigs_create_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Tap to edit date of event"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/tv_gigs_create_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="The Province / City"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_create_event_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ex: Hà Nội / New York"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/tv_gigs_create_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Address"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_create_event_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ex: 1 Cong Hoa street, Tan Binh district"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/tv_gigs_create_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/et_create_event_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input your event details"
+                    android:maxLines="10" />
+                <TextView
+                    android:id="@+id/tv_gigs_create_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Artist"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/et_create_event_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ex: Martin Garrix, Marshmello "
+                    android:maxLines="10" />
+                <TextView
+                    android:id="@+id/tv_gigs_create_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Category"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <Spinner
+                    android:id="@+id/spn_gigs_create_category"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/tv_gigs_create_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Price"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <RadioGroup
+                    android:id="@+id/rb_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rb_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Free"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:id="@+id/rb_not_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not Free"/>
+                </RadioGroup>
+                <EditText
+                    android:id="@+id/et_create_event_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Input ticket price in VND(ex: 200,000)"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+        </ScrollView>
+
 
         <LinearLayout
             android:id="@+id/ll_create_event"

@@ -12,12 +12,16 @@ public interface FileUploadService {
     @Multipart
     @POST("/api/event/create")
     Call<ResponseBody> upload(
-            @Part("Id")RequestBody id,
-            @Part("Name")RequestBody name,
             @Part("Title")RequestBody title,
-            @Part("Location")RequestBody location,
+            @Part("City")RequestBody city,
+            @Part("Address")RequestBody address,
             @Part("Description")RequestBody description,
+            @Part("Artist")RequestBody artist,
             @Part("DateTime")RequestBody datetime,
+            @Part("IsSale")Boolean isSale,
+            @Part("Price")Double price,
+            @Part("Category")Integer category,
+
             @Part MultipartBody.Part img
     );
 }

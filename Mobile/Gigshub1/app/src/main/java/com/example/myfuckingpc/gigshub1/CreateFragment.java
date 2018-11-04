@@ -16,10 +16,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -51,7 +54,7 @@ public class CreateFragment extends Fragment {
 
     private ImageView iv_create_gigs_image;
     private TextView tv_gigs_create_date;
-    private EditText title, place, description;
+    private EditText title, description, price, city, address, artist;
     private String date_time = "";
     private int mYear;
     private int mMonth;
@@ -63,6 +66,10 @@ public class CreateFragment extends Fragment {
     private LinearLayout ll_create_event;
     String IMAGE_PATH;
     Uri selectedImage;
+    private RadioGroup rb_price;
+    boolean isSale;
+    private Spinner spn_category;
+
 
     public CreateFragment() {
         // Required empty public constructor
@@ -105,11 +112,42 @@ public class CreateFragment extends Fragment {
                 datePicker();
             }
         });
+        //price
+        rb_price = getActivity().findViewById(R.id.rb_price);
+        price = getActivity().findViewById(R.id.et_create_event_price);
+        rb_price.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int checked = rb_price.getCheckedRadioButtonId();
+                switch (checked){
+                    case R.id.rb_free:
+                        isSale = false;
+                        price.setVisibility(View.GONE);
+                        break;
+                    case R.id.rb_not_free:
+                        isSale = true;
+                        price.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+        //category
+        String[] categoryArr = {"Rock", "Pop", "EDM", "Rap"};
+        spn_category = getActivity().findViewById(R.id.spn_gigs_create_category);
+        ArrayAdapter<String> adapterCategory = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,categoryArr);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spn_category.setAdapter(adapterCategory);
+        //city
+
+
+
 
         //create event handler
         title = getActivity().findViewById(R.id.et_create_event_title);
-        place = getActivity().findViewById(R.id.et_create_event_place);
+        city = getActivity().findViewById(R.id.et_create_event_city);
+        address = getActivity().findViewById(R.id.et_create_event_address);
         description = getActivity().findViewById(R.id.et_create_event_description);
+        artist = getActivity().findViewById(R.id.et_create_event_artist);
         ll_create_event = getActivity().findViewById(R.id.ll_create_event);
         ll_create_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +161,10 @@ public class CreateFragment extends Fragment {
         String token = SavedToken.getUserToken(getActivity());
         FileUploadService service = ApiUtils.createEventClient(token);
 
-
+        if(IMAGE_PATH == null){
+            Toast.makeText(getContext(), "Please choose an image.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         File file = new File(IMAGE_PATH);
 
         RequestBody requestFile =
@@ -131,22 +172,41 @@ public class CreateFragment extends Fragment {
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
-        String idString = "4";
-        String nameString = title.getText().toString();
-        String titleString = "title1";
-        String locationString = place.getText().toString();
+        String titleString = title.getText().toString();
+        String cityString = city.getText().toString();
+        String addressString = address.getText().toString();
         String descriptionString = description.getText().toString();
+        String artistString = artist.getText().toString();
         String datetimeString = tv_gigs_create_date.getText().toString().substring(6);
+        double priceDouble = Double.parseDouble(price.getText().toString());
+        String categoryString = spn_category.getSelectedItem().toString();
+        int categoryInt = 0;
+        switch (categoryString){
+            case "EDM":
+                categoryInt = 1;
+                break;
+            case "Rock":
+                categoryInt = 5;
+                break;
+            case "Rap":
+                categoryInt = 8;
+                break;
+            case "Pop":
+                categoryInt = 9;
+                break;
 
-        RequestBody id = RequestBody.create(okhttp3.MultipartBody.FORM, idString);
-        RequestBody name = RequestBody.create(okhttp3.MultipartBody.FORM, nameString);
+        }
+
+
         RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
-        RequestBody location = RequestBody.create(okhttp3.MultipartBody.FORM, locationString);
+        RequestBody city = RequestBody.create(okhttp3.MultipartBody.FORM, cityString);
+        RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
+        RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
+
         RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
         RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
 
-
-        Call<ResponseBody> call = service.upload(id,name,title,location,description,datetime,body);
+        Call<ResponseBody> call = service.upload(title,city,address,description,artist,datetime,isSale,priceDouble,categoryInt,body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
