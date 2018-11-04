@@ -14,7 +14,6 @@ namespace Gigshub.Data.Configuration
             Property(k => k.Title).IsRequired()
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true}))
                 .HasMaxLength(50);
-            Property(k => k.Location).IsRequired().HasMaxLength(200);
             Property(k => k.DateTime).IsRequired();
             Property(k => k.OwnerID).IsRequired();
         }

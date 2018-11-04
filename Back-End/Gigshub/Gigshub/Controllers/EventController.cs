@@ -41,15 +41,15 @@ namespace Gigshub.Controllers
                 {
                     Id = k.Id,
                     Title = k.Title,
-                    Location = k.Location,
+                    City = k.City,
+                    Address = k.Address,
                     Description = k.Description,
+                    Artist = k.Artist,
                     NumberOfAttender = k.NumberOfAttender,
                     Rating = k.Rating,
-                    IsDelete = k.IsDeleted,
+                    IsDeleted = k.IsDeleted,
                     IsSale = k.IsSale,
                     Price = k.Price,
-                    Longitude = k.Longitude,
-                    Latitude = k.Latitude,
                     OwnerName = _customerService.GetByID(k.OwnerID).UserName,
                     DateTime = k.DateTime.ToString("D"),
                     Category = _eventCategoryService.GetById(k.CategoryID).Name,
@@ -79,15 +79,15 @@ namespace Gigshub.Controllers
                 {
                     Id = k.Id,
                     Title = k.Title,
-                    Location = k.Location,
+                    City = k.City,
+                    Address = k.Address,
                     Description = k.Description,
+                    Artist = k.Artist,
                     NumberOfAttender = k.NumberOfAttender,
                     Rating = k.Rating,
-                    IsDelete = k.IsDeleted,
+                    IsDeleted = k.IsDeleted,
                     IsSale = k.IsSale,
                     Price = k.Price,
-                    Longitude = k.Longitude,
-                    Latitude = k.Latitude,
                     OwnerName = _customerService.GetByID(k.OwnerID).UserName,
                     DateTime = k.DateTime.ToString("D"),
                     Category = _eventCategoryService.GetById(k.CategoryID).Name,
@@ -129,15 +129,15 @@ namespace Gigshub.Controllers
             var result = new EventViewModel {
                 Id = Event.Id,
                 Title = Event.Title,
-                Location = Event.Location,
+                City = Event.City,
+                Address = Event.Address,
                 Description = Event.Description,
+                Artist = Event.Artist,
                 NumberOfAttender = Event.NumberOfAttender,
                 Rating = Event.Rating,
-                IsDelete = Event.IsDeleted,
+                IsDeleted = Event.IsDeleted,
                 IsSale = Event.IsSale,
                 Price = Event.Price,
-                Longitude = Event.Longitude,
-                Latitude = Event.Latitude,
                 OwnerName = name,
                 DateTime = Event.DateTime.ToString("D"),
                 Category = "AAA",
@@ -155,16 +155,15 @@ namespace Gigshub.Controllers
             var httpRequest = HttpContext.Current.Request;
             var model = new EventCreateModel
             {
-                Name = httpRequest["Name"],
                 Title = httpRequest["Title"],
-                Location = httpRequest["Location"],
+                City = httpRequest["City"],
+                Address = httpRequest["Address"],
                 Description = httpRequest["Description"],
+                Artist = httpRequest["Artist"],
                 DateTime = Convert.ToDateTime(httpRequest["DateTime"]),
                 IsSale = Convert.ToBoolean(httpRequest["IsSale"]),
                 Price = Convert.ToDouble(httpRequest["Price"]),
-                CategoryID = Convert.ToInt32(httpRequest["Category"]),
-                Latitude = Convert.ToDouble(httpRequest["Latitude"]),
-                Longitude = Convert.ToDouble(httpRequest["Longitude"])
+                CategoryID = Convert.ToInt64(httpRequest["Category"]),
             };
 
             var name = User.Identity.Name;
@@ -252,14 +251,13 @@ namespace Gigshub.Controllers
                 Id = Convert.ToInt64(httpRequest["Id"]),
                 DateTime = Convert.ToDateTime(httpRequest["Datetime"]),
                 Description = httpRequest["Description"],
-                Location = httpRequest["Location"],
-                Name = httpRequest["Name"],
-                Title = httpRequest["Title"],
+                City = httpRequest["City"],
+                Address = httpRequest["Address"],
+                Artist = httpRequest["Artist"],
                 IsSale = Convert.ToBoolean(httpRequest["IsSale"]),
                 Price = Convert.ToDouble(httpRequest["Price"]),
                 CategoryID = Convert.ToInt32(httpRequest["Category"]),
-                Latitude = Convert.ToDouble(httpRequest["Latitude"]),
-                Longitude = Convert.ToDouble(httpRequest["Longitude"])
+                
             };
 
             var EventInDb = _eventService.GetByID(model.Id);

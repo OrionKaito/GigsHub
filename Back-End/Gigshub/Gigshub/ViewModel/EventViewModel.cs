@@ -7,15 +7,16 @@ namespace Gigshub.ViewModel
     {
         public long Id { get; set; }
         public string Title { get; set; }
-        public string Location { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
         public string Description { get; set; }
+        public string Artist { get; set; }
         public int NumberOfAttender { get; set; }
         public double Rating { get; set; }
-        public Boolean IsDelete { get; set; }
-        public Boolean IsSale { get; set; }
         public double Price { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Boolean IsDeleted { get; set; }
+        public Boolean IsSale { get; set; }
 
         //conver to string
         public string OwnerName { get; set; }
@@ -29,20 +30,31 @@ namespace Gigshub.ViewModel
 
     public class EventCreateModel
     {
-        public string Name { get; set; }
         public string Title { get; set; }
-        public string Location { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
         public string Description { get; set; }
-        public DateTime DateTime { get; set; }
-        public Boolean IsSale { get; set; }
+        public string Artist { get; set; }
         public double Price { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Boolean IsDeleted { get; set; }
+        public Boolean IsSale { get; set; }
         public long CategoryID { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
     }
 
-    public class EventUpdateModel : EventCreateModel
+    public class EventUpdateModel
     {
         public long Id { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public string Description { get; set; }
+        public string Artist { get; set; }
+        public double Price { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Boolean IsDeleted { get; set; }
+        public Boolean IsSale { get; set; }
+        public long CategoryID { get; set; }
     }
 }
