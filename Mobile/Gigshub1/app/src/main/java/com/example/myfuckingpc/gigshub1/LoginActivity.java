@@ -15,7 +15,9 @@ import android.widget.PopupWindow;
 public class LoginActivity extends AppCompatActivity {
     private EditText et_username, et_password;
     private PopupWindow pw;
-    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password ;
+    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password;
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +29,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void clickToLogin(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        if (et_username.getText().toString().equalsIgnoreCase("ADMIN")) {
+            intent = new Intent(this, AdminActivity.class);
+        } else {
+            intent = new Intent(this, MainActivity.class);
+        }
+
         startActivity(intent);
     }
 
     public void clickToRegister(View view) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pw = new PopupWindow(inflater.inflate(R.layout.popup_register, null,false), LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw = new PopupWindow(inflater.inflate(R.layout.popup_register, null, false), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
         pw.setAnimationStyle(R.style.popup_window_animation_phone);
-        pw.showAtLocation(view, Gravity.CENTER,0,0);
+        pw.showAtLocation(view, Gravity.CENTER, 0, 0);
 
     }
 
