@@ -14,7 +14,6 @@ namespace Gigshub.ViewModel
         public int NumberOfAttender { get; set; }
         public double Rating { get; set; }
         public double Price { get; set; }
-        public DateTime CreateDate { get; set; }
         public Boolean IsDeleted { get; set; }
         public Boolean IsSale { get; set; }
 
@@ -37,7 +36,6 @@ namespace Gigshub.ViewModel
         public string Artist { get; set; }
         public double Price { get; set; }
         public DateTime DateTime { get; set; }
-        public DateTime CreateDate { get; set; }
         public Boolean IsDeleted { get; set; }
         public Boolean IsSale { get; set; }
         public long CategoryID { get; set; }
@@ -52,7 +50,6 @@ namespace Gigshub.ViewModel
         public string Artist { get; set; }
         public double Price { get; set; }
         public DateTime DateTime { get; set; }
-        public DateTime CreateDate { get; set; }
         public Boolean IsDeleted { get; set; }
         public Boolean IsSale { get; set; }
         public long CategoryID { get; set; }

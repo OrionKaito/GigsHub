@@ -34,12 +34,17 @@ namespace Gigshub.Service
 
         public IEnumerable<string> GetAllByEventId(long eventId)
         {
-            return eventImageRepository.GetAll().Where(k => k.EventId == eventId).Select(k => k.ImagePath);
+            return eventImageRepository
+                .GetMany(k => k.EventId == eventId)
+                .Select(k => k.ImagePath);
         }
 
         public string GetOneByEventId(long eventId)
         {
-            return eventImageRepository.GetAll().Where(k => k.EventId == eventId).Select(k => k.ImagePath).Single();
+            return eventImageRepository
+                .GetMany(k => k.EventId == eventId)
+                .Select(k => k.ImagePath)
+                .Single();
         }
 
         public void Create(EventImage image)

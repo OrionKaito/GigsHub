@@ -35,8 +35,7 @@ namespace Gigshub.Service
 
         public IEnumerable<EventCategory> GetAll()
         {
-            return eventCategoryRepository.GetAll()
-                .Where(k => k.IsDelete == false);
+            return eventCategoryRepository.GetMany(k => k.IsDelete == false);
         }
 
         public EventCategory GetById(long Id)

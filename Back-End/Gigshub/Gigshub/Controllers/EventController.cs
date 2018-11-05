@@ -17,17 +17,20 @@ namespace Gigshub.Controllers
         private readonly IEventImageService _eventImageSerivce;
         private readonly ICustomerService _customerService;
         private readonly IEventCategoryService _eventCategoryService;
+        private readonly IAttendanceService _attendanceService;
         private readonly string DIRECTORY_PATH = "/Images/Event/";
         
         public EventController(IEventService _eventService,
             IEventImageService _eventImageSerivce,
             ICustomerService _customerService,
-            IEventCategoryService _eventCategoryService)
+            IEventCategoryService _eventCategoryService,
+            IAttendanceService _attendanceService)
         {
             this._eventService = _eventService;
             this._eventImageSerivce = _eventImageSerivce;
             this._customerService = _customerService;
             this._eventCategoryService = _eventCategoryService;
+            this._attendanceService = _attendanceService;
         }
 
         [HttpGet]
@@ -60,7 +63,6 @@ namespace Gigshub.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest("Failed to get data"); //status code 400
             }
             //end get data
@@ -106,9 +108,35 @@ namespace Gigshub.Controllers
 
         [HttpGet]
         [Route("api/event/getattendingevent", Name = "GetAttendingEvent")]
-        public IHttpActionResult GetAttendingEvent(long Id)
+        public IHttpActionResult GetAttendingEvent()
         {
+            var name = User.Identity.Name;
+            var Id = _customerService.GetByName(name).Id;
             //begin get data
+            try
+            {
+                var result = _attendanceService.GetAll(Id).Select(k => new EventViewModel{
+                    Id = k.Event.Id,
+                    Title = k.Event.Title,
+                    City = k.Event.City,
+                    Address = k.Event.Address,
+                    Description = k.Event.Description,
+                    Artist = k.Event.Artist,
+                    NumberOfAttender = k.Event.NumberOfAttender,
+                    Rating = k.Event.Rating,
+                    IsDeleted = k.Event.IsDeleted,
+                    IsSale = k.Event.IsSale,
+                    Price = k.Event.Price,
+                    OwnerName = _customerService.GetByID(k.Event.OwnerID).UserName,
+                    DateTime = k.Event.DateTime.ToString("D"),
+                    Category = _eventCategoryService.GetById(k.Event.CategoryID).Name,
+                    ImgPath = _eventImageSerivce.GetOneByEventId(k.Event.Id)
+                }); 
+            }
+            catch (Exception)
+            {
+                return NotFound(); //status code 404
+            }
             return Ok("Coming soon!");
             //end get data
         }
@@ -140,7 +168,7 @@ namespace Gigshub.Controllers
                 Price = Event.Price,
                 OwnerName = name,
                 DateTime = Event.DateTime.ToString("D"),
-                Category = "AAA",
+                Category = _eventCategoryService.GetById(Event.CategoryID).Name,
                 ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
             };
             //end get data
@@ -165,6 +193,11 @@ namespace Gigshub.Controllers
                 Price = Convert.ToDouble(httpRequest["Price"]),
                 CategoryID = Convert.ToInt64(httpRequest["Category"]),
             };
+
+            if (_eventService.GetByTitle(model.Title) != null)
+            {
+                return BadRequest("Title's event already exist");
+            }
 
             var name = User.Identity.Name;
             long OwnerID = _customerService.GetByName(name).Id;

@@ -15,7 +15,6 @@ namespace Gigshub.Data.Repositories
         {
             return this.DbContext.Events
                     .Where(k => k.Title == title)
-                    .Where(k => k.IsDeleted != true)
                     .FirstOrDefault();
         }
     }

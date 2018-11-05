@@ -37,16 +37,16 @@ namespace Gigshub.Service
 
         public IEnumerable<Event> GetAll()
         {
-            return eventRepository.GetAll()
-                .Where(k => k.IsDeleted == false)
+            return eventRepository
+                .GetMany(k => k.IsDeleted == false)
                 .Where(k => k.DateTime > DateTime.Now)
                 .OrderBy(k => k.DateTime);
         }
 
         public IEnumerable<Event> GetAllUserEvent(long Id)
         {
-            return eventRepository.GetAll()
-                .Where(k => k.OwnerID == Id)
+            return eventRepository
+                .GetMany(k => k.OwnerID == Id)
                 .OrderBy(k => k.DateTime);
         }
 
