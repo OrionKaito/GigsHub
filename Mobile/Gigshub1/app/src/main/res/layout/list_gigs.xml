@@ -92,12 +92,28 @@
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="15sp" />
+    <TextView
+        android:id="@+id/tv_gigs_artist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gigs_place"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/tv_gigs_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gigs_artist"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_gigs_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_gigs_place"
+        android:layout_below="@id/tv_gigs_category"
         android:layout_marginLeft="10dp"
         android:text="Thursday, 13:00 20/12/2018"
         android:textColor="@color/black"
@@ -111,4 +127,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         />
+    <TextView
+        android:id="@+id/tv_gigs_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_gigs_time"
+        android:layout_marginLeft="10dp"
+        android:text="FREE"
+        android:textColor="@color/green"
+        android:textSize="15sp" />
+
 </RelativeLayout>

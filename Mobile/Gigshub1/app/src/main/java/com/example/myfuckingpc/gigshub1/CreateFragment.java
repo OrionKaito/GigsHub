@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,7 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.FileUtils.ReadPath;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
-import com.example.myfuckingpc.gigshub1.api.FileUploadService;
+import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
 import java.io.File;
@@ -61,6 +60,7 @@ public class CreateFragment extends Fragment {
     private int mDay;
     private int mHour;
     private int mMinute;
+    private DatePickerDialog mDatePickerDialog;
     private TimePickerDialog timePickerDialog;
     private LinearLayout ll_camera_create;
     private LinearLayout ll_create_event;
@@ -69,7 +69,6 @@ public class CreateFragment extends Fragment {
     private RadioGroup rb_price;
     boolean isSale;
     private Spinner spn_category;
-
 
     public CreateFragment() {
         // Required empty public constructor
@@ -110,6 +109,7 @@ public class CreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 datePicker();
+
             }
         });
         //price
@@ -137,7 +137,10 @@ public class CreateFragment extends Fragment {
         ArrayAdapter<String> adapterCategory = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,categoryArr);
         adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spn_category.setAdapter(adapterCategory);
-        //city
+        //datetime picker
+
+
+
 
 
 
@@ -159,10 +162,11 @@ public class CreateFragment extends Fragment {
 
     private void createGigs() {
         String token = SavedToken.getUserToken(getActivity());
-        FileUploadService service = ApiUtils.createEventClient(token);
+        CreateEventClient service = ApiUtils.createEventClient(token);
 
         if(IMAGE_PATH == null){
             Toast.makeText(getContext(), "Please choose an image.", Toast.LENGTH_SHORT).show();
+
             return;
         }
         File file = new File(IMAGE_PATH);
@@ -178,7 +182,11 @@ public class CreateFragment extends Fragment {
         String descriptionString = description.getText().toString();
         String artistString = artist.getText().toString();
         String datetimeString = tv_gigs_create_date.getText().toString().substring(6);
-        double priceDouble = Double.parseDouble(price.getText().toString());
+        double priceDouble = 0;
+        if(isSale == true){
+            priceDouble = Double.parseDouble(price.getText().toString());
+        }
+
         String categoryString = spn_category.getSelectedItem().toString();
         int categoryInt = 0;
         switch (categoryString){
@@ -202,7 +210,6 @@ public class CreateFragment extends Fragment {
         RequestBody city = RequestBody.create(okhttp3.MultipartBody.FORM, cityString);
         RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
         RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
-
         RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
         RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
 
@@ -225,7 +232,9 @@ public class CreateFragment extends Fragment {
         });
     }
 
+
     private void datePicker() {
+
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -234,10 +243,11 @@ public class CreateFragment extends Fragment {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        date_time = (dayOfMonth + "/" + monthOfYear + "/" + year);
-                        tiemPicker();
+                        date_time = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+
                     }
                 }, mYear, mMonth, mDay);
+        tiemPicker();
         datePickerDialog.show();
 
     }
@@ -294,4 +304,6 @@ public class CreateFragment extends Fragment {
             }
         }
     }
+
+
 }

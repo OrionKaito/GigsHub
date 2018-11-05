@@ -16,9 +16,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
+import com.example.myfuckingpc.gigshub1.api.EventClient;
+import com.example.myfuckingpc.gigshub1.model.Event;
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -26,7 +37,8 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
-    private List<Gigs> gigsList = new ArrayList<>();
+    private List<Event> eventsList = new ArrayList<>();
+
     private RecyclerView recyclerView;
     private GigsAdapter mAdapter;
     private String title;
@@ -54,6 +66,14 @@ public class HomeFragment extends Fragment {
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
 
+
+
+    }
+
+    private void loadEvent() {
+
+
+
     }
 
     @Override
@@ -65,13 +85,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadEvent();
+
+
         ivAddEvents = getActivity().findViewById(R.id.iv_add_gigs);
         recyclerView = getActivity().findViewById(R.id.rv_gigshome);
         recyclerView.setVisibility(View.VISIBLE);
 //        topBar = getActivity().findViewById(R.id.ll_main_top_bar);
         psts = getActivity().findViewById(R.id.tabs);
         psts.setVisibility(View.VISIBLE);
-        mAdapter = new GigsAdapter(gigsList);
+
+        mAdapter = new GigsAdapter(eventsList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -102,13 +126,26 @@ public class HomeFragment extends Fragment {
     }
 
     private void setGigsList() {
-        gigsList.clear();
-        Gigs gigs= new Gigs("Ultra Music Festival", "Miami, USA", "Nguyễn Anh Kiệt", (float) 4.0, R.drawable.user_event_detail1, 3512);
-        gigsList.add(gigs);
-        gigs = new Gigs("FPT Graduation Ceremony", "District 12", "Nguyễn Anh Kiệt", (float) 3.5, R.drawable.event, 256);
-        gigsList.add(gigs);
-        gigs = new Gigs("Sơn Tùng MTP", "Quân khu 7 Stadium", "Lý Cao Kỳ", (float) 4.5, R.drawable.event2, 875);
-        gigsList.add(gigs);
-        mAdapter.notifyDataSetChanged();
+        EventClient service = ApiUtils.eventClient();
+        Call<List<Event>> call = service.getall();
+        call.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                mAdapter.updateAnswers(response.body());
+                return;
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+        //gigsList.clear();
+        //Gigs gigs= new Gigs("Ultra Music Festival", "Miami, USA", "Nguyễn Anh Kiệt", (float) 4.0, R.drawable.user_event_detail1, 3512);
+        //gigsList.add(gigs);
+        //gigs = new Gigs("FPT Graduation Ceremony", "District 12", "Nguyễn Anh Kiệt", (float) 3.5, R.drawable.event, 256);
+        //gigsList.add(gigs);
+        //gigs = new Gigs("Sơn Tùng MTP", "Quân khu 7 Stadium", "Lý Cao Kỳ", (float) 4.5, R.drawable.event2, 875);
+        //gigsList.add(gigs);
     }
 }

@@ -13,8 +13,12 @@ public class ApiUtils {
         return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(CustomerClient.class);
     }
 
-    public static FileUploadService createEventClient(String token) {
+    public static CreateEventClient createEventClient(String token) {
         String bearer_token = "Bearer "+ token;
-        return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(FileUploadService.class);
+        return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(CreateEventClient.class);
+    }
+
+    public static EventClient eventClient() {
+        return RetrofitClient.getClient(BASE_URL).create(EventClient.class);
     }
 }

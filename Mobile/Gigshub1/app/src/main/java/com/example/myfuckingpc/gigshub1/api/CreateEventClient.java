@@ -1,14 +1,17 @@
 package com.example.myfuckingpc.gigshub1.api;
 
+import com.example.myfuckingpc.gigshub1.model.Event;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
-public interface FileUploadService {
+public interface CreateEventClient {
     @Multipart
     @POST("/api/event/create")
     Call<ResponseBody> upload(
@@ -24,4 +27,8 @@ public interface FileUploadService {
 
             @Part MultipartBody.Part img
     );
+
+    @GET("api/event/getall")
+    Call<Event> getall();
+
 }

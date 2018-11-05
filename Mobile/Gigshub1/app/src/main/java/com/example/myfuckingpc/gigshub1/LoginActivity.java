@@ -1,5 +1,7 @@
 package com.example.myfuckingpc.gigshub1;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         fields.put("username", username );
         fields.put("password", password);
         fields.put("grant_type", "password");
-
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.show();
         Call<User> call = userClient.login(fields);
         call.enqueue(new Callback<User>() {
             @Override
@@ -87,11 +90,13 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     token = response.body().getAccessToken();
                     SavedToken.setUserToken(LoginActivity.this, token);
+                    progressDialog.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 else {
                     Toast.makeText(LoginActivity.this, "Wrong Username or Password.", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
 
             }
@@ -99,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
     }
@@ -175,18 +181,21 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.show();
         Call<ResponseBody> call = userClient.register(email, username,password,confirmPassword);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                     pw.dismiss();
                 }
                 else {
 
-                    Toast.makeText(LoginActivity.this, "Username is existed, please choose another one.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Username or Email is existed, please choose another one.", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     return;
                 }
             }
@@ -194,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
                 return;
             }
         });

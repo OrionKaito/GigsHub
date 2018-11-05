@@ -1,5 +1,7 @@
 package com.example.myfuckingpc.gigshub1;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +10,21 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.myfuckingpc.gigshub1.model.Event;
+
+import java.io.File;
 import java.util.List;
 
 public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> {
-    private List<Gigs> gigsList;
+    private List<Event> gigsList;
+    Bitmap bitmap = null;
 
-    public GigsAdapter(List<Gigs> gigsList) {
+    public GigsAdapter(List<Event> gigsList) {
         this.gigsList = gigsList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, location, number, hosted;
+        public TextView title, location, number, hosted, category, artist, price;
         public ImageView image;
         public RatingBar star;
 
@@ -30,6 +36,9 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
             star = view.findViewById(R.id.rb_gigs_star);
             image = view.findViewById(R.id.iv_gigs);
             hosted = view.findViewById(R.id.tv_hosted_user);
+            category = view.findViewById(R.id.tv_gigs_category);
+            artist = view.findViewById(R.id.tv_gigs_artist);
+            price = view.findViewById(R.id.tv_gigs_price);
         }
     }
 
@@ -43,18 +52,37 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Gigs gigs = gigsList.get(position);
-        holder.title.setText(gigs.getGigsTitle());
-        holder.location.setText(gigs.getGigsLocation());
-        holder.number.setText(gigs.getGigsNumber() + " people will go");
-        holder.star.setRating(gigs.getGigsStar());
-        holder.image.setImageResource(gigs.getGigsImage());
-        holder.hosted.setText(gigs.getGigsHosted());
+        Event gigs = gigsList.get(position);
+        holder.title.setText(gigs.getTitle());
+        holder.location.setText(gigs.getAddress()+", "+gigs.getCity());
+        holder.number.setText(gigs.getNumberOfAttender() + " people will go");
+        holder.star.setRating(gigs.getRating().floatValue());
+        File imgFile = new File(gigs.getImgPath());
+
+
+        if(imgFile.exists()){
+            bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        }
+        holder.image.setImageBitmap(bitmap);
+        holder.hosted.setText("Hosted by: "+gigs.getOwnerName());
+        holder.artist.setText("Artist: "+gigs.getArtist());
+        holder.category.setText("Category: "+gigs.getCategory());
+        if(gigs.getIsSale()==false){
+            holder.price.setText("FREE");
+        }
+        else {
+            holder.price.setText(gigs.getPrice().intValue());
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
         return gigsList.size();
+    }
+    public void updateAnswers(List<Event> items) {
+        gigsList = items;
+        notifyDataSetChanged();
     }
 }
