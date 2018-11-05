@@ -19,7 +19,8 @@ namespace Gigshub.ViewModel
 
         //conver to string
         public string OwnerName { get; set; }
-        public string DateTime { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
         public string Category { get; set; }
 
         //image path

@@ -54,7 +54,8 @@ namespace Gigshub.Controllers
                     IsSale = k.IsSale,
                     Price = k.Price,
                     OwnerName = _customerService.GetByID(k.OwnerID).UserName,
-                    DateTime = k.DateTime.ToString("D"),
+                    Date = k.DateTime.ToString("D"),
+                    Time = k.DateTime.ToString("t"),
                     Category = _eventCategoryService.GetById(k.CategoryID).Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
@@ -91,7 +92,8 @@ namespace Gigshub.Controllers
                     IsSale = k.IsSale,
                     Price = k.Price,
                     OwnerName = _customerService.GetByID(k.OwnerID).UserName,
-                    DateTime = k.DateTime.ToString("D"),
+                    Date = k.DateTime.ToString("D"),
+                    Time = k.DateTime.ToString("t"),
                     Category = _eventCategoryService.GetById(k.CategoryID).Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
@@ -128,7 +130,8 @@ namespace Gigshub.Controllers
                     IsSale = k.Event.IsSale,
                     Price = k.Event.Price,
                     OwnerName = _customerService.GetByID(k.Event.OwnerID).UserName,
-                    DateTime = k.Event.DateTime.ToString("D"),
+                    Date = k.Event.DateTime.ToString("D"),
+                    Time = k.Event.DateTime.ToString("t"),
                     Category = _eventCategoryService.GetById(k.Event.CategoryID).Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Event.Id)
                 }); 
@@ -167,7 +170,8 @@ namespace Gigshub.Controllers
                 IsSale = Event.IsSale,
                 Price = Event.Price,
                 OwnerName = name,
-                DateTime = Event.DateTime.ToString("D"),
+                Date = Event.DateTime.ToString("D"),
+                Time = Event.DateTime.ToString("t"),
                 Category = _eventCategoryService.GetById(Event.CategoryID).Name,
                 ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
             };
