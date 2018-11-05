@@ -15,6 +15,21 @@ namespace Gigshub.Controllers
         }
 
         [HttpGet]
+        [Route("api/eventcategory/getall", Name = "GetAllEventCategoryt")]
+        public IHttpActionResult GetByAll()
+        {
+            //begin get data
+            var category = _eventCategoryService.GetAll();
+
+            if (category == null)
+            {
+                return BadRequest("Category not exist"); //status code 400
+            }
+            //end get data
+            return Ok(category);
+        }
+
+        [HttpGet]
         [Route("api/eventcategory/getbyid", Name = "GetEventCategorytById")]
         public IHttpActionResult GetById(long Id)
         {
