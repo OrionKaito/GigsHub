@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".VerifyEventActivity">
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Verify Event"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="25sp"/>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_search_event"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/pop_event2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_search_event">
+
+            <TextView
+                android:id="@+id/tv_search_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:text="Music contest in Ho Chi Minh City"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_search_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_title"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="Location: 1 Cong Hoa street, Tan Binh District" />
+
+            <TextView
+                android:id="@+id/tv_search_event_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_description"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_date_range"
+                android:drawablePadding="5dp"
+                android:text="Nov 18, 2018" />
+            <LinearLayout
+                android:layout_below="@id/tv_search_event_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                androisd:weightSum="10">
+                <Button
+                    android:layout_marginTop="12dp"
+                    android:onClick="clickToVerify"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/white"
+                    android:background="@color/orange"
+                    android:layout_weight="10"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:text="Click to view details"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_search_event1"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/pop_event1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_search_event1">
+
+            <TextView
+                android:id="@+id/tv_search_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:text="POP is BEST"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_search_description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_title1"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="Location: Quan Khu 7 Stadium" />
+
+            <TextView
+                android:id="@+id/tv_search_event_date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_description1"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_date_range"
+                android:drawablePadding="5dp"
+                android:text="Dec 18, 2018" />
+            <LinearLayout
+                android:layout_below="@id/tv_search_event_date1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+                <Button
+                    android:layout_marginTop="12dp"
+                    android:onClick="clickToVerify"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/white"
+                    android:background="@color/orange"
+                    android:layout_weight="10"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:text="Click to view details"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_search_event2"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/pop_event3" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_search_event2">
+
+            <TextView
+                android:id="@+id/tv_search_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:text="Son Tung Music Concern"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_search_description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_title2"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="Location: Quang Trung Software Park" />
+
+            <TextView
+                android:id="@+id/tv_search_event_date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_search_description2"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_date_range"
+                android:drawablePadding="5dp"
+                android:text="Dec 20, 2018" />
+            <LinearLayout
+                android:layout_below="@id/tv_search_event_date2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+                <Button
+                    android:layout_marginTop="12dp"
+                    android:onClick="clickToVerify"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="4dp"
+                    android:textColor="@color/white"
+                    android:background="@color/orange"
+                    android:layout_weight="10"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:text="Click to view details"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

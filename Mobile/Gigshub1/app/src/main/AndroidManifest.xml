@@ -42,11 +42,7 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".CreateActivity" />
         <activity
@@ -54,21 +50,26 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".MapActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".UpdateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".BuyTicketActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-
-        </activity>
+            android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
             android:name=".ChooseMethodToAddBudget"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".CommentActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity android:name=".VerifyEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

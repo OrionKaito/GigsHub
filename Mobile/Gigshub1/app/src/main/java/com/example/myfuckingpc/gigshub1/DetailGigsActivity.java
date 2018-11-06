@@ -15,15 +15,17 @@ import com.chabbal.slidingdotsplash.SlidingSplashView;
 import java.util.Arrays;
 
 public class DetailGigsActivity extends AppCompatActivity {
-    private TextView gigsname, title, datetime, description, location;
+    private TextView gigsname, title, datetime, description, location, accept, decline;
     private SlidingSplashView ssv_image;
     private int[] setImage;
     private int typeUser;
     private static final int USER = 1;
     private static final int ADMIN = 2;
+    private static final int VERIFY = 3;
     private LinearLayout ll_action;
     private LinearLayout ll_update;
     private ImageView iv_price;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class DetailGigsActivity extends AppCompatActivity {
         location = findViewById(R.id.tv_location);
         description = findViewById(R.id.tv_description);
         iv_price = findViewById(R.id.iv_buy_ticket);
+        accept = findViewById(R.id.tv_join_event);
+        decline = findViewById(R.id.tv_not_join);
 
         if (typeUser == ADMIN) {
             ll_action.setVisibility(View.GONE);
@@ -79,7 +83,22 @@ public class DetailGigsActivity extends AppCompatActivity {
                     "Following Ultra Music Festival’s record-breaking 20th anniversary this past March, the now three-time #1 festival award winner* presents its mind-blowing 2018 Official Aftermovie, alongside the 2019 ticket on sale release.\n" +
                     "\n" +
                     "Ultra’s longstanding home, Bayfront Park is captured through the lens of critically acclaimed filmmaker FINAL KID, who immerses the viewer in a state of pure euphoria and exquisite detail by way of RED 8K Cameras. Exceeding the quality of its predecessor’s, this year’s Aftermovie showcases ULTRA’s monumental production, star-studded lineup and breath-taking scenery, all of which have solidified the festival’s position as the world’s premier electronic music festival.");
-        }else{
+        } else if(typeUser == VERIFY){
+            ll_action.setVisibility(View.VISIBLE);
+            accept.setText("ACCEPT");
+            decline.setText("DECLINE");
+            ll_update.setVisibility(View.GONE);
+            setImage = new int[0];
+            setImage = addElement(setImage, R.drawable.pop_event2);
+            setImage = addElement(setImage, R.drawable.pop_event1);
+            setImage = addElement(setImage, R.drawable.pop_event3);
+            setImage = addElement(setImage, R.drawable.pop_event4);
+            title.setText("Music Contest in HCM");
+            datetime.setText("07:30PM \n29 March 2019");
+            location.setText("Tan Binh, Ho Chi Minh");
+            description.setText("This is an music event, have many singers, celebs, artist from over the world");
+        }
+        else{
             ll_action.setVisibility(View.VISIBLE);
             ll_update.setVisibility(View.GONE);
             setImage = new int[0];

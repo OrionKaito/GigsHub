@@ -131,6 +131,7 @@ public class HomeFragment extends Fragment {
         call.enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+
                 mAdapter.updateAnswers(response.body());
                 return;
             }
