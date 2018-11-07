@@ -2,7 +2,10 @@
 using Gigshub.Model.Model;
 using Gigshub.Service;
 using Gigshub.ViewModel;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace Gigshub.Controllers
@@ -11,10 +14,28 @@ namespace Gigshub.Controllers
     public class CustomerController : ApiController
     {
         private readonly ICustomerService _customerService;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         public CustomerController(ICustomerService _customerService)
         {
             this._customerService = _customerService;
+        }
+
+        public CustomerController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
         }
 
         [HttpGet]
@@ -188,6 +209,36 @@ namespace Gigshub.Controllers
                 return BadRequest("Customer is not exist!"); //status code 400
             }
             return Ok(CusInDb.IsVerified); //status code 200
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("api/customer/confirmemail", Name = "ConfirmEmail")]
+        public IHttpActionResult ConfirmEmail(ConfirmEmailModel model)
+        {
+            var user = UserManager.FindByName(model.name);
+
+            if (user == null)
+            {
+                return BadRequest("User is not exist"); //status code 400
+            }
+
+            var cusInDb = _customerService.GetByName(model.name);
+
+            if (cusInDb.EmailConfirmCode == model.Code)
+            {
+                cusInDb.EmailConfirm = true;
+                _customerService.Save();
+                user.EmailConfirmed = true;
+                UserManager.Update(user);
+            }
+
+            else
+            {
+                return BadRequest("Wrong code! please try again"); //status code 400
+            }
+
+            return Ok("Success"); //status code 200
         }
     }
 }

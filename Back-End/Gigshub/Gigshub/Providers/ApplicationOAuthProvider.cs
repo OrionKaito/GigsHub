@@ -39,6 +39,12 @@ namespace Gigshub.Providers
                 return;
             }
 
+            if (!user.EmailConfirmed)
+            {
+                context.SetError("invalid_grant", "Please confirm your email first.");
+                return;
+            }
+
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gigshub.Model.Model
 {
@@ -15,6 +13,8 @@ namespace Gigshub.Model.Model
         public string Gender { get; set; }
         public string Address { get; set; }
         public double AccountBalance { get; set; }
+        public string EmailConfirmCode { get; set; }
+        public Boolean EmailConfirm { get; set; }
         public Boolean IsVerified { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime CreateDate { get; set; }

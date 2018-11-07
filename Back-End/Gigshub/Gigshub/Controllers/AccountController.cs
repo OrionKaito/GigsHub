@@ -12,7 +12,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -350,9 +352,40 @@ namespace Gigshub.Controllers
             var customer = new Customer();
             Mapper.Map(model, customer);
             customer.CreateDate = DateTime.Now;
-            customer.AccountBalance = 2200;
+            customer.AccountBalance = 2000;
+
+            Random random = new Random();
+            customer.EmailConfirmCode = random.Next(1001, 9999).ToString();
+
             _customerService.Create(customer);
             _customerService.Save();
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("gigshubteam@gmail.com", "gigshubteam123456");
+            smtp.EnableSsl = true;
+            MailMessage msg = new MailMessage();
+            msg.Subject = "Activation Code to Verify Email Address";
+            msg.Body = "Thank you for creating an account with Gigshub" 
+                + "\n\nAccount name : " 
+                + model.UserName 
+                + "\n\nYour account will work but you must verify it by enter this code in our app" 
+                + "\n\nYour Activation Code is " 
+                + customer.EmailConfirmCode 
+                + "\n\nThanks & Regards\nGigshub Team";
+            string toAddress = customer.Email;
+            msg.To.Add(toAddress);
+            string fromAddress = "Gigshub Team <gigshubteam@gmail.com>";
+            msg.From = new MailAddress(fromAddress);
+            try
+            {
+                smtp.Send(msg);
+            }
+            catch (Exception)
+            {
+                return BadRequest("We unable to send verify code now, please try later"); //status code 400
+            }
 
             return Ok();
         }
