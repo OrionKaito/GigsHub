@@ -21,4 +21,7 @@ public class ApiUtils {
     public static EventClient eventClient() {
         return RetrofitClient.getClient(BASE_URL).create(EventClient.class);
     }
+    public static CategoryClient categoryClient() {
+        return RetrofitClient.getClient(BASE_URL).create(CategoryClient.class);
+    }
 }

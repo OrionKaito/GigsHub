@@ -28,14 +28,21 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.FileUtils.ReadPath;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CategoryClient;
 import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
+import com.example.myfuckingpc.gigshub1.model.Category;
+import com.example.myfuckingpc.gigshub1.model.CategoryItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -50,7 +57,11 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class CreateFragment extends Fragment {
-
+    //category
+    List<CategoryItem> categoryList = new ArrayList<>();
+    String[] categoryArr;
+    Map<String, Integer> categoryMaps = new HashMap<>();
+    //
     private ImageView iv_create_gigs_image;
     private TextView tv_gigs_create_date;
     private EditText title, description, price, city, address, artist;
@@ -132,11 +143,38 @@ public class CreateFragment extends Fragment {
             }
         });
         //category
-        String[] categoryArr = {"Rock", "Pop", "EDM", "Rap"};
+
         spn_category = getActivity().findViewById(R.id.spn_gigs_create_category);
-        ArrayAdapter<String> adapterCategory = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,categoryArr);
-        adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        spn_category.setAdapter(adapterCategory);
+        CategoryClient service = ApiUtils.categoryClient();
+        Call<Category> call = service.getAllCategory();
+        call.enqueue(new Callback<Category>() {
+            @Override
+            public void onResponse(Call<Category> call, Response<Category> response) {
+                if (response.isSuccessful()) {
+                    categoryList = response.body().getData();
+                    categoryArr = new String[categoryList.size()];
+                    for(int i = 0; i<categoryList.size();i++){
+                        categoryArr[i] = categoryList.get(i).getName();
+                        categoryMaps.put(categoryList.get(i).getName(),categoryList.get(i).getId());
+
+                    }
+                    ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,categoryArr);
+                    adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                    spn_category.setAdapter(adapterCategory);
+                }
+                else {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                return;
+            }
+        });
+
+
+
         //datetime picker
 
 
@@ -171,7 +209,7 @@ public class CreateFragment extends Fragment {
         }
         File file = new File(IMAGE_PATH);
 
-        RequestBody requestFile =
+        final RequestBody requestFile =
                 RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(selectedImage)),file);
 
         MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
@@ -188,22 +226,9 @@ public class CreateFragment extends Fragment {
         }
 
         String categoryString = spn_category.getSelectedItem().toString();
-        int categoryInt = 0;
-        switch (categoryString){
-            case "EDM":
-                categoryInt = 1;
-                break;
-            case "Rock":
-                categoryInt = 5;
-                break;
-            case "Rap":
-                categoryInt = 8;
-                break;
-            case "Pop":
-                categoryInt = 9;
-                break;
+        int categoryInt = categoryMaps.get(categoryString);
 
-        }
+
 
 
         RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
@@ -221,7 +246,8 @@ public class CreateFragment extends Fragment {
                     Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getActivity(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <ImageView
+
         android:id="@+id/iv_gigs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
             android:textSize="15sp" />
 
         <ImageView
+            android:id="@+id/iv_is_verified"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:src="@drawable/ic_verified_user"
@@ -118,17 +120,8 @@
         android:text="Thursday, 13:00 20/12/2018"
         android:textColor="@color/black"
         android:textSize="15sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/tv_gigs_time"
-        android:background="@color/gray"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        />
     <TextView
-        android:id="@+id/tv_gigs_price"
+        android:id="@+id/tv_gigs_price_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_gigs_time"
@@ -136,5 +129,14 @@
         android:text="FREE"
         android:textColor="@color/green"
         android:textSize="15sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_gigs_price_1"
+        android:background="@color/gray"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
 
 </RelativeLayout>

@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface EventClient {
     @GET("api/event/getall")
-    Call<List<Event>> getall();
+    Call<Event> getAll();
 }

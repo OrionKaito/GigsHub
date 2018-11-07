@@ -28,7 +28,5 @@ public interface CreateEventClient {
             @Part MultipartBody.Part img
     );
 
-    @GET("api/event/getall")
-    Call<Event> getall();
 
 }
