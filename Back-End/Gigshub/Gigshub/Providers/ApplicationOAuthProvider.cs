@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using Gigshub.Data;
+using Gigshub.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Gigshub.Models;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Gigshub.Providers
 {
@@ -44,7 +44,7 @@ namespace Gigshub.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateCustomerProperties(user.UserName, user.Roles);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -84,6 +84,38 @@ namespace Gigshub.Providers
             }
 
             return Task.FromResult<object>(null);
+        }
+
+        public static AuthenticationProperties CreateCustomerProperties(string userName, ICollection<IdentityUserRole> roles)
+        {
+            string role = "";
+            var context = new GigshubEntities();
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+            var count = roles.Count;
+            var index = 0;
+            foreach (var item in roles)
+            {
+                index++;
+                if (count == index)
+                {
+                    var strRole = roleManager.FindById(item.RoleId).Name;
+                    role = strRole.ToString();
+                }
+                else
+                {
+                    var strRole = roleManager.FindById(item.RoleId).Name;
+                    role = role + " , " + strRole.ToString();
+                }
+            }
+
+            IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "roles", role },
+                { "userName", userName },
+            };
+            return new AuthenticationProperties(data);
         }
 
         public static AuthenticationProperties CreateProperties(string userName)

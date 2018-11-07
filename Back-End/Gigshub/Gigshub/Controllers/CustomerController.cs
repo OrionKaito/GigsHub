@@ -151,5 +151,43 @@ namespace Gigshub.Controllers
             //end delete data
             return Ok("Success"); //status code 200
         }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/customer/verify", Name = "VerifyCustomer")]
+        public IHttpActionResult Verify(long Id)
+        {
+            var CusInDb = _customerService.GetByID(Id);
+
+            if (CusInDb == null)
+            {
+                return BadRequest("Customer is not exist!"); //status code 400
+            }
+            //begin update data
+            try
+            {
+                CusInDb.IsVerified = true;
+                _customerService.Save();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Can't verify customer"); //statis code 400
+            }
+            //end update data
+            return Ok("Success"); //status code 200
+        }
+
+        [HttpGet]
+        [Route("api/customer/checkverify", Name = "CheckVerify")]
+        public IHttpActionResult CheckVerify(long Id)
+        {
+            var CusInDb = _customerService.GetByID(Id);
+
+            if (CusInDb == null)
+            {
+                return BadRequest("Customer is not exist!"); //status code 400
+            }
+            return Ok(CusInDb.IsVerified); //status code 200
+        }
     }
 }

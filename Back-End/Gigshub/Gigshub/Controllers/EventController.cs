@@ -60,7 +60,12 @@ namespace Gigshub.Controllers
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
 
-                return Ok(result);
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
             }
             catch (Exception)
             {

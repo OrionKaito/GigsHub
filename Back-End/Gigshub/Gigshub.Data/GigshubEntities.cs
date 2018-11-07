@@ -75,17 +75,19 @@ namespace Gigshub.Data
                 roleManager.Create(admin);
 
                 //add user
-                var PasswordHash = new PasswordHasher();
+                //var PasswordHash = new PasswordHasher();
                 var SeedUser = new ApplicationUser
                 {
-                    UserName = "admin",
+                    UserName = "admin1",
                     Email = "admin@unknow.com",
                     EmailConfirmed = true,
-                    PasswordHash = PasswordHash.HashPassword("123456"),
+                    //PasswordHash = PasswordHash.HashPassword("12345678"),
                     SecurityStamp = "1",
+                    
                 };
 
-                userManager.Create(SeedUser, SeedUser.PasswordHash);
+                var password = "123456";
+                userManager.Create(SeedUser, password);
                 userManager.SetLockoutEnabled(SeedUser.Id, false);
                 userManager.AddToRole(SeedUser.Id, "Admin");
 
@@ -103,8 +105,8 @@ namespace Gigshub.Data
                         Email = "admin@unknow.com",
                         CreateDate = DateTime.Now,
                         DateOfBirth = DateTime.Now,
-                        IsVerified = true,
                         AccountBalance = 20000,
+                        IsVerified = true,
                     },
                 };
             }

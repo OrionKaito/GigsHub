@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Gigshub.ViewModel
 {
+    public class DataEventViewModel
+    {
+        public IEnumerable<EventViewModel> Data { get; set; }
+    }
+
     public class EventViewModel
     {
         public long Id { get; set; }

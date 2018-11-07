@@ -15,10 +15,10 @@ namespace Gigshub.Model.Model
         public string Gender { get; set; }
         public string Address { get; set; }
         public double AccountBalance { get; set; }
+        public Boolean IsVerified { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public DateTime CreateDate { get; set; }
         public Boolean IsDeleted { get; set; }
-        public Boolean IsVerified { get; set; }
 
         public ICollection<Following> Followees { get; set; }
         public ICollection<Following> Followers { get; set; }
