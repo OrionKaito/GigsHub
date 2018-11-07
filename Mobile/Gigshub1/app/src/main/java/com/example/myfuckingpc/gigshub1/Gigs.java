@@ -1,6 +1,8 @@
 package com.example.myfuckingpc.gigshub1;
 
-public class Gigs {
+import java.io.Serializable;
+
+public class Gigs implements Serializable {
     private String gigsTitle, gigsLocation, gigsHosted;
     private float gigsStar;
     private int gigsImage;

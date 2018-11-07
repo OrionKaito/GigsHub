@@ -3,7 +3,8 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".CreateMapActivity">
 
     <RelativeLayout
         android:id="@+id/ll_top_bar"
@@ -28,12 +29,34 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+    <EditText
+        android:id="@+id/et_search_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_top_bar"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:hint="Search address"
+        android:padding="10dp" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
+        android:id="@+id/map1"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/ll_top_bar"
-        tools:context=".MapActivity" />
+        android:layout_below="@id/et_search_address" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"
+        android:background="@color/white"
+        android:onClick="clickToReturnCreate"
+        android:src="@drawable/ic_ok" />
 </RelativeLayout>

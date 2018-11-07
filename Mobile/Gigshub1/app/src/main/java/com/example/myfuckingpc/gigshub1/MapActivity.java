@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +44,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private double latitude, longitude;
     private LatLng myPosition, destination;
     private LatLngBounds.Builder builder;
+    private ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        iv_back = findViewById(R.id.iv_maps_back_button);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mapFragment.getMapAsync(this);
 
     }
@@ -102,9 +112,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 //            String url = getDirectionsUrl(myPosition, destination);
 //            DownloadTask downloadTask = new DownloadTask();
 //            downloadTask.execute(url);
-//
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(destination, 15);
-            mMap.animateCamera(cameraUpdate);
+            mMap.moveCamera(cameraUpdate);
             return;
         }
     }
@@ -255,5 +264,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
         return data;
     }
-
 }

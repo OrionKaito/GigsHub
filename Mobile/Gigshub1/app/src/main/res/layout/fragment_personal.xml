@@ -86,12 +86,14 @@
                 android:weightSum="9">
 
                 <ImageView
+                    android:id="@+id/iv_verify_request"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="3"
-                    android:src="@drawable/ic_verified_user" />
+                    android:src="@drawable/ic_not_verified_user" />
 
                 <ImageView
+                    android:id="@+id/iv_list_follow"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="3"
@@ -115,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="Verified" />
+                    android:text="Not verify" />
 
                 <TextView
                     android:id="@+id/txtFollower"

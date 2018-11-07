@@ -22,4 +22,5 @@
         <item>@drawable/image_event_4</item>
     </integer-array>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_create_map">Map</string>
 </resources>

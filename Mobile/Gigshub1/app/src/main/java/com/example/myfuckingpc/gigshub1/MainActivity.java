@@ -20,6 +20,7 @@ import com.astuetz.PagerSlidingTabStrip;
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter fragmentPagerAdapter;
     private ImageView createEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

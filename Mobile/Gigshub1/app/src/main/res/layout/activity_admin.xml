@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,7 @@
     tools:context=".AdminActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_admin_top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
@@ -22,86 +23,54 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black" />
 
     <LinearLayout
-        android:id="@+id/ll_action_button"
+        android:id="@+id/ll_list_verify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_admin_top_bar"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:visibility="visible"
         android:weightSum="2">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_verify_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/background_black_border"
+            android:background="@color/black"
             android:gravity="center"
             android:onClick="clickToViewListUser"
-            android:orientation="horizontal">
+            android:padding="10dp"
+            android:text="User"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
 
-            <Button
-                android:id="@+id/btn_not_going"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_view_list" />
-
-            <TextView
-                android:id="@+id/tv_not_join"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ropa_sans"
-                android:padding="10dp"
-                android:text="List user request"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_verify_event"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="5dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/background_orange_border"
+            android:background="@color/white"
             android:gravity="center"
             android:onClick="clickToViewListUserVerify"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_going"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_playlist_add_check" />
-
-            <TextView
-                android:id="@+id/tv_join_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ropa_sans"
-                android:padding="10dp"
-                android:text="List user verified"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-        </LinearLayout>
+            android:padding="10dp"
+            android:text="Event"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_verify_request_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_below="@+id/ll_list_verify"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_user1"
@@ -111,29 +80,12 @@
 
             <ImageView
                 android:id="@+id/iv_user_1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_thai" />
-
-
-            <ImageView
-                android:id="@+id/iv_accept_verify_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_ok" />
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_accept_verify_1"
-                android:background="@drawable/ic_cancel" />
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:background="@drawable/image_st1" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -144,8 +96,8 @@
                     android:id="@+id/tv_user_fullname_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="Trần Đức Thái"
+                    android:layout_margin="5dp"
+                    android:text="Sơn Tùng M-TP"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -154,7 +106,25 @@
                     android:id="@+id/tv_user_email_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="thaitdse62593@fpt.edu.vn" />
+                    android:layout_margin="5dp"
+                    android:text="MTP Coporation" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="34567678912" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/orange"
+                    android:gravity="center"
+                    android:onClick="clickToViewUser"
+                    android:padding="2dp"
+                    android:text="CLICK TO VIEW DETAILS"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -166,29 +136,13 @@
 
             <ImageView
                 android:id="@+id/iv_user_2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:background="@drawable/ic_personal1" />
 
 
-            <ImageView
-                android:id="@+id/iv_accept_verify_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_ok" />
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_accept_verify_2"
-                android:background="@drawable/ic_cancel" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -199,7 +153,8 @@
                     android:id="@+id/tv_user_fullname_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="5dp"
+
                     android:text="User A"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -209,7 +164,24 @@
                     android:id="@+id/tv_user_email_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="usera@mail.com" />
+                    android:layout_margin="5dp"
+                    android:text="A Company" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="03243094230" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/orange"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:text="CLICK TO VIEW DETAILS"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -221,29 +193,13 @@
 
             <ImageView
                 android:id="@+id/iv_user_3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:background="@drawable/ic_personal2" />
 
 
-            <ImageView
-                android:id="@+id/iv_accept_verify_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_ok" />
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_accept_verify_3"
-                android:background="@drawable/ic_cancel" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -254,17 +210,35 @@
                     android:id="@+id/tv_user_fullname_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:text="User B"
                     android:textColor="@color/black"
+                    android:layout_margin="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_user_email"
+                    android:id="@+id/tv_user_email_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="userb@mail.com" />
+                    android:layout_margin="5dp"
+                    android:text="B Company" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="03243094230" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/orange"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="CLICK TO VIEW DETAILS"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -276,29 +250,13 @@
 
             <ImageView
                 android:id="@+id/iv_user_4"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:background="@drawable/ic_personal3" />
 
 
-            <ImageView
-                android:id="@+id/iv_accept_verify_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_ok" />
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_accept_verify_4"
-                android:background="@drawable/ic_cancel" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
@@ -309,8 +267,8 @@
                     android:id="@+id/tv_user_fullname_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:text="User C"
+                    android:layout_margin="5dp"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -319,207 +277,241 @@
                     android:id="@+id/tv_user_email_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="userb@mail.com" />
+                    android:layout_margin="5dp"
+                    android:text="C Company" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="983259238023" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/orange"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="CLICK TO VIEW DETAILS"
+                    android:textColor="@color/white" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_verified_list"
+        android:id="@+id/ll_verify_event_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_list_verify"
         android:orientation="vertical"
         android:visibility="gone">
 
         <RelativeLayout
-            android:id="@+id/rl_user5"
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_user_5"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_thai" />
+                android:id="@+id/iv_search_event"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/pop_event2" />
 
-            <ImageView
-                android:id="@+id/iv_cancel_verify_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_cancel" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_user_5"
-                android:orientation="vertical">
+                android:layout_toRightOf="@id/iv_search_event">
 
                 <TextView
-                    android:id="@+id/tv_user_fullname_5"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_search_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="Trần Đức Thái"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:text="Music contest in Ho Chi Minh City"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_user_email_5"
+                    android:id="@+id/tv_search_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_search_title"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:text="Location: 1 Cong Hoa street, Tan Binh District" />
+
+                <TextView
+                    android:id="@+id/tv_search_event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_search_description"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_date_range"
+                    android:drawablePadding="5dp"
+                    android:text="Nov 18, 2018" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="thaitdse62593@fpt.edu.vn" />
-            </LinearLayout>
+                    android:layout_below="@id/tv_search_event_date"
+                    android:weightSum="10">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="10"
+                        android:background="@color/orange"
+                        android:onClick="clickToVerify"
+                        android:text="CLICK TO VIEW DETAILS"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_user_6"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_personal1" />
+                android:id="@+id/iv_search_event1"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/pop_event1" />
 
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_cancel" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_user_6"
-                android:orientation="vertical">
+                android:layout_toRightOf="@id/iv_search_event1">
 
                 <TextView
-                    android:id="@+id/tv_user_fullname_6"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_search_title1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="User A"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:text="POP is BEST"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_user_email_6"
+                    android:id="@+id/tv_search_description1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_search_title1"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:text="Location: Quan Khu 7 Stadium" />
+
+                <TextView
+                    android:id="@+id/tv_search_event_date1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_search_description1"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_date_range"
+                    android:drawablePadding="5dp"
+                    android:text="Dec 18, 2018" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="usera@mail.com" />
-            </LinearLayout>
+                    android:layout_below="@id/tv_search_event_date1"
+                    android:weightSum="10">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="10"
+                        android:background="@color/orange"
+                        android:onClick="clickToVerify"
+                        android:text="CLICK TO VIEW DETAILS"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_user7"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/iv_user_7"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_personal2" />
+                android:id="@+id/iv_search_event2"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/pop_event3" />
 
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_cancel" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_user_7"
-                android:orientation="vertical">
+                android:layout_toRightOf="@id/iv_search_event2">
 
                 <TextView
-                    android:id="@+id/tv_user_fullname_7"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_search_title2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="User B"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+                    android:text="Son Tung Music Concern"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_user_email_7"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_search_description2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="userb@mail.com" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_user8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/iv_user_8"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_personal3" />
-
-
-            <ImageView
-                android:id="@+id/iv_cancel_verify_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_cancel" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_user_8"
-                android:orientation="vertical">
+                    android:layout_below="@id/tv_search_title2"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="2"
+                    android:text="Location: Quang Trung Software Park" />
 
                 <TextView
-                    android:id="@+id/tv_user_fullname_8"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_search_event_date2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="User C"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_below="@id/tv_search_description2"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_date_range"
+                    android:drawablePadding="5dp"
+                    android:text="Dec 20, 2018" />
 
-                <TextView
-                    android:id="@+id/tv_user_email_8"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="userb@mail.com" />
-            </LinearLayout>
+                    android:layout_below="@id/tv_search_event_date2"
+                    android:weightSum="10">
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="23dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="10"
+                        android:background="@color/orange"
+                        android:onClick="clickToVerify"
+                        android:text="CLICK TO VIEW DETAILS"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

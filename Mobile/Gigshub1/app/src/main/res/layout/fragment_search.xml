@@ -6,128 +6,285 @@
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
+
     <RelativeLayout
         android:id="@+id/rl_title_screeen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <LinearLayout
             android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/orange"
+            android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="6dp">
 
-            <SearchView
+            <TextView
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:queryHint="Search Event...." />
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:padding="10dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_type_music"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_below="@id/ll_top_bar"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:background="@color/gray" />
 
-            <RelativeLayout
-                android:id="@+id/rl_type_rock"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_rock">
-
-                <ImageView
-                    android:id="@+id/iv_guitar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_guitar" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_guitar"
-                    android:layout_centerHorizontal="true"
-                    android:text="Rock"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_type_pop"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_pop">
-
-                <ImageView
-                    android:id="@+id/iv_mic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_mic" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_mic"
-                    android:layout_centerHorizontal="true"
-                    android:text="Pop"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_type_EDM"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_edm">
-
-                <ImageView
-                    android:id="@+id/iv_piano"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_disk" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_piano"
-                    android:layout_centerHorizontal="true"
-                    android:text="EDM"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <FrameLayout
+        <RelativeLayout
+            android:id="@+id/rl_search_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_type_music">
+            android:layout_below="@id/ll_top_bar">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_search_list_event"
+            <LinearLayout
+                android:id="@+id/ll_search_infomation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_type_music"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/s_search_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <EditText
+                        android:id="@+id/et_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/s_search_location"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Date/Time"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_search_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_light_gray_border"
+                    android:gravity="start"
+                    android:text="All days"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Price"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/tv_price_all"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/black"
+                        android:padding="10dp"
+                        android:text="ALL"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_price_paid"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="PAID"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_price_free"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:text="FREE"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ExpandableListView
+                android:id="@+id/elv_list_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_search_infomation"
+                android:visibility="gone" />
+
+            <ExpandableListView
+                android:id="@+id/elv_list_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_search_infomation"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_type_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:id="@+id/rl_type_rock"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rock">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_ok" />
+
+                    <ImageView
+                        android:id="@+id/iv_guitar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_guitar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_guitar"
+                        android:layout_centerHorizontal="true"
+                        android:text="Rock"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_type_pop"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_pop">
+
+                    <ImageView
+                        android:id="@+id/iv_mic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_mic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_mic"
+                        android:layout_centerHorizontal="true"
+                        android:text="Pop"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_type_EDM"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edm">
+
+                    <ImageView
+                        android:id="@+id/iv_piano"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_disk" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_piano"
+                        android:layout_centerHorizontal="true"
+                        android:text="EDM"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_search_infomation"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/background_orange_border"
+                android:padding="10dp"
+                android:text="Apply Filter"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_filter">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_search_list_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+        </RelativeLayout>
     </RelativeLayout>
-
-
 </FrameLayout>

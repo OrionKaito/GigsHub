@@ -54,21 +54,33 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".MapActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".UpdateGigsActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".BuyTicketActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-
-        </activity>
+            android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".ChooseMethodToAddBudget"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".CommentActivity"
-            android:theme="@style/MyActionBar.ActionBar"></activity>
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".VerifyRequestActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".AdminActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity android:name=".VerifyEventActivity" />
+        <activity
+            android:name=".UserDetailInfomationActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".CreateMapActivity"
+            android:label="@string/title_activity_create_map"></activity>
+        <activity android:name=".FollowerActivity"></activity>
     </application>
 
 </manifest>

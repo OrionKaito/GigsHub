@@ -1,7 +1,12 @@
 package com.example.myfuckingpc.gigshub1;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,15 +14,25 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
-import android.view.SearchEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,6 +45,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private List<EventSearch> listEvent;
     private RelativeLayout rl_rock, rl_pop, rl_edm;
     List<EventSearch> data1, data2, data3;
+    private TextView tv_type, tv_datetime, tv_price_all, tv_price_paid, tv_price_free;
+    private TextView et_search;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+    private TimePickerDialog timePickerDialog;
+    private String date_time;
+    private Spinner s_location;
+    private LinearLayout ll_top_bar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -65,12 +87,27 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         data3.add(new EventSearch("Vietnam’s Epizode festival enlists ", "The end-of-year EDM showdown is on! Vietnam’s Epizode festival is coming back with an epic 2017 edition", "Sat, Jan 20, 2019", R.drawable.rock_event3));
 
         View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
+        ll_top_bar = inputFragmentView.findViewById(R.id.ll_top_bar);
+        tv_datetime = inputFragmentView.findViewById(R.id.tv_search_date);
+        s_location = inputFragmentView.findViewById(R.id.s_search_location);
+        tv_datetime = inputFragmentView.findViewById(R.id.tv_search_date);
+        tv_price_all = inputFragmentView.findViewById(R.id.tv_price_all);
+        tv_price_paid = inputFragmentView.findViewById(R.id.tv_price_paid);
+        tv_price_free = inputFragmentView.findViewById(R.id.tv_price_free);
+        et_search = inputFragmentView.findViewById(R.id.et_search);
+        setSpinner();
         rl_rock = inputFragmentView.findViewById(R.id.rl_type_rock);
         rl_pop = inputFragmentView.findViewById(R.id.rl_type_pop);
         rl_edm = inputFragmentView.findViewById(R.id.rl_type_EDM);
         rl_rock.setOnClickListener(this);
         rl_pop.setOnClickListener(this);
+        ll_top_bar.setOnClickListener(this);
         rl_edm.setOnClickListener(this);
+        tv_datetime.setOnClickListener(this);
+        tv_price_all.setOnClickListener(this);
+        tv_price_paid.setOnClickListener(this);
+        tv_price_free.setOnClickListener(this);
+        et_search.setOnClickListener(this);
         listEvent = new ArrayList<>();
         adapter = new EventSearchAdapter(listEvent);
         recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
@@ -102,8 +139,13 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
-
+    private void setSpinner() {
+        String[] locationArr = {"Ho Chi Minh City", "Ha Noi", "Da Nang", "Another place..."};
+        ArrayAdapter<String> adapterCategory = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, locationArr);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        s_location.setAdapter(adapterCategory);
     }
 
     private void listPopMusic() {
@@ -128,24 +170,63 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_type_pop:
-                listPopMusic();
-                rl_pop.setClickable(false);
-                rl_pop.setFocusable(false);
-                rl_edm.setClickable(true);
-                rl_edm.setFocusable(true);
-                rl_rock.setClickable(true);
-                rl_rock.setFocusable(true);
+//                listPopMusic();
+//                rl_pop.setClickable(false);
+//                rl_pop.setFocusable(false);
+//                rl_edm.setClickable(true);
+//                rl_edm.setFocusable(true);
+//                rl_rock.setClickable(true);
+//                rl_rock.setFocusable(true);
                 break;
             case R.id.rl_type_EDM:
-                listEDMMusic();
-                rl_pop.setClickable(true);
-                rl_pop.setFocusable(true);
-                rl_edm.setClickable(false);
-                rl_edm.setFocusable(false);
-                rl_rock.setClickable(true);
-                rl_rock.setFocusable(true);
+//                listEDMMusic();
+//                rl_pop.setClickable(true);
+//                rl_pop.setFocusable(true);
+//                rl_edm.setClickable(false);
+//                rl_edm.setFocusable(false);
+//                rl_rock.setClickable(true);
+//                rl_rock.setFocusable(true);
                 break;
             case R.id.rl_type_rock:
+//                listRockMusic();
+//                rl_pop.setClickable(true);
+//                rl_pop.setFocusable(true);
+//                rl_edm.setClickable(true);
+//                rl_edm.setFocusable(true);
+//                rl_rock.setClickable(false);
+//                rl_rock.setFocusable(false);
+                break;
+            case R.id.tv_price_all:
+                tv_price_all.setBackgroundColor(getResources().getColor(R.color.black));
+                tv_price_all.setTextColor(getResources().getColor(R.color.white));
+                tv_price_free.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_free.setTextColor(getResources().getColor(R.color.black));
+                tv_price_paid.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_paid.setTextColor(getResources().getColor(R.color.black));
+                break;
+            case R.id.tv_price_free:
+                tv_price_all.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_all.setTextColor(getResources().getColor(R.color.black));
+                tv_price_free.setBackgroundColor(getResources().getColor(R.color.black));
+                tv_price_free.setTextColor(getResources().getColor(R.color.white));
+                tv_price_paid.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_paid.setTextColor(getResources().getColor(R.color.black));
+                break;
+            case R.id.tv_price_paid:
+                tv_price_all.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_all.setTextColor(getResources().getColor(R.color.black));
+                tv_price_free.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_price_free.setTextColor(getResources().getColor(R.color.black));
+                tv_price_paid.setBackgroundColor(getResources().getColor(R.color.black));
+                tv_price_paid.setTextColor(getResources().getColor(R.color.white));
+                break;
+            case R.id.tv_search_date:
+                datePicker();
+                break;
+            case R.id.ll_top_bar:
+
+                break;
+            case R.id.et_search:
                 listRockMusic();
                 rl_pop.setClickable(true);
                 rl_pop.setFocusable(true);
@@ -156,4 +237,51 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private void datePicker() {
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date_time = (dayOfMonth + "/" + monthOfYear + "/" + year);
+                        tiemPicker();
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    private void tiemPicker() {
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        timePickerDialog = new TimePickerDialog(getContext(),
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        date_time += " " + hourOfDay + ":" + minute;
+                        Date date = null;
+                        try {
+                            date = formatter.parse(date_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        SimpleDateFormat formatter2 = new SimpleDateFormat("EEE, dd/MM/yyyy HH:mm");
+                        tv_datetime.setText(formatter2.format(date));
+                    }
+                }, mHour, mMinute, true);
+        timePickerDialog.show();
+    }
+
+
 }
