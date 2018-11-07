@@ -18,19 +18,28 @@ namespace Gigshub.Controllers
         private readonly ICustomerService _customerService;
         private readonly IEventCategoryService _eventCategoryService;
         private readonly IAttendanceService _attendanceService;
+        private readonly INotificationService _notificationService;
+        private readonly IUserNotificationService _userNotificationService;
+        private readonly IFollowingService _followingService;
         private readonly string DIRECTORY_PATH = "/Images/Event/";
         
         public EventController(IEventService _eventService,
             IEventImageService _eventImageSerivce,
             ICustomerService _customerService,
             IEventCategoryService _eventCategoryService,
-            IAttendanceService _attendanceService)
+            IAttendanceService _attendanceService,
+            INotificationService _notificationService,
+            IUserNotificationService _userNotificationService,
+            IFollowingService _followingService)
         {
             this._eventService = _eventService;
             this._eventImageSerivce = _eventImageSerivce;
             this._customerService = _customerService;
             this._eventCategoryService = _eventCategoryService;
             this._attendanceService = _attendanceService;
+            this._notificationService = _notificationService;
+            this._userNotificationService = _userNotificationService;
+            this._followingService = _followingService;
         }
 
         [HttpGet]
@@ -59,6 +68,11 @@ namespace Gigshub.Controllers
                     Category = _eventCategoryService.GetById(k.CategoryID).Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
+
+                if (!result.Any())
+                {
+                    return Ok("There is not any event yet!"); // status code 200
+                }
 
                 var data = new DataEventViewModel
                 {
@@ -103,6 +117,11 @@ namespace Gigshub.Controllers
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
 
+                if (!result.Any())
+                {
+                    return Ok("There is not any event yet!"); // status code 200
+                }
+
                 return Ok(result);
             }
             catch (Exception)
@@ -122,7 +141,7 @@ namespace Gigshub.Controllers
             //begin get data
             try
             {
-                var result = _attendanceService.GetAll(Id).Select(k => new EventViewModel{
+                var result = _attendanceService.GetByCusId(Id).Select(k => new EventViewModel {
                     Id = k.Event.Id,
                     Title = k.Event.Title,
                     City = k.Event.City,
@@ -137,15 +156,21 @@ namespace Gigshub.Controllers
                     OwnerName = _customerService.GetByID(k.Event.OwnerID).UserName,
                     Date = k.Event.DateTime.ToString("D"),
                     Time = k.Event.DateTime.ToString("t"),
-                    Category = _eventCategoryService.GetById(k.Event.CategoryID).Name,
+                    //Category = _eventCategoryService.GetById(k.Event.CategoryID).Name,
+                    Category = k.Event.Category.Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Event.Id)
-                }); 
+                });
+
+                if (!result.Any())
+                {
+                    return Ok("There is not any event yet!"); // status code 200
+                }
+                return Ok(result);
             }
             catch (Exception)
             {
                 return NotFound(); //status code 404
             }
-            return Ok("Coming soon!");
             //end get data
         }
 
@@ -273,6 +298,35 @@ namespace Gigshub.Controllers
                 }
             }
             //end upload image
+            //create notification
+            Notification notification = new Notification
+            {
+                DateTime = DateTime.Now,
+                Event = Event,
+                Type = NotificationType.EventCreated,
+            };
+
+            try
+            {
+                _notificationService.Create(notification);
+                _notificationService.Save();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Can't create notification"); //status code 400
+            }
+
+            var follower = _followingService.GetByFolloweeId(Event.OwnerID).Select(k => k.Follower);
+
+            foreach (var customer in follower)
+            {
+                var userNotification = new UserNotifcation
+                {
+                    CustomerId = customer.Id,
+                    NotificationId = notification.Id,
+                };
+                _userNotificationService.Create(userNotification);
+            }
             //end create data
             return Ok("Success"); //status code 200
         }
@@ -363,6 +417,29 @@ namespace Gigshub.Controllers
                     }
                 }
             }
+
+            //create notification
+            Notification notification = new Notification
+            {
+                DateTime = DateTime.Now,
+                Event = EventInDb,
+                Type = NotificationType.EventUpdated,
+            };
+
+            _notificationService.Create(notification);
+            _notificationService.Save();
+
+            var attendees = _attendanceService.GetByEventId(EventInDb.Id).Select(k => k.Customer);
+
+            foreach (var customer in attendees)
+            {
+                var userNotification = new UserNotifcation
+                {
+                    CustomerId = customer.Id,
+                    NotificationId = notification.Id,
+                };
+                _userNotificationService.Create(userNotification);
+            }
             //end update data
             return Ok("Success"); //status code 200
         }
@@ -388,8 +465,33 @@ namespace Gigshub.Controllers
             //begin delete data
             try
             {
-                _eventImageSerivce.DeleteByEventId(Id);
+                //_eventImageSerivce.DeleteByEventId(Id);
                 EventInDb.IsDeleted = true;
+
+
+                //create notification
+                Notification notification = new Notification
+                {
+                    DateTime = DateTime.Now,
+                    Event = EventInDb,
+                    Type = NotificationType.EventCanceled,
+                };
+
+                _notificationService.Create(notification);
+                _notificationService.Save();
+
+                var attendees = _attendanceService.GetByEventId(EventInDb.Id).Select(k => k.Customer);
+
+                foreach (var customer in attendees)
+                {
+                    var userNotification = new UserNotifcation
+                    {
+                        CustomerId = customer.Id,
+                        NotificationId = notification.Id,
+                    };
+                    _userNotificationService.Create(userNotification);
+                }
+
                 _eventService.Save();
             }
             catch (Exception)

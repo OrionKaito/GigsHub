@@ -27,7 +27,9 @@ namespace Gigshub.Data
         public DbSet<EventImage> EventImages { get; set; }
         public DbSet<Following> Followings { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<EventCategory> EventCategorys { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotifcation> UserNotifcations { get; set; }
 
         public virtual void Commit()
         {
@@ -56,6 +58,11 @@ namespace Gigshub.Data
                 .HasRequired(k => k.Event)
                 .WithMany()
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserNotifcation>()
+                .HasRequired(k => k.Customer)
+                .WithMany()
+                .WillCascadeOnDelete(false);
         }
 
         public class GigshubEntitiesSeed : DropCreateDatabaseIfModelChanges<GigshubEntities>
@@ -78,7 +85,7 @@ namespace Gigshub.Data
                 //var PasswordHash = new PasswordHasher();
                 var SeedUser = new ApplicationUser
                 {
-                    UserName = "admin1",
+                    UserName = "admin",
                     Email = "admin@unknow.com",
                     EmailConfirmed = true,
                     //PasswordHash = PasswordHash.HashPassword("12345678"),
@@ -87,7 +94,7 @@ namespace Gigshub.Data
                 };
 
                 var password = "123456";
-                userManager.Create(SeedUser, password);
+                userManager.Create(SeedUser, password); 
                 userManager.SetLockoutEnabled(SeedUser.Id, false);
                 userManager.AddToRole(SeedUser.Id, "Admin");
 

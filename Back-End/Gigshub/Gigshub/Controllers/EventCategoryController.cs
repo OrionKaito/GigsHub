@@ -1,5 +1,6 @@
 ﻿using Gigshub.Model.Model;
 using Gigshub.Service;
+using Gigshub.ViewModel;
 using System;
 using System.Web.Http;
 
@@ -25,8 +26,13 @@ namespace Gigshub.Controllers
             {
                 return BadRequest("Category not exist"); //status code 400
             }
+
+            var data = new EventCategoryViewModel
+            {
+                Data = category,
+            };
             //end get data
-            return Ok(category);
+            return Ok(data);
         }
 
         [HttpGet]

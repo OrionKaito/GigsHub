@@ -10,7 +10,7 @@ namespace Gigshub.Data.Repositories
 
         public EventCategory GetByName(string name)
         {
-            return this.DbContext.EventCategorys
+            return this.DbContext.EventCategories
                 .Where(k => k.Name == name)
                 .FirstOrDefault();
         }

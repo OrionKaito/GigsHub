@@ -72,6 +72,8 @@
     <Compile Include="Repositories\EventImageRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\FollowingRepository.cs" />
+    <Compile Include="Repositories\NotificationRepository.cs" />
+    <Compile Include="Repositories\UserNotificationRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gigshub.Model\Gigshub.Model.csproj">

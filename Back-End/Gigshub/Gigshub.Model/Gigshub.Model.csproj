@@ -63,6 +63,7 @@
     <Compile Include="Model\IdentityModels.cs" />
     <Compile Include="Model\Notification.cs" />
     <Compile Include="Model\NotificationType.cs" />
+    <Compile Include="Model\UserNotifcation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

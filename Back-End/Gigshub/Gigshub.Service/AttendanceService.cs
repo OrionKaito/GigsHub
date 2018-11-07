@@ -8,7 +8,8 @@ namespace Gigshub.Service
 {
     public interface IAttendanceService
     {
-        IEnumerable<Attendance> GetAll(long customerId);
+        IEnumerable<Attendance> GetByCusId(long customerId);
+        IEnumerable<Attendance> GetByEventId(long eventId);
         Attendance Get(long customerId, long eventId);
         void Create(Attendance attendance);
         void Delete(long Id);
@@ -33,9 +34,14 @@ namespace Gigshub.Service
 
         #region IAttendanceSerivce Members
 
-        public IEnumerable<Attendance> GetAll(long customerId)
+        public IEnumerable<Attendance> GetByCusId(long customerId)
         {
             return attendanceRepository.GetMany(k => k.CustomerId == customerId);
+        }
+
+        public IEnumerable<Attendance> GetByEventId(long eventId)
+        {
+            return attendanceRepository.GetMany(k => k.EventId == eventId);
         }
 
         public Attendance Get(long customerId, long eventId)

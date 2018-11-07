@@ -1,6 +1,7 @@
 ﻿using Gigshub.Model.Model;
 using Gigshub.Service;
 using System;
+using System.Linq;
 using System.Web.Http;
 
 namespace Gigshub.Controllers
@@ -15,6 +16,68 @@ namespace Gigshub.Controllers
         {
             this._followingService = _followingService;
             this._customerService = _customerService;
+        }
+
+        [HttpGet]
+        [Route("api/following/GetFollower", Name = "GetFollower")]
+        public IHttpActionResult GetFollower()
+        {
+            var name = User.Identity.Name;
+            var cusInDb = _customerService.GetByName(name);
+
+            if (cusInDb == null)
+            {
+                return NotFound(); //status code 404
+            }
+
+            //begin get data
+            try
+            {
+                var result = _followingService.GetByFolloweeId(cusInDb.Id).Select(k => k.Follower);
+
+                if (!result.Any())
+                {
+                    return Ok("No one have follow you yet!");
+                }
+
+                return Ok(result); //status code 200
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to get data"); //status code 400
+            }
+            //end get data
+        }
+
+        [HttpGet]
+        [Route("api/following/GetFollowee", Name = "GetFollowee")]
+        public IHttpActionResult GetFollowee()
+        {
+            var name = User.Identity.Name;
+            var cusInDb = _customerService.GetByName(name);
+
+            if (cusInDb == null)
+            {
+                return NotFound(); //status code 404
+            }
+
+            //begin get data
+            try
+            {
+                var result = _followingService.GetByFollowerId(cusInDb.Id).Select(k => k.Followee);
+
+                if (!result.Any())
+                {
+                    return Ok("You not follow anyone yet!");
+                }
+
+                return Ok(result); //status code 200
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to get data"); //status code 400
+            }
+            //end get data
         }
 
         [HttpPost]

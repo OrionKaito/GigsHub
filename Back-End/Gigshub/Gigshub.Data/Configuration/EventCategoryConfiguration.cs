@@ -9,7 +9,7 @@ namespace Gigshub.Data.Configuration
     {
         public EventCategoryConfiguration()
         {
-            ToTable("EventCategorys");
+            ToTable("EventCategories");
             Property(k => k.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(k => k.Name).IsRequired()
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute() { IsUnique = true }))
