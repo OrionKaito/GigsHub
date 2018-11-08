@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Date"
+                    android:text="Date Time"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -233,7 +233,7 @@
                     android:id="@+id/et_create_event_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Input ticket price in VND(ex: 200,000)"
+                    android:hint="Input ticket price in $(ex: 20$)"
                     android:visibility="gone"
                     />
             </LinearLayout>

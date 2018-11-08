@@ -24,4 +24,7 @@ public class ApiUtils {
     public static CategoryClient categoryClient() {
         return RetrofitClient.getClient(BASE_URL).create(CategoryClient.class);
     }
+    public static VerifyClient verifyClient() {
+        return RetrofitClient.getClient(BASE_URL).create(VerifyClient.class);
+    }
 }

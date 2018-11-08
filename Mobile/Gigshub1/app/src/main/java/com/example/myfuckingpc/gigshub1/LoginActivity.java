@@ -10,13 +10,17 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CustomerClient;
 import com.example.myfuckingpc.gigshub1.api.UserClient;
+import com.example.myfuckingpc.gigshub1.api.VerifyClient;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 import com.example.myfuckingpc.gigshub1.model.User;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -24,6 +28,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -39,9 +44,12 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText et_username, et_password;
-    private String token;
-    private PopupWindow pw;
-    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password ;
+    private String token,
+            verify_username = null;
+    private PopupWindow pw, pw_verify;
+    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password, edt_register_verify_code ;
+    private RelativeLayout dim_backgroud;
+    private Button btn_verify;
 
     UserClient userClient = ApiUtils.getUserClient();
     @Override
@@ -51,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        dim_backgroud = findViewById(R.id.bac_dim_layout);
+        btn_verify = findViewById(R.id.btn_register_verify);
         //install lacking in device
         try {
             ProviderInstaller.installIfNeeded(getApplicationContext());
@@ -62,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void clickToLogin(View view) {
+    public void clickToLogin(final View view) {
         //Intent intent = new Intent(this, MainActivity.class);
         //startActivity(intent);
 
@@ -95,7 +105,32 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, "Wrong Username or Password.", Toast.LENGTH_SHORT).show();
+                    String message = null;
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.errorBody().string());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        message = jsonObject.getString("error_description");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(message.equals("Please confirm your email first.")){
+                        Toast.makeText(LoginActivity.this, "Please check your EMAIL to get VERIFY CODE", Toast.LENGTH_SHORT).show();
+                        verify_username = et_username.getText().toString();
+
+                        dim_backgroud.setVisibility(View.VISIBLE);
+                        verifycode(view);
+
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
                     progressDialog.dismiss();
                 }
 
@@ -113,15 +148,17 @@ public class LoginActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         pw = new PopupWindow(inflater.inflate(R.layout.popup_register, null,false), LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
         pw.setAnimationStyle(R.style.popup_window_animation_phone);
+        dim_backgroud.setVisibility(View.VISIBLE);
         pw.showAtLocation(view, Gravity.CENTER,0,0);
 
     }
 
     public void clickToCancelRegister(View view) {
         pw.dismiss();
+        dim_backgroud.setVisibility(View.GONE);
     }
 
-    public void clickToSignUp(View view) {
+    public void clickToSignUp(final View view) {
         View v = pw.getContentView();
         edt_register_email = v.findViewById(R.id.edt_register_email);
         edt_register_username = v.findViewById(R.id.edt_register_username);
@@ -188,9 +225,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Please check your EMAIL to get VERIFY CODE", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                     pw.dismiss();
+                    verifycode(view);
                 }
                 else {
 
@@ -209,5 +247,50 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void verifycode(View view) {
 
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        pw_verify = new PopupWindow(inflater.inflate(R.layout.popup_verify_code, null,false), LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        pw_verify.setAnimationStyle(R.style.popup_window_animation_phone);
+        dim_backgroud.setVisibility(View.VISIBLE);
+        pw_verify.showAtLocation(view,Gravity.CENTER,0,0);
+
+    }
+
+
+    public void clickToVerifyCode(View view) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        VerifyClient verifyService = ApiUtils.verifyClient();
+        View v = pw_verify.getContentView();
+        edt_register_verify_code = v.findViewById(R.id.edt_register_verify_code);
+        String verifyCode = edt_register_verify_code.getText().toString();
+        if(verify_username==null){
+            verify_username = edt_register_username.getText().toString();
+        }
+        Call<ResponseBody> call = verifyService.verify(verify_username,verifyCode);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Register successful, you can login now.", Toast.LENGTH_LONG).show();
+                    pw_verify.dismiss();
+                    dim_backgroud.setVisibility(View.GONE);
+                    progressDialog.dismiss();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "Wrong verify code.", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+            }
+        });
+
+    }
 }
