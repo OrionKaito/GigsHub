@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:fitsSystemWindows="true"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/ic_logo_apps"
@@ -79,8 +80,18 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".CreateMapActivity"
-            android:label="@string/title_activity_create_map"></activity>
-        <activity android:name=".FollowerActivity"></activity>
+            android:label="@string/title_activity_create_map" />
+        <activity
+            android:name=".FolloweeActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".RequestVerificationActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".UserFollowActivity"
+
+            android:theme="@style/MyActionBar.ActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>
 
 </manifest>

@@ -30,7 +30,13 @@ public class PersonalFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<EventSearch> listEvent;
     private EventSearchAdapter adapter;
-    private ImageView iv_verify;
+    private ImageView iv_verify, iv_followee, iv_follower;
+    private Intent intent;
+    public static final int FOLLOWER = 1;
+    public static final int FOLLOWING = 2;
+    public static final int VERIFIED = 1;
+    public static final int NOT_VERIFY = 2;
+    public boolean isVerify;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -50,7 +56,6 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
-
         return view;
 
     }
@@ -58,31 +63,31 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        iv_followee = view.findViewById(R.id.iv_list_follow);
+        iv_follower = view.findViewById(R.id.iv_list_follower);
+        iv_followee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FolloweeActivity.class);
+                intent.putExtra("TYPE", FOLLOWING);
+                startActivity(intent);
+            }
+        });
+        iv_follower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FolloweeActivity.class);
+                intent.putExtra("TYPE", FOLLOWER);
+                startActivity(intent);
+            }
+        });
         addBudget = getActivity().findViewById(R.id.im_add_budget);
         iv_verify = getActivity().findViewById(R.id.iv_verify_request);
         iv_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(getContext());
-                }
-                builder.setTitle("Verify accounts")
-                        .setMessage("Are you sure you want to verify this account?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getContext(), "We're accepting your requests. Please wait", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                Intent intent = new Intent(getActivity(), RequestVerificationActivity.class);
+                startActivity(intent);
             }
         });
         addBudget.setOnClickListener(new View.OnClickListener() {
