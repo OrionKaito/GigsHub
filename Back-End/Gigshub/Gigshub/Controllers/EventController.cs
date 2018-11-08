@@ -62,10 +62,11 @@ namespace Gigshub.Controllers
                     IsDeleted = k.IsDeleted,
                     IsSale = k.IsSale,
                     Price = k.Price,
-                    OwnerName = _customerService.GetByID(k.OwnerID).UserName,
+                    OwnerName = k.Owner.UserName,
+                    ICusVerified = k.Owner.IsVerified,
                     Date = k.DateTime.ToString("D"),
                     Time = k.DateTime.ToString("t"),
-                    Category = _eventCategoryService.GetById(k.CategoryID).Name,
+                    Category = k.Category.Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
 
@@ -110,10 +111,11 @@ namespace Gigshub.Controllers
                     IsDeleted = k.IsDeleted,
                     IsSale = k.IsSale,
                     Price = k.Price,
-                    OwnerName = _customerService.GetByID(k.OwnerID).UserName,
+                    OwnerName = k.Owner.UserName,
+                    ICusVerified = k.Owner.IsVerified,
                     Date = k.DateTime.ToString("D"),
                     Time = k.DateTime.ToString("t"),
-                    Category = _eventCategoryService.GetById(k.CategoryID).Name,
+                    Category = k.Category.Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
                 });
 
@@ -153,10 +155,10 @@ namespace Gigshub.Controllers
                     IsDeleted = k.Event.IsDeleted,
                     IsSale = k.Event.IsSale,
                     Price = k.Event.Price,
-                    OwnerName = _customerService.GetByID(k.Event.OwnerID).UserName,
+                    OwnerName = k.Event.Owner.UserName,
+                    ICusVerified = k.Event.Owner.IsVerified,
                     Date = k.Event.DateTime.ToString("D"),
                     Time = k.Event.DateTime.ToString("t"),
-                    //Category = _eventCategoryService.GetById(k.Event.CategoryID).Name,
                     Category = k.Event.Category.Name,
                     ImgPath = _eventImageSerivce.GetOneByEventId(k.Event.Id)
                 });
@@ -199,10 +201,11 @@ namespace Gigshub.Controllers
                 IsDeleted = Event.IsDeleted,
                 IsSale = Event.IsSale,
                 Price = Event.Price,
-                OwnerName = name,
+                OwnerName = Event.Owner.UserName,
+                ICusVerified = Event.Owner.IsVerified,
                 Date = Event.DateTime.ToString("D"),
                 Time = Event.DateTime.ToString("t"),
-                Category = _eventCategoryService.GetById(Event.CategoryID).Name,
+                Category = Event.Category.Name,
                 ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
             };
             //end get data
