@@ -3,8 +3,11 @@ package com.example.myfuckingpc.gigshub1;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +68,7 @@ public class CreateFragment extends Fragment {
     //
     private ImageView iv_create_gigs_image;
     private TextView tv_gigs_create_date;
-    private EditText title, description, price, city, address, artist;
+    private EditText tv_title, tv_description, tv_price, tv_city, tv_address, tv_artist;
     private String date_time = "";
     private int mYear;
     private int mMonth;
@@ -80,7 +84,6 @@ public class CreateFragment extends Fragment {
     private RadioGroup rb_price;
     boolean isSale;
     private Spinner spn_category;
-
     public CreateFragment() {
         // Required empty public constructor
     }
@@ -125,7 +128,7 @@ public class CreateFragment extends Fragment {
         });
         //price
         rb_price = getActivity().findViewById(R.id.rb_price);
-        price = getActivity().findViewById(R.id.et_create_event_price);
+        tv_price = getActivity().findViewById(R.id.et_create_event_price);
         rb_price.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -133,17 +136,16 @@ public class CreateFragment extends Fragment {
                 switch (checked){
                     case R.id.rb_free:
                         isSale = false;
-                        price.setVisibility(View.GONE);
+                        tv_price.setVisibility(View.GONE);
                         break;
                     case R.id.rb_not_free:
                         isSale = true;
-                        price.setVisibility(View.VISIBLE);
+                        tv_price.setVisibility(View.VISIBLE);
                         break;
                 }
             }
         });
         //category
-
         spn_category = getActivity().findViewById(R.id.spn_gigs_create_category);
         CategoryClient service = ApiUtils.categoryClient();
         Call<Category> call = service.getAllCategory();
@@ -184,23 +186,29 @@ public class CreateFragment extends Fragment {
 
 
         //create event handler
-        title = getActivity().findViewById(R.id.et_create_event_title);
-        city = getActivity().findViewById(R.id.et_create_event_city);
-        address = getActivity().findViewById(R.id.et_create_event_address);
-        description = getActivity().findViewById(R.id.et_create_event_description);
-        artist = getActivity().findViewById(R.id.et_create_event_artist);
+        tv_title = getActivity().findViewById(R.id.et_create_event_title);
+        tv_city = getActivity().findViewById(R.id.et_create_event_city);
+        tv_address = getActivity().findViewById(R.id.et_create_event_address);
+        tv_description = getActivity().findViewById(R.id.et_create_event_description);
+        tv_artist = getActivity().findViewById(R.id.et_create_event_artist);
+
         ll_create_event = getActivity().findViewById(R.id.ll_create_event);
         ll_create_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 createGigs();
             }
         });
     }
 
+
+
     private void createGigs() {
-        String token = SavedToken.getUserToken(getActivity());
-        CreateEventClient service = ApiUtils.createEventClient(token);
+        String userInfo = SavedToken.getUserInfo(getContext());
+        String[] arrInfo = userInfo.split("[|]",2);
+        String token = arrInfo[0];
+        final CreateEventClient service = ApiUtils.createEventClient(token);
 
         if(IMAGE_PATH == null){
             Toast.makeText(getContext(), "Please choose an image.", Toast.LENGTH_SHORT).show();
@@ -212,50 +220,115 @@ public class CreateFragment extends Fragment {
         final RequestBody requestFile =
                 RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(selectedImage)),file);
 
-        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+        final MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
-        String titleString = title.getText().toString();
-        String cityString = city.getText().toString();
-        String addressString = address.getText().toString();
-        String descriptionString = description.getText().toString();
-        String artistString = artist.getText().toString();
-        String datetimeString = tv_gigs_create_date.getText().toString().substring(6);
+        final String titleString = tv_title.getText().toString();
+        final String cityString = tv_city.getText().toString();
+        final String addressString = tv_address.getText().toString();
+        final String descriptionString = tv_description.getText().toString();
+        final String artistString = tv_artist.getText().toString();
+        final String datetimeString = tv_gigs_create_date.getText().toString().substring(6);
         double priceDouble = 0;
         if(isSale == true){
-            priceDouble = Double.parseDouble(price.getText().toString());
+            priceDouble = Double.parseDouble(tv_price.getText().toString());
+            if(priceDouble == 0){
+                Toast.makeText(getActivity(), "If price is 0$, WHY don't you choose FREE option?", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
         String categoryString = spn_category.getSelectedItem().toString();
-        int categoryInt = categoryMaps.get(categoryString);
+        final int categoryInt = categoryMaps.get(categoryString);
+        ///validate
+        if(titleString.equals("")){
+            Toast.makeText(getActivity(), "Please enter event's TITLE.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (datetimeString.equals(" edit date of event")) {
+            Toast.makeText(getActivity(), "Please enter event's Date Time.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (cityString.equals("")) {
+            Toast.makeText(getActivity(), "Please enter event's CITY.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (addressString.equals("")) {
+            Toast.makeText(getActivity(), "Please enter event's ADDRESS.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (descriptionString.equals("")) {
+            Toast.makeText(getActivity(), "Please enter event's DESCRIPTION.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (artistString.equals("")) {
+            Toast.makeText(getActivity(), "Please enter event's Artist.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(priceDouble<0){
+            Toast.makeText(getActivity(), "Price MUST BE greater than 0.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
 
-
-
-        RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
-        RequestBody city = RequestBody.create(okhttp3.MultipartBody.FORM, cityString);
-        RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
-        RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
-        RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
-        RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
-
-        Call<ResponseBody> call = service.upload(title,city,address,description,artist,datetime,isSale,priceDouble,categoryInt,body);
-        call.enqueue(new Callback<ResponseBody>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Create Event");
+        builder.setMessage("Please check your event's information carefully. \n" +
+                "Do you want to create this event?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
-                }
-                else{
-
-                    Toast.makeText(getActivity(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
+        final double finalPriceDouble = priceDouble;
+        builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
+                RequestBody city = RequestBody.create(okhttp3.MultipartBody.FORM, cityString);
+                RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
+                RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
+                RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
+                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.show();
+                Call<ResponseBody> call = service.upload(title,city,address,description,artist,datetime,isSale, finalPriceDouble,categoryInt,body);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.isSuccessful()){
+                            Toast.makeText(getActivity(), "Success!", Toast.LENGTH_SHORT).show();
+                            tv_title.setText("");
+                            tv_address.setText("");
+                            tv_artist.setText("");
+                            tv_city.setText("");
+                            tv_description.setText("");
+                            tv_gigs_create_date.setText("Tap to edit date of event");
+                            iv_create_gigs_image.setImageBitmap(null);
+                            tv_price.setText("");
+                            progressDialog.dismiss();
+                        }
+                        else{
+
+                            Toast.makeText(getActivity(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Please check your network connection", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                });
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
+
     }
 
 

@@ -74,7 +74,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         holder.location.setText(gigs.getAddress()+", "+gigs.getCity());
         holder.number.setText(gigs.getNumberOfAttender() + " people will go");
         holder.star.setRating(gigs.getRating().floatValue());
-        String url = "http://192.168.1.213:8080"+gigs.getImgPath();
+        String url = gigs.getImgPath();
         LoadImageInternet load = new LoadImageInternet(holder.image);
         load.execute(url);
         //Bitmap dr = ReadImage.LoadImageFromWebOperations("http://192.168.1.213:8080"+gigs.getImgPath());

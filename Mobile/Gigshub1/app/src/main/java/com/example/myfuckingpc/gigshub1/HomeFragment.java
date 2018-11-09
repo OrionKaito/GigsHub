@@ -98,11 +98,29 @@ public class HomeFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("TYPE", 1);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                String userInfo = SavedToken.getUserInfo(getActivity());
+                String[] infoArr = userInfo.split("[|]");
+                String username = infoArr[1];
+                String ownerUsername = eventsList.get(position).getOwnerName();
+                int REQ_DETAIL = 1;
+                if(username.equals(ownerUsername)){
+                    REQ_DETAIL = 2;
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", eventsList.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", eventsList.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -99,7 +100,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     token = response.body().getAccessToken();
-                    SavedToken.setUserToken(LoginActivity.this, token);
+                    String username = response.body().getUserName();
+                    String userInfo = token +"|"+ username;
+                    SavedToken.setUserInfo(getApplicationContext(),userInfo);
                     progressDialog.dismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

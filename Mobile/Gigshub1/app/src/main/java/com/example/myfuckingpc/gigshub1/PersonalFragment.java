@@ -110,7 +110,7 @@ public class PersonalFragment extends Fragment {
                 builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SavedToken.setUserToken(getActivity(), "");
+                        SavedToken.setUserInfo(getContext(),"");
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }
