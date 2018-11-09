@@ -6,7 +6,16 @@ public class EventSearch implements Serializable {
     private String title;
     private String description;
     private String datetime;
+    private String location;
     private int Image;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getTitle() {
         return title;
@@ -41,10 +50,18 @@ public class EventSearch implements Serializable {
     }
 
     public EventSearch(String title, String description, String datetime, int image) {
-
         this.title = title;
         this.description = description;
         this.datetime = datetime;
         Image = image;
+    }
+
+    public EventSearch(String title, String description, String datetime, String location, int image) {
+        this.title = title;
+        this.description = description;
+        this.datetime = datetime;
+        this.location = location;
+        Image = image;
+
     }
 }

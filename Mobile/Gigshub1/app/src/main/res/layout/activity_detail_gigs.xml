@@ -23,6 +23,47 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_white_border"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:onClick="clickToExit"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_back_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_arrow_back" />
+
+                <TextView
+                    android:id="@+id/tv_back_gigs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Back"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_update_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +111,7 @@
             android:paddingTop="20dp"
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:weightSum="2">
 
             <LinearLayout

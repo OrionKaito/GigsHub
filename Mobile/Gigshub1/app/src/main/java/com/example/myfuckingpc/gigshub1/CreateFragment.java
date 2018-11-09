@@ -41,7 +41,7 @@ import java.util.Date;
  */
 public class CreateFragment extends Fragment {
 
-    private ImageView iv_create_gigs_image;
+    private ImageView iv_create_gigs_image, iv_create_maps;
     private TextView tv_gigs_create_date, address;
     private EditText title, description, price, city, artist;
     private String date_time = "";
@@ -84,6 +84,7 @@ public class CreateFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ll_camera_create = getActivity().findViewById(R.id.ll_camera_create);
+        iv_create_maps = view.findViewById(R.id.iv_create_maps);
         iv_create_gigs_image = getActivity().findViewById(R.id.iv_create_gigs);
         ll_camera_create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +132,6 @@ public class CreateFragment extends Fragment {
 
         //create event handler
         title = getActivity().findViewById(R.id.et_create_event_title);
-        city = getActivity().findViewById(R.id.et_create_event_city);
         address = getActivity().findViewById(R.id.et_create_event_address);
         description = getActivity().findViewById(R.id.et_create_event_description);
         artist = getActivity().findViewById(R.id.et_create_event_artist);
@@ -143,7 +143,7 @@ public class CreateFragment extends Fragment {
             }
         });
         final Intent intent = new Intent(getActivity(), CreateMapActivity.class);
-        address.setOnClickListener(new View.OnClickListener() {
+        iv_create_maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(intent, CREATE_LOCATION);
@@ -168,7 +168,7 @@ public class CreateFragment extends Fragment {
 //        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
         String titleString = title.getText().toString();
-        String cityString = city.getText().toString();
+//        String cityString = city.getText().toString();
         String addressString = address.getText().toString();
         String descriptionString = description.getText().toString();
         String artistString = artist.getText().toString();

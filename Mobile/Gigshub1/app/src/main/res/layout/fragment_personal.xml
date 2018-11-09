@@ -16,6 +16,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tv_name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trần Đức Thái"
@@ -36,6 +37,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_personal_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -78,11 +80,12 @@
                     android:text="Following" />
 
                 <TextView
+                    android:id="@+id/tv_numbers_event_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Gigs" />
+                    android:text="Attend" />
 
             </LinearLayout>
 
@@ -116,6 +119,7 @@
                     android:src="@drawable/ic_following" />
 
                 <ImageView
+                    android:id="@+id/iv_numbers_event"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -130,6 +134,7 @@
                 android:weightSum="4">
 
                 <TextView
+                    android:id="@+id/tv_user_verify_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -154,7 +159,7 @@
                     android:text="20" />
 
                 <TextView
-                    android:id="@+id/txtEventGigs"
+                    android:id="@+id/tv_numbers_event"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

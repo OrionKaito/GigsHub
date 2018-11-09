@@ -20,13 +20,15 @@ import com.astuetz.PagerSlidingTabStrip;
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter fragmentPagerAdapter;
     private ImageView createEvent;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        type = getIntent().getIntExtra("USER", 1);
         ViewPager viewPager = findViewById(R.id.vp_main);
-        fragmentPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        fragmentPagerAdapter = new PagerAdapter(getSupportFragmentManager(), type);
         viewPager.setAdapter(fragmentPagerAdapter);
         PagerSlidingTabStrip tabsStrip = findViewById(R.id.tabs);
         tabsStrip.setShouldExpand(true);
@@ -50,4 +52,6 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

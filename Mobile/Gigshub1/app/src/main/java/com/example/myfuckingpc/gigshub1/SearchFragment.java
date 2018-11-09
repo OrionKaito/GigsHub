@@ -224,7 +224,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 datePicker();
                 break;
             case R.id.ll_top_bar:
-
                 break;
             case R.id.et_search:
                 listRockMusic();

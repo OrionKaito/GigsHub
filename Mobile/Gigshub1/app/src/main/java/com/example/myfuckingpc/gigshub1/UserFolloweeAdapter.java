@@ -1,12 +1,14 @@
 package com.example.myfuckingpc.gigshub1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +19,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFolloweeAdapter extends RecyclerView.Adapter<UserFolloweeAdapter.MyViewHolder> {
     private List<UserFollowee> usersList;
+    private Intent intent;
+    private Context context;
 
-    public UserFolloweeAdapter(List<UserFollowee> usersList) {
+    public UserFolloweeAdapter(List<UserFollowee> usersList, Intent intent, Context context) {
         this.usersList = usersList;
+        this.intent = intent;
+        this.context = context;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, fullname, following, notfollow;
         public CircleImageView image;
         private ImageView verify;
+        private RelativeLayout rl_user;
 
         public MyViewHolder(View view) {
             super(view);
@@ -35,9 +42,31 @@ public class UserFolloweeAdapter extends RecyclerView.Adapter<UserFolloweeAdapte
             verify = view.findViewById(R.id.iv_user_verify_follow);
             following = view.findViewById(R.id.tv_following);
             notfollow = view.findViewById(R.id.tv_not_follow);
+            rl_user = view.findViewById(R.id.rl_user_follow);
+            rl_user.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), UserFollowActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+            following.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    following.setVisibility(View.GONE);
+                    notfollow.setVisibility(View.VISIBLE);
+                }
+            });
+            notfollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    following.setVisibility(View.VISIBLE);
+                    notfollow.setVisibility(View.GONE);
+                }
+            });
         }
-
     }
+
 
     @NonNull
     @Override

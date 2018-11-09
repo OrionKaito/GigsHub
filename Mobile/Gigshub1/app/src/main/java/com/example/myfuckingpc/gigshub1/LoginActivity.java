@@ -33,6 +33,12 @@ public class LoginActivity extends AppCompatActivity {
             intent = new Intent(this, AdminActivity.class);
         } else {
             intent = new Intent(this, MainActivity.class);
+            if (et_username.getText().toString().equalsIgnoreCase("USER1")) {
+                intent.putExtra("USER", 2);
+            } else {
+                intent.putExtra("USER", 1);
+            }
+
         }
 
         startActivity(intent);

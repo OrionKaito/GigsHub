@@ -25,6 +25,7 @@ public class DetailGigsActivity extends AppCompatActivity {
     private LinearLayout ll_action;
     private LinearLayout ll_update;
     private ImageView iv_price;
+    private LinearLayout ll_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +45,18 @@ public class DetailGigsActivity extends AppCompatActivity {
         type = findViewById(R.id.tv_gigs_details_types);
         accept = findViewById(R.id.tv_join_event);
         decline = findViewById(R.id.tv_not_join);
+        ll_back = findViewById(R.id.ll_back_button);
         if (typeUser == ADMIN) {
             ll_action.setVisibility(View.GONE);
-            ll_update.setVisibility(View.VISIBLE);
+            ll_update.setVisibility(View.GONE);
             iv_price.setVisibility(View.GONE);
+            ll_back.setVisibility(View.VISIBLE);
             setImage = new int[0];
             setImage = addElement(setImage, R.drawable.pop_event3);
             setImage = addElement(setImage, R.drawable.admin_event_detai2);
             setImage = addElement(setImage, R.drawable.admin_event_detai3);
             setImage = addElement(setImage, R.drawable.admin_event_detail);
             setImage = addElement(setImage, R.drawable.admin_event_detai5);
-
             artist.setText("Sơn Tùng MTP");
             title.setText("Ultra Music Festival");
             datetime.setText("07:30PM \n24 Nov 2018");
@@ -89,10 +91,10 @@ public class DetailGigsActivity extends AppCompatActivity {
                     "\n" +
                     "Ultra’s longstanding home, Bayfront Park is captured through the lens of critically acclaimed filmmaker FINAL KID, who immerses the viewer in a state of pure euphoria and exquisite detail by way of RED 8K Cameras. Exceeding the quality of its predecessor’s, this year’s Aftermovie showcases ULTRA’s monumental production, star-studded lineup and breath-taking scenery, all of which have solidified the festival’s position as the world’s premier electronic music festival.");
         } else if (typeUser == VERIFY) {
-            ll_action.setVisibility(View.VISIBLE);
+            ll_update.setVisibility(View.VISIBLE);
+            ll_action.setVisibility(View.GONE);
             accept.setText("ACCEPT");
             decline.setText("DECLINE");
-            ll_update.setVisibility(View.GONE);
             setImage = new int[0];
             setImage = addElement(setImage, R.drawable.pop_event2);
             setImage = addElement(setImage, R.drawable.pop_event1);
@@ -104,38 +106,31 @@ public class DetailGigsActivity extends AppCompatActivity {
             datetime.setText("07:30PM \n29 March 2019");
             location.setText("Tan Binh, Ho Chi Minh");
             description.setText("This is an music event, have many singers, celebs, artist from over the world");
+        } else if (typeUser == 4) {
+            ll_action.setVisibility(View.GONE);
+            ll_update.setVisibility(View.VISIBLE);
+            setImage = new int[0];
+            setImage = addElement(setImage, R.drawable.search_edm_4);
+            setImage = addElement(setImage, R.drawable.search_edm_1);
+            setImage = addElement(setImage, R.drawable.search_edm_3);
+            setImage = addElement(setImage, R.drawable.search_edm_2);
+            artist.setText("Bích Phương, Chainsmokers");
+            title.setText("Memory Asia Tour");
+            datetime.setText("07:30PM \n14 Sep 2018");
+            location.setText("District 2, Ho Chi Minh City");
+            description.setText("This is the first Asian tour of The Chainsmokers in 2019. In Vietnam, the tour will take place on September 14th at the Football Stadium (3ha). District Administrative Center (Truong Van Bang Street, Thanh Ward My Loi, District 2, Ho Chi Minh City.\n" +
+                    "\n" +
+                    "Tour in Ho Chi Minh City on 14/9/2017. Tickets will commence on the first sale from 02 - 04/08/2017\n" +
+                    "\n" +
+                    "Five months ago, the DJ duo, including Alex Pall and Drew Taggart, kicked off the \"Memories ... Do Not Open\" tour of 40 US cities, starting at the American Airlines Arena in Miami. So far, the duo's attraction # 18 DJ Mag is not only in the United States but has swept across the Asian and Canadian countries as the shows are always covered by the ticket fire.");
         } else {
             ll_action.setVisibility(View.VISIBLE);
             ll_update.setVisibility(View.GONE);
             setImage = new int[0];
-            setImage = addElement(setImage, R.drawable.search_event_detail2);
-            setImage = addElement(setImage, R.drawable.search_event_detail3);
+            setImage = addElement(setImage, R.drawable.image_bp1);
+            setImage = addElement(setImage, R.drawable.edm_event5);
             setImage = addElement(setImage, R.drawable.search_event_detail1);
             setImage = addElement(setImage, R.drawable.edm_event2);
-            title.setText("Electric Zoo");
-            datetime.setText("05:30PM \n17 Dec 2018");
-            location.setText("New York, USA");
-            description.setText("About Electric Zoo\n" +
-                    "\n" +
-                    "Established in 2009 by Made Event, the internationally renowned Electric Zoo Festival is one of New York City’s largest music festivals and features the top names in electronic music, bringing a wide variety of acts from around the world and across the spectrum of electronic music’s various sub-genres. International editions of Electric Zoo have taken place in Mexico City, Tokyo, Shanghai and São Paulo. This year’s 10th annual New York edition, themed ‘The Big Ten’ will take place on Aug 31/Sep 1-2 at Randall’s Island Park.\n" +
-                    "\n" +
-                    "About Electric Zoo: The Big Ten\n" +
-                    "\n" +
-                    "All those moons ago, who’da thought that the weekender that roared to life on NYC’s Randall’s Island in 2009 —which featured a fresh faced deadmau5, a pre-cake Aoki and the late-great Frankie Knuckles—would become a household name in the global dance festival scene?\n" +
-                    "\n" +
-                    "We’ve come a long, long way together, through the hard times and the good. From our earliest expeditions through the chaotic urban jungle, to scaling the feral lands of the Wild Island, and getting our minds blown by the gritty 6th Boro. What a ride it’s been!\n" +
-                    "\n" +
-                    "Since our first outing in 2009, we’ve been welcome all across the globe, taking our brand to Shanghai, Tokyo, Sao Paulo, and Mexico City.\n" +
-                    "\n" +
-                    "But New York City, baby, you’ll always be our home.\n" +
-                    "\n" +
-                    "From your great gleaming skyscrapers to your filthy-a** subway. The neon lights of Time Square to the fading memories of Coney Island. From the famous fuggedaboutit wiseguys to the lifelong friendships forged on dance floors. New York, you are the Big Apple in our eye, and our constant source of inspiration. It’s been an honor to make you dance.\n" +
-                    "\n" +
-                    "2018 is Electric Zoo’s 10th birthday, and we’re going to make sure that this is the biggest, wildest fiesta that we’ve ever thrown down! #EzooTen will be a blow-out of epic proportions, featuring the world’s finest DJs and most mind-melting production in the heart of The City That Never Sleeps.\n" +
-                    "\n" +
-                    "We are preparing the biggest party New York City has ever seen. At Electric Zoo: The BIG 10 we want to dance with all of our friends at once. All the hardcore heroes from the past decade, and the fledgling fauns making their first trip to the island. We want to see the old skool trance tigers, the crunchy bass bears, the techno penguins, and the classic house hippos, all returning to the watering hole to shake it out again, and soak up the infectious vibes.\n" +
-                    "\n" +
-                    "We can’t wait to dance with you again New York!.");
         }
         ssv_image.setImageResources(setImage);
     }
@@ -179,4 +174,5 @@ public class DetailGigsActivity extends AppCompatActivity {
     public void clickToExit(View view) {
         finish();
     }
+
 }

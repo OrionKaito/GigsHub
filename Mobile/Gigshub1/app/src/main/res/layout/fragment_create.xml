@@ -6,42 +6,44 @@
     tools:context=".CreateFragment">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_create_top_bar"
         android:background="@color/white"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/ll_create_top_bar"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Create Event"
-                android:textSize="20sp"
+                android:layout_marginLeft="6dp"
                 android:fontFamily="@font/ropa_sans"
-                android:textColor="@color/black"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="6dp"/>
+                android:text="Create Event"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
         </LinearLayout>
+
         <View
             android:id="@+id/v_create_divider"
-            android:layout_below="@+id/ll_create_top_bar"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
-            />
+            android:layout_below="@+id/ll_create_top_bar"
+            android:background="@color/gray" />
+
         <ScrollView
-            android:layout_below="@+id/v_create_divider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/v_create_divider"
             android:layout_marginBottom="57dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,8 +71,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:padding="10dp"
-                        android:background="@drawable/background_orange_border">
+                        android:background="@drawable/background_orange_border"
+                        android:padding="10dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -118,40 +120,45 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="Tap to edit date of event"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:id="@+id/tv_gigs_create_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="The Province / City"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20dp" />
 
-                <EditText
-                    android:id="@+id/et_create_event_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="ex: Hà Nội / New York"
-                    android:maxLines="1" />
+
 
                 <TextView
                     android:id="@+id/tv_gigs_create_place"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:text="Address"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/et_create_event_address"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="1 Cong Hoa street, Tan Binh district"
-                    android:maxLines="1" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_create_maps"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_location" />
+
+                    <TextView
+                        android:id="@+id/et_create_event_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/iv_create_maps"
+                        android:hint="Tap on icon to choose location on map " />
+
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_gigs_create_description"
@@ -170,6 +177,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Input your event details"
                     android:maxLines="10" />
+
                 <TextView
                     android:id="@+id/tv_gigs_create_artist"
                     android:layout_width="match_parent"
@@ -185,8 +193,9 @@
                     android:id="@+id/et_create_event_artist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ex: Martin Garrix, Marshmello "
+                    android:hint="Ex: Sơn Tùng - MTP, Bích Phương,..."
                     android:maxLines="10" />
+
                 <TextView
                     android:id="@+id/tv_gigs_create_category"
                     android:layout_width="match_parent"
@@ -196,6 +205,7 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
                 <Spinner
                     android:id="@+id/spn_gigs_create_category"
                     android:layout_width="200dp"
@@ -212,30 +222,33 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
                 <RadioGroup
                     android:id="@+id/rb_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/rb_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Free"
-                        android:checked="true"/>
+                        android:checked="true"
+                        android:text="Free" />
+
                     <RadioButton
                         android:id="@+id/rb_not_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Not Free"/>
+                        android:text="Not Free" />
                 </RadioGroup>
+
                 <EditText
                     android:id="@+id/et_create_event_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Input ticket price in VND(ex: 200,000)"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 

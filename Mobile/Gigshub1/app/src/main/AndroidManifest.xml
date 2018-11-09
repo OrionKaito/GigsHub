@@ -89,9 +89,10 @@
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".UserFollowActivity"
-
             android:theme="@style/MyActionBar.ActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+
+        </activity>
     </application>
 
 </manifest>
