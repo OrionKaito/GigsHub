@@ -24,6 +24,7 @@ namespace Gigshub.ViewModel
 
         //conver to string
         public string OwnerName { get; set; }
+        public string OwnderFullname { get; set; }
         public Boolean ICusVerified { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
