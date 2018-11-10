@@ -116,7 +116,7 @@ public class CreateMapActivity extends FragmentActivity implements OnMapReadyCal
                 mMap.addMarker(new MarkerOptions()
                         .position(latLng)
                         .title("Hello world"));
-                String address = getAddressFromLatLong(getApplicationContext(), latLng.latitude, latLng.longitude).getAddressLine(0);
+                address = getAddressFromLatLong(getApplicationContext(), latLng.latitude, latLng.longitude).getAddressLine(0);
                 et_search.setText(address);
             }
         });
@@ -129,6 +129,7 @@ public class CreateMapActivity extends FragmentActivity implements OnMapReadyCal
                     count_time = 0;
                     address = et_search.getText().toString();
                     destination = getLocationFromAddress(getApplicationContext(), address);
+                    address = getAddressFromLatLong(getApplicationContext(), destination.latitude, destination.longitude).getAddressLine(0);
                     return true;
                 }
                 return false;
@@ -140,7 +141,7 @@ public class CreateMapActivity extends FragmentActivity implements OnMapReadyCal
         if (destination != null) {
             final Intent data = new Intent();
             // Lấy string address
-            data.putExtra("Address", et_search.getText().toString());
+            data.putExtra("Address", address);
             // Lấy kinh độ vĩ độ
             data.putExtra("Lat", destination.latitude);
             data.putExtra("Lng", destination.longitude);
