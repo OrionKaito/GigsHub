@@ -1,13 +1,13 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.example.myfuckingpc.gigshub1.R;
 
 import java.util.ArrayList;
 import java.util.List;

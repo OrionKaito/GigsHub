@@ -1,4 +1,4 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
 
 import android.app.Activity;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.example.myfuckingpc.gigshub1.R;
 
 public class ProfileActivity2 extends Activity implements ActionBar.TabListener {
 

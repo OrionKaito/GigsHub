@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PersonalFragment">
+    tools:context=".Fragment.PersonalFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,7 +1,9 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.myfuckingpc.gigshub1.R;
 
 public class ChooseMethodToAddBudget extends AppCompatActivity {
 

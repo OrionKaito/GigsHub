@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_login"
     android:focusableInTouchMode="true"
-    tools:context=".LoginActivity">
+    tools:context=".Activity.LoginActivity">
 
     <RelativeLayout
         android:id="@+id/bac_dim_layout"
