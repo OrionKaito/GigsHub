@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
+import com.example.myfuckingpc.gigshub1.UpdateGigsActivity;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.AttendClient;
 import com.example.myfuckingpc.gigshub1.api.EventClient;
@@ -100,6 +101,8 @@ public class DetailGigsActivity extends AppCompatActivity {
             ll_action.setVisibility(View.GONE);
             ll_update.setVisibility(View.VISIBLE);
             iv_price.setVisibility(View.GONE);
+
+
 
 
         } else if (typeUser == USER) {

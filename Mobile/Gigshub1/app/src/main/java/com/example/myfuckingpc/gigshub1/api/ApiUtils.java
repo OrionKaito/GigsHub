@@ -17,6 +17,10 @@ public class ApiUtils {
         String bearer_token = "Bearer "+ token;
         return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(CreateEventClient.class);
     }
+    public static UpdateEventClient updateEventClient(long eventId) {
+        String bearer_token = "Bearer" + eventId;
+        return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(UpdateEventClient.class);
+    }
 
     public static EventClient eventClient() {
         return RetrofitClient.getClient(BASE_URL).create(EventClient.class);
