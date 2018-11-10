@@ -21,6 +21,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity
             android:name=".Activity.ProfileActivity2"
             android:label="@string/title_activity_profile2" />
@@ -28,7 +29,13 @@
         <activity android:name=".Activity.HomeActivity" />
         <activity
             android:name=".Activity.MainActivity"
-            android:theme="@style/MyActionBar.ActionBar" />
+            android:theme="@style/MyActionBar.ActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.DetailGigsActivity"
             android:theme="@style/MyActionBar.ActionBar" />
@@ -42,11 +49,7 @@
         <activity
             android:name=".Activity.SplashActivity"
             android:theme="@style/SplashscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activity.CreateActivity" />
         <activity
@@ -60,15 +63,25 @@
             android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
             android:name=".Activity.BuyTicketActivity"
-            android:theme="@style/MyActionBar.ActionBar">
-
-        </activity>
+            android:theme="@style/MyActionBar.ActionBar"/>
         <activity
             android:name=".Activity.ChooseMethodToAddBudget"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
             android:name=".Activity.CommentActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
+        <activity
+            android:name=".Activity.RequestVerificationActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
+        <activity
+            android:name=".Activity.UserFollowActivity"
+            android:theme="@style/MyActionBar.ActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" >
+
+        </activity>
+        <activity
+            android:name=".Activity.FollowActivity"
+            android:theme="@style/MyActionBar.ActionBar" />
     </application>
 
 </manifest>

@@ -58,5 +58,5 @@
         android:layout_margin="50dp"
         android:background="@color/white"
         android:onClick="clickToReturnCreate"
-        android:src="@drawable/ic_ok" />
+        android:src="@drawable/ic_check_circle_black" />
 </RelativeLayout>

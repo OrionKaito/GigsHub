@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.Activity.ChooseMethodToAddBudget;
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
+import com.example.myfuckingpc.gigshub1.Activity.FollowActivity;
 import com.example.myfuckingpc.gigshub1.Activity.LoginActivity;
+import com.example.myfuckingpc.gigshub1.Activity.RequestVerificationActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
 import com.example.myfuckingpc.gigshub1.EventSearch;
 import com.example.myfuckingpc.gigshub1.R;
@@ -26,15 +30,25 @@ import com.example.myfuckingpc.gigshub1.model.SavedToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PersonalFragment extends Fragment {
     ImageView addBudget, logout;
     private RecyclerView recyclerView;
+    private CircleImageView civ_image;
     private List<EventSearch> listEvent;
     private EventSearchAdapter adapter;
-
+    private ImageView iv_verify, iv_followee, iv_follower;
+    private Intent intent;
+    private TextView tv_verify, tv_name, tv_number_event, tv_numbers_event_title;
+    public static final int FOLLOWER = 1;
+    public static final int FOLLOWING = 2;
+    public static final int VERIFIED = 1;
+    public static final int NOT_VERIFY = 2;
+    public static int typeUser;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -62,6 +76,43 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        civ_image = view.findViewById(R.id.civ_personal_image);
+        iv_followee = view.findViewById(R.id.iv_list_follow);
+        iv_follower = view.findViewById(R.id.iv_list_follower);
+        addBudget = view.findViewById(R.id.im_add_budget);
+        iv_verify = view.findViewById(R.id.iv_verify_request);
+        tv_verify = view.findViewById(R.id.tv_user_verify_status);
+        recyclerView = view.findViewById(R.id.rv_personal_list_event);
+        tv_number_event = view.findViewById(R.id.tv_numbers_event);
+        tv_numbers_event_title = view.findViewById(R.id.tv_numbers_event_title);
+        tv_name = view.findViewById(R.id.tv_name_user);
+        iv_followee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FollowActivity.class);
+                intent.putExtra("TYPE", FOLLOWING);
+                startActivity(intent);
+            }
+        });
+        iv_follower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(), FollowActivity.class);
+                intent.putExtra("TYPE", FOLLOWER);
+                startActivity(intent);
+            }
+        });
+        iv_verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (typeUser != 2) {
+                    Intent intent = new Intent(getActivity(), RequestVerificationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), "This profile was verified", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         addBudget = getActivity().findViewById(R.id.im_add_budget);
         addBudget.setOnClickListener(new View.OnClickListener() {
             @Override

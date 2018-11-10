@@ -14,6 +14,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tv_name_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trần Đức Thái"
@@ -50,6 +51,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_personal_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -68,28 +70,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="9">
+                android:weightSum="4">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:visibility="visible" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="Follower" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Gigs" />
+                    android:text="Following" />
+
+                <TextView
+                    android:id="@+id/tv_numbers_event_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Attend" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -97,55 +108,77 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="9">
+                android:weightSum="4">
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:id="@+id/iv_verify_request"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="3"
-                    android:src="@drawable/ic_verified_user" />
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_not_verified_user" />
 
                 <ImageView
-                    android:layout_width="50dp"
+                    android:id="@+id/iv_list_follower"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_people_black" />
 
+
                 <ImageView
-                    android:layout_width="50dp"
+                    android:id="@+id/iv_list_follow"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_following" />
+
+                <ImageView
+                    android:id="@+id/iv_numbers_event"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:src="@drawable/ic_event_followed" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="9">
+                android:weightSum="4">
 
                 <TextView
+                    android:id="@+id/tv_user_verify_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Verified" />
+                    android:text="Not verify" />
 
                 <TextView
                     android:id="@+id/txtFollower"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="10" />
 
+
                 <TextView
-                    android:id="@+id/txtFollowingEvent"
+                    android:id="@+id/txtFollowing"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="5" />
+                    android:text="20" />
+
+                <TextView
+                    android:id="@+id/tv_numbers_event"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1" />
             </LinearLayout>
         </LinearLayout>
 

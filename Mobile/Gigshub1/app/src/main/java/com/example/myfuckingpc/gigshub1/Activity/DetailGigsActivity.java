@@ -114,8 +114,8 @@ public class DetailGigsActivity extends AppCompatActivity {
     }
 
     public void clickToOpenMap(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MapActivity.class);
+//        startActivity(intent);
     }
 
     public void clickToOpenComment(View view) {

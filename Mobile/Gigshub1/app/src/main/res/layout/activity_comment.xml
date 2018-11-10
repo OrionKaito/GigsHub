@@ -15,15 +15,15 @@
         <Button
             android:layout_width="35dp"
             android:layout_height="30dp"
-            android:onClick="clickToReturn"
-            android:background="@drawable/ic_arrow_back" />
+            android:background="@drawable/ic_arrow_back"
+            android:onClick="clickToReturn" />
 
         <TextView
             android:id="@+id/tv_event_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="ST-MTP Concert"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -41,4 +41,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_comment_top_bar"
         android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickToAddComment"
+        android:layout_alignParentBottom="true"
+        android:drawableRight="@drawable/ic_send_black"
+        android:hint="Write your comment...."
+        android:padding="10dp" />
 </RelativeLayout>
