@@ -23,25 +23,25 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ProfileActivity2"
+            android:name=".Activity.ProfileActivity2"
             android:label="@string/title_activity_profile2" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.HomeActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".DetailGigsActivity"
+            android:name=".Activity.DetailGigsActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:theme="@style/MyActionBar.ActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".CreateGigsActivity"
+            android:name=".Activity.CreateGigsActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:theme="@style/SplashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,26 +49,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateActivity" />
+        <activity android:name=".Activity.CreateActivity" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".Activity.NotificationActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".MapActivity"
+            android:name=".Activity.MapActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
-            android:name=".UpdateGigsActivity"
+            android:name=".Activity.UpdateGigsActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
-            android:name=".BuyTicketActivity"
+            android:name=".Activity.BuyTicketActivity"
             android:theme="@style/MyActionBar.ActionBar">
 
         </activity>
         <activity
-            android:name=".ChooseMethodToAddBudget"
+            android:name=".Activity.ChooseMethodToAddBudget"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".CommentActivity"
+            android:name=".Activity.CommentActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
     </application>
 

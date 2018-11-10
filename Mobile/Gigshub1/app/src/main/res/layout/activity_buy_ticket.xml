@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".BuyTicketActivity">
+    tools:context=".Activity.BuyTicketActivity">
 
     <TextView
         android:id="@+id/tv_buy_ticket_event_name"

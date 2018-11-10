@@ -1,4 +1,4 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.chabbal.slidingdotsplash.SlidingSplashView;
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
+import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.EventClient;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
 
-import java.util.Arrays;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
