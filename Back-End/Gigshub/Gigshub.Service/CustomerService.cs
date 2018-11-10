@@ -1,11 +1,14 @@
 ﻿using Gigshub.Data.Infrastructure;
 using Gigshub.Data.Repositories;
 using Gigshub.Model.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gigshub.Service
 {
     public interface ICustomerService
     {
+        IEnumerable<Customer> SearchLikeFullName(string fullname);
         Customer GetByID(long Id);
         Customer GetByName(string name);
         void Create(Customer customer);
@@ -29,6 +32,13 @@ namespace Gigshub.Service
         }
 
         #region ICustomerService Members
+
+        public IEnumerable<Customer> SearchLikeFullName(string fullname)
+        {
+            return customerRepository
+                .GetMany(k => k.Fullname.Contains(fullname))
+                .Where(k => k.IsDeleted == false);
+        }
 
         public Customer GetByID(long Id)
         {

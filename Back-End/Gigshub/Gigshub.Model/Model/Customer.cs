@@ -14,6 +14,7 @@ namespace Gigshub.Model.Model
         public string Address { get; set; }
         public double AccountBalance { get; set; }
         public string EmailConfirmCode { get; set; }
+        public string ImgPath { get; set; }
         public Boolean EmailConfirm { get; set; }
         public Boolean IsVerified { get; set; }
         public DateTime? DateOfBirth { get; set; }

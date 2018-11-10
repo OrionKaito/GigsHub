@@ -216,6 +216,135 @@ namespace Gigshub.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("api/event/searchliketitle", Name = "SearchLikeTitle")]
+        public IHttpActionResult SearchLikeTitle(string strSeach)
+        {
+            //begin get data
+            try
+            {
+                var result = _eventService.SearchLikeTitle(strSeach).Select(k => new EventViewModel
+                {
+                    Id = k.Id,
+                    Title = k.Title,
+                    City = k.City,
+                    Address = k.Address,
+                    Description = k.Description,
+                    Artist = k.Artist,
+                    NumberOfAttender = k.NumberOfAttender,
+                    Rating = k.Rating,
+                    IsDeleted = k.IsDeleted,
+                    IsSale = k.IsSale,
+                    Price = k.Price,
+                    OwnerName = k.Owner.UserName,
+                    OwnderFullname = k.Owner.Fullname,
+                    ICusVerified = k.Owner.IsVerified,
+                    Date = k.DateTime.ToString("D"),
+                    Time = k.DateTime.ToString("t"),
+                    Category = k.Category.Name,
+                    ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
+                });
+
+                if (!result.Any())
+                {
+                    return Ok("There are no matching event!"); // status code 200
+                }
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound(); //satus code 404
+            }
+            //end get data
+        }
+
+        [HttpGet]
+        [Route("api/event/searchlikecity", Name = "SearchLikeCity")]
+        public IHttpActionResult SearchLikeCity(string strSeach)
+        {
+            //begin get data
+            try
+            {
+                var result = _eventService.SearchLikeCity(strSeach).Select(k => new EventViewModel
+                {
+                    Id = k.Id,
+                    Title = k.Title,
+                    City = k.City,
+                    Address = k.Address,
+                    Description = k.Description,
+                    Artist = k.Artist,
+                    NumberOfAttender = k.NumberOfAttender,
+                    Rating = k.Rating,
+                    IsDeleted = k.IsDeleted,
+                    IsSale = k.IsSale,
+                    Price = k.Price,
+                    OwnerName = k.Owner.UserName,
+                    OwnderFullname = k.Owner.Fullname,
+                    ICusVerified = k.Owner.IsVerified,
+                    Date = k.DateTime.ToString("D"),
+                    Time = k.DateTime.ToString("t"),
+                    Category = k.Category.Name,
+                    ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
+                });
+
+                if (!result.Any())
+                {
+                    return Ok("There are no matching event!"); // status code 200
+                }
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound(); //satus code 404
+            }
+            //end get data
+        }
+
+        [HttpGet]
+        [Route("api/event/searchbycategory", Name = "SearchByCategory")]
+        public IHttpActionResult SearchByCategory(string strSeach)
+        {
+            //begin get data
+            try
+            {
+                var result = _eventService.SearchByCategory(strSeach).Select(k => new EventViewModel
+                {
+                    Id = k.Id,
+                    Title = k.Title,
+                    City = k.City,
+                    Address = k.Address,
+                    Description = k.Description,
+                    Artist = k.Artist,
+                    NumberOfAttender = k.NumberOfAttender,
+                    Rating = k.Rating,
+                    IsDeleted = k.IsDeleted,
+                    IsSale = k.IsSale,
+                    Price = k.Price,
+                    OwnerName = k.Owner.UserName,
+                    OwnderFullname = k.Owner.Fullname,
+                    ICusVerified = k.Owner.IsVerified,
+                    Date = k.DateTime.ToString("D"),
+                    Time = k.DateTime.ToString("t"),
+                    Category = k.Category.Name,
+                    ImgPath = _eventImageSerivce.GetOneByEventId(k.Id)
+                });
+
+                if (!result.Any())
+                {
+                    return Ok("There are no matching event!"); // status code 200
+                }
+
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound(); //satus code 404
+            }
+            //end get data
+        }
+
         [HttpPost]
         [Route("api/event/create", Name = "CreateEvent")]
         public IHttpActionResult Create()

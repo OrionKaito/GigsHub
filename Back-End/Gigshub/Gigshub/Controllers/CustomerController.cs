@@ -5,7 +5,10 @@ using Gigshub.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace Gigshub.Controllers
@@ -15,6 +18,7 @@ namespace Gigshub.Controllers
     {
         private readonly ICustomerService _customerService;
         private ApplicationUserManager _userManager;
+        private readonly string DIRECTORY_PATH = "/Images/Customer/";
 
         public ApplicationUserManager UserManager
         {
@@ -54,7 +58,7 @@ namespace Gigshub.Controllers
 
             Mapper.Map(cusInDb, result);
             //end get data
-            return Ok(result); //status code 200
+            return Ok(result); //sta    tus code 200
         }
 
         [HttpGet]
@@ -86,6 +90,24 @@ namespace Gigshub.Controllers
             if (cusInDb == null)
             {
                 return BadRequest("Customer not exist!"); //status code 400
+            }
+
+            Mapper.Map(cusInDb, result);
+            //end get data
+            return Ok(result); //status code 200
+        }
+
+        [HttpGet]
+        [Route("api/customer/searchlikefullname", Name = "SearchLikeFullname")]
+        public IHttpActionResult SearchLikeFullname(string fullname)
+        {
+            var result = new CustomerViewModel();
+            //begin get data
+            var cusInDb = _customerService.SearchLikeFullName(fullname);
+
+            if (cusInDb == null)
+            {
+                return BadRequest("There are no matching customer!"); //status code 400
             }
 
             Mapper.Map(cusInDb, result);
@@ -126,7 +148,7 @@ namespace Gigshub.Controllers
 
         [HttpPost]
         [Route("api/customer/update", Name = "UpdateCustomer")]
-        public IHttpActionResult Update(CustomerUpdateModel model)
+        public IHttpActionResult Update()
         {
             if (!ModelState.IsValid)
             {
@@ -142,8 +164,58 @@ namespace Gigshub.Controllers
             }
 
             //begin update data
-            Mapper.Map(model, custInDb);
-            _customerService.Save();
+            var httpRequest = HttpContext.Current.Request;
+            var model = new CustomerUpdateModel
+            {
+                Id = custInDb.Id,
+                Address = httpRequest["Address"],
+                DateOfBirth = Convert.ToDateTime(httpRequest["Datetime"]),
+                Fullname = httpRequest["Fullname"],
+                Gender = httpRequest["Gender"],
+                Phonenumber = httpRequest["Phonenumber"],
+            };
+
+            try
+            {
+                Mapper.Map(model, custInDb);
+                _customerService.Save();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to update Customer"); //status code 400
+            }
+
+            //delete image
+            if (httpRequest.Files.Count > 0)
+            {
+                custInDb.ImgPath = "";
+            }
+
+            //upload imagge
+            if (httpRequest.Files.Count > 0)
+            {
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    //create customer name
+                    string imageName = new string(Path.GetFileNameWithoutExtension(postedFile.FileName)
+                        .Take(10).ToArray()).Replace(" ", "-");
+                    imageName = imageName + DateTime.Now.ToString("yy-mm-ss-ff") + Path.GetExtension(postedFile.FileName);
+                    var relativePath = DIRECTORY_PATH + imageName;
+                    var filePath = HttpContext.Current.Server.MapPath(relativePath);
+                    postedFile.SaveAs(filePath);
+                    //save to db
+                    try
+                    {
+                        custInDb.ImgPath = relativePath;
+                        _customerService.Save();
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Failed to update customer's image"); //status code 400
+                    }
+                }
+            }
             //end update data
             return Ok("Success"); //status code 200
         }

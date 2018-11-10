@@ -11,6 +11,9 @@ namespace Gigshub.Service
     {
         IEnumerable<Event> GetAll();
         IEnumerable<Event> GetAllUserEvent(long Id);
+        IEnumerable<Event> SearchLikeTitle(string str);
+        IEnumerable<Event> SearchLikeCity(string str);
+        IEnumerable<Event> SearchByCategory(string str);
         Event GetByID(long Id);
         Event GetByTitle(string name);
         void Create(Event Event);
@@ -47,6 +50,29 @@ namespace Gigshub.Service
         {
             return eventRepository
                 .GetMany(k => k.OwnerID == Id)
+                .OrderBy(k => k.DateTime);
+        }
+
+        public IEnumerable<Event> SearchLikeTitle(string str)
+        {
+            return eventRepository
+                .GetMany(k => k.Title.Contains(str))
+                .Where(k => k.DateTime > DateTime.Now)
+                .OrderBy(k => k.DateTime);
+        }
+
+        public IEnumerable<Event> SearchLikeCity(string str)
+        {
+            return eventRepository
+                .GetMany(k => k.City.Contains(str))
+                .Where(k => k.DateTime > DateTime.Now)
+                .OrderBy(k => k.DateTime);
+        }
+        public IEnumerable<Event> SearchByCategory(string str)
+        {
+            return eventRepository
+                .GetMany(k => k.Category.Name == str)
+                .Where(k => k.DateTime > DateTime.Now)
                 .OrderBy(k => k.DateTime);
         }
 
