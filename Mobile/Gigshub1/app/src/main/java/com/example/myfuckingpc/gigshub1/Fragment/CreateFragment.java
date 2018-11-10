@@ -67,7 +67,7 @@ public class CreateFragment extends Fragment {
     String[] categoryArr;
     Map<String, Integer> categoryMaps = new HashMap<>();
     //
-    private ImageView iv_create_gigs_image;
+    private ImageView iv_create_gigs_image, iv_open_maps;
     private TextView tv_gigs_create_date;
     private EditText tv_title, tv_description, tv_price, tv_city, tv_address, tv_artist;
     private String date_time = "";
@@ -194,12 +194,13 @@ public class CreateFragment extends Fragment {
 
         tv_description = getActivity().findViewById(R.id.et_create_event_description);
         tv_artist = getActivity().findViewById(R.id.et_create_event_artist);
-        tv_address.setOnClickListener(new View.OnClickListener() {
+
+        iv_open_maps = getActivity().findViewById(R.id.iv_open_maps);
+        iv_open_maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Intent intent = new Intent(getActivity(), CreateMapActivity.class);
                 startActivityForResult(intent, CREATE_LOCATION);
-
             }
         });
         ll_create_event = getActivity().findViewById(R.id.ll_create_event);

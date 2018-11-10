@@ -112,6 +112,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
+
                 <TextView
                     android:id="@+id/tv_gigs_create_date"
                     android:layout_width="match_parent"
@@ -119,6 +120,27 @@
                     android:maxLines="1"
                     android:text="Tap to edit date of event"
                     android:textSize="20dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Open maps to choose location"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/iv_open_maps"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:src="@drawable/ic_edit_location"
+                        android:layout_gravity="bottom"/>
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_gigs_create_province"
                     android:layout_width="match_parent"
