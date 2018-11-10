@@ -6,6 +6,7 @@ namespace Gigshub.ViewModel
     {
         public long Id { get; set; }
         public string ImgPath { get; set; }
+        public Boolean IsVerified { get; set; }
     }
 
     public class CustomerCreateModel
