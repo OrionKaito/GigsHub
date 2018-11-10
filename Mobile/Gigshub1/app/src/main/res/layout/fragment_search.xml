@@ -15,116 +15,54 @@
             android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="vertical"
-            android:padding="6dp">
+            android:orientation="horizontal"
+            android:padding="6dp"
+            android:weightSum="10">
 
-            <SearchView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_weight="5.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:background="@color/white"
-                android:queryHint="Search Event...." />
+                android:hint="Search Event...."
+                android:visibility="visible"/>
+            <Spinner
+                android:id="@+id/spn_search_category"
+                android:layout_width="0dp"
+                android:layout_weight="5.5"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+            </Spinner>
+            <Spinner
+                android:id="@+id/spn_search_type"
+                android:layout_weight="3.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+            </Spinner>
+            <ImageView
+                android:id="@+id/iv_search_event"
+                android:background="@color/orange"
+                android:layout_weight="1"
+                android:src="@drawable/ic_search_32dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
         <View
+            android:id="@+id/divider"
             android:layout_below="@id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/gray"/>
-        <LinearLayout
-            android:id="@+id/ll_type_music"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_top_bar"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
 
-            <RelativeLayout
-                android:id="@+id/rl_type_rock"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_rock">
-
-                <ImageView
-                    android:id="@+id/iv_guitar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_guitar" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_guitar"
-                    android:layout_centerHorizontal="true"
-                    android:text="Rock"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_type_pop"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_pop">
-
-                <ImageView
-                    android:id="@+id/iv_mic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_mic" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_mic"
-                    android:layout_centerHorizontal="true"
-                    android:text="Pop"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_type_EDM"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_edm">
-
-                <ImageView
-                    android:id="@+id/iv_piano"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_disk" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/iv_piano"
-                    android:layout_centerHorizontal="true"
-                    android:text="EDM"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_type_music">
+            android:layout_below="@id/divider">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_search_list_event"

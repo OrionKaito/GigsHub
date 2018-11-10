@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
+import com.example.myfuckingpc.gigshub1.MapActivity;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.EventClient;

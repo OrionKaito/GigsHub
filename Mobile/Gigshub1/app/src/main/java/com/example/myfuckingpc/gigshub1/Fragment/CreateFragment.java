@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.myfuckingpc.gigshub1.Activity.CreateMapActivity;
 import com.example.myfuckingpc.gigshub1.FileUtils.ReadPath;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
@@ -84,6 +85,7 @@ public class CreateFragment extends Fragment {
     private RadioGroup rb_price;
     boolean isSale;
     private Spinner spn_category;
+    private final int CREATE_LOCATION = 1;
     public CreateFragment() {
         // Required empty public constructor
     }
@@ -189,9 +191,17 @@ public class CreateFragment extends Fragment {
         tv_title = getActivity().findViewById(R.id.et_create_event_title);
         tv_city = getActivity().findViewById(R.id.et_create_event_city);
         tv_address = getActivity().findViewById(R.id.et_create_event_address);
+
         tv_description = getActivity().findViewById(R.id.et_create_event_description);
         tv_artist = getActivity().findViewById(R.id.et_create_event_artist);
+        tv_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getActivity(), CreateMapActivity.class);
+                startActivityForResult(intent, CREATE_LOCATION);
 
+            }
+        });
         ll_create_event = getActivity().findViewById(R.id.ll_create_event);
         ll_create_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,6 +410,14 @@ public class CreateFragment extends Fragment {
                     Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString);
                     iv_create_gigs_image.setImageBitmap(bitmap);
                 }
+            }
+        }
+        else if (requestCode == CREATE_LOCATION) {
+            if (resultCode == Activity.RESULT_OK) {
+                String addressFrom = data.getStringExtra("Address");
+                Double addressLat = data.getDoubleExtra("Lat",0);
+                Double addressLng = data.getDoubleExtra("Lng",0);
+                tv_address.setText(addressFrom);
             }
         }
     }

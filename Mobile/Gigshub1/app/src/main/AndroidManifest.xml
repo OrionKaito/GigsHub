@@ -53,7 +53,7 @@
             android:name=".Activity.NotificationActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity
-            android:name=".Activity.MapActivity"
+            android:name=".Activity.CreateMapActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
             android:name=".Activity.UpdateGigsActivity"

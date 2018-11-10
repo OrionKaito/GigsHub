@@ -12,27 +12,47 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
 import com.example.myfuckingpc.gigshub1.EventSearch;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
+import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CategoryClient;
+import com.example.myfuckingpc.gigshub1.model.Category;
+import com.example.myfuckingpc.gigshub1.model.CategoryItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends Fragment implements View.OnClickListener {
+    //
+    List<CategoryItem> categoryList = new ArrayList<>();
+    String[] categoryArr;
+    //
+    private EditText searchText;
     private RecyclerView recyclerView;
     private EventSearchAdapter adapter;
     private List<EventSearch> listEvent;
     private RelativeLayout rl_rock, rl_pop, rl_edm;
     List<EventSearch> data1, data2, data3;
+    private Spinner spn_category, spn_type;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -50,6 +70,61 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //
+        View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
+        spn_type = inputFragmentView.findViewById(R.id.spn_search_type);
+        spn_category = inputFragmentView.findViewById(R.id.spn_search_category);
+        searchText = inputFragmentView.findViewById(R.id.edt_search);
+        String[] typeArr = {"Title","Location","Category"};
+        ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,typeArr);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_type.setAdapter(adapterCategory);
+        //
+        CategoryClient service = ApiUtils.categoryClient();
+        Call<Category> call = service.getAllCategory();
+        call.enqueue(new Callback<Category>() {
+            @Override
+            public void onResponse(Call<Category> call, Response<Category> response) {
+                if (response.isSuccessful()) {
+                    categoryList = response.body().getData();
+                    categoryArr = new String[categoryList.size()];
+                    for(int i = 0; i<categoryList.size();i++){
+                        categoryArr[i] = categoryList.get(i).getName();
+
+
+                    }
+                    ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,categoryArr);
+                    adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                    spn_category.setAdapter(adapterCategory);
+                }
+                else {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                return;
+            }
+        });
+        //
+        spn_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(spn_type.getSelectedItem()=="Category"){
+                    spn_category.setVisibility(View.VISIBLE);
+                    searchText.setVisibility(View.GONE);
+                }
+                else {
+                    spn_category.setVisibility(View.GONE);
+                    searchText.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         // Inflate the layout for this fragment
         data1 = new ArrayList<>();
         data1.add(new EventSearch("Music contest in Ho Chi Minh City", "One of the best music event in Ho Chi Minh City. Join it with us", "Sat, Dec 20, 2018", R.drawable.pop_event1));
@@ -67,13 +142,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         data3.add(new EventSearch("Black Sun Empire", "Returning in late December on the beautiful west coast of Vietnam, the electronic dance music festival extravaganza EPIZODE³ will be welcoming the bigges", "Sun, Dec 20, 2018", R.drawable.rock_event2));
         data3.add(new EventSearch("Vietnam’s Epizode festival enlists ", "The end-of-year EDM showdown is on! Vietnam’s Epizode festival is coming back with an epic 2017 edition", "Sat, Jan 20, 2019", R.drawable.rock_event3));
 
-        View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
-        rl_rock = inputFragmentView.findViewById(R.id.rl_type_rock);
-        rl_pop = inputFragmentView.findViewById(R.id.rl_type_pop);
-        rl_edm = inputFragmentView.findViewById(R.id.rl_type_EDM);
-        rl_rock.setOnClickListener(this);
-        rl_pop.setOnClickListener(this);
-        rl_edm.setOnClickListener(this);
+
+
+
         listEvent = new ArrayList<>();
         adapter = new EventSearchAdapter(listEvent);
         recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
@@ -130,33 +201,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_type_pop:
-                listPopMusic();
-                rl_pop.setClickable(false);
-                rl_pop.setFocusable(false);
-                rl_edm.setClickable(true);
-                rl_edm.setFocusable(true);
-                rl_rock.setClickable(true);
-                rl_rock.setFocusable(true);
-                break;
-            case R.id.rl_type_EDM:
-                listEDMMusic();
-                rl_pop.setClickable(true);
-                rl_pop.setFocusable(true);
-                rl_edm.setClickable(false);
-                rl_edm.setFocusable(false);
-                rl_rock.setClickable(true);
-                rl_rock.setFocusable(true);
-                break;
-            case R.id.rl_type_rock:
-                listRockMusic();
-                rl_pop.setClickable(true);
-                rl_pop.setFocusable(true);
-                rl_edm.setClickable(true);
-                rl_edm.setFocusable(true);
-                rl_rock.setClickable(false);
-                rl_rock.setFocusable(false);
-                break;
+
         }
     }
 }
