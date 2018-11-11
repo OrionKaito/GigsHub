@@ -25,6 +25,7 @@ import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
 import com.example.myfuckingpc.gigshub1.EventSearch;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
+import com.example.myfuckingpc.gigshub1.model.EventItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PersonalFragment extends Fragment {
     ImageView addBudget, logout;
     private RecyclerView recyclerView;
+    private List<EventItem> listEvent;
     private CircleImageView civ_image;
-    private List<EventSearch> listEvent;
     private EventSearchAdapter adapter;
     private ImageView iv_verify, iv_followee, iv_follower;
     private Intent intent;
@@ -176,14 +177,14 @@ public class PersonalFragment extends Fragment {
     }
 
     private void listFollow() {
-        listEvent.clear();
-        List<EventSearch> data = new ArrayList<>();
-        data.add(new EventSearch("Viral Fest Asia", "Award competition for young singer for asia singer, band. Now return to Bankok, Thailand", "Sat, Jan 30, 2019", R.drawable.pop_event3));
-        data.add(new EventSearch("Hyperplay", "Day trips to world class attractions, and a chance to compete for the Grand Prize against the best of Southeast Asia", "Thu, Sep 13, 2019", R.drawable.pop_event4));
-        data.add(new EventSearch("Countdown NYE", "There are few better ways to welcome in the new year than at a huge Insomniac party. Brought to San Bernardino by the incredible minds behind Electric Daisy Carnival, Nocturnal Wonderland, Escape, Life is Beautiful, Dreamstate and Middlelands", "Sun, Dec 31, 2018", R.drawable.edm_event1));
-        data.add(new EventSearch("Electric Zoo", "Randall's Island, East Manhattan, parks a full-scale electronic festival right in the heart of New York City", "Sun, Mar 2, 2019", R.drawable.edm_event2));
-        data.add(new EventSearch("Black Sun Empire", "Returning in late December on the beautiful west coast of Vietnam, the electronic dance music festival extravaganza EPIZODE³ will be welcoming the bigges", "Sun, Dec 20, 2018", R.drawable.rock_event2));
-        listEvent.addAll(data);
-        adapter.notifyDataSetChanged();
+        //listEvent.clear();
+        //List<EventSearch> data = new ArrayList<>();
+        //data.add(new EventSearch("Viral Fest Asia", "Award competition for young singer for asia singer, band. Now return to Bankok, Thailand", "Sat, Jan 30, 2019", R.drawable.pop_event3));
+        //data.add(new EventSearch("Hyperplay", "Day trips to world class attractions, and a chance to compete for the Grand Prize against the best of Southeast Asia", "Thu, Sep 13, 2019", R.drawable.pop_event4));
+        //data.add(new EventSearch("Countdown NYE", "There are few better ways to welcome in the new year than at a huge Insomniac party. Brought to San Bernardino by the incredible minds behind Electric Daisy Carnival, Nocturnal Wonderland, Escape, Life is Beautiful, Dreamstate and Middlelands", "Sun, Dec 31, 2018", R.drawable.edm_event1));
+        //data.add(new EventSearch("Electric Zoo", "Randall's Island, East Manhattan, parks a full-scale electronic festival right in the heart of New York City", "Sun, Mar 2, 2019", R.drawable.edm_event2));
+        //data.add(new EventSearch("Black Sun Empire", "Returning in late December on the beautiful west coast of Vietnam, the electronic dance music festival extravaganza EPIZODE³ will be welcoming the bigges", "Sun, Dec 20, 2018", R.drawable.rock_event2));
+        //listEvent.addAll(data);
+        //adapter.notifyDataSetChanged();
     }
 }

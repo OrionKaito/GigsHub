@@ -43,6 +43,7 @@
 
             </Spinner>
             <ImageView
+                android:layout_gravity="center"
                 android:id="@+id/iv_search_event"
                 android:background="@color/orange"
                 android:layout_weight="1"

@@ -17,5 +17,14 @@ public interface EventClient {
     Call<Event> getAll();
 
     @GET("api/event/getbyid")
-    Call<EventItem> getEventById(@Query("Id") long eventId);
+    Call<Event> getEventById(@Query("Id") long eventId);
+
+    @GET("/api/event/searchliketitle")
+    Call<Event> searchByTitle(@Query("strSeach") String title);
+
+    @GET("/api/event/searchlikecity")
+    Call<Event> searchByCity(@Query("strSeach") String city);
+
+    @GET("/api/event/searchbycategory")
+    Call<Event> searchByCategory(@Query("strSeach") String category);
 }

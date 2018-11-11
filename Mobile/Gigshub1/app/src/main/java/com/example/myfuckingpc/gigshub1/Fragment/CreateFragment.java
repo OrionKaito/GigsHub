@@ -67,9 +67,10 @@ public class CreateFragment extends Fragment {
     String[] categoryArr;
     Map<String, Integer> categoryMaps = new HashMap<>();
     //
+    String inputDate = null;
     private ImageView iv_create_gigs_image, iv_open_maps;
-    private TextView tv_gigs_create_date;
-    private EditText tv_title, tv_description, tv_price, tv_city, tv_address, tv_artist;
+    private TextView tv_gigs_create_date, tv_city, tv_address;
+    private EditText tv_title, tv_description, tv_price, tv_artist;
     private String date_time = "";
     private int mYear;
     private int mMonth;
@@ -301,7 +302,7 @@ public class CreateFragment extends Fragment {
                 RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
                 RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
                 RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
-                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
+                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, inputDate);
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                 progressDialog.show();
                 Call<ResponseBody> call = service.upload(title,city,address,description,artist,datetime,isSale, finalPriceDouble,categoryInt,body);
@@ -383,7 +384,9 @@ public class CreateFragment extends Fragment {
                             e.printStackTrace();
                         }
                         SimpleDateFormat formatter2 = new SimpleDateFormat("EEE, dd/MM/yyyy HH:mm");
+                        SimpleDateFormat formarter3 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                         tv_gigs_create_date.setText(formatter2.format(date));
+                        inputDate = formarter3.format(date);
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
@@ -418,7 +421,10 @@ public class CreateFragment extends Fragment {
                 String addressFrom = data.getStringExtra("Address");
                 Double addressLat = data.getDoubleExtra("Lat",0);
                 Double addressLng = data.getDoubleExtra("Lng",0);
-                tv_address.setText(addressFrom);
+                String[] addressArr = addressFrom.split("[,]");
+
+                tv_address.setText(addressArr[0]+", "+addressArr[1]+", "+addressArr[2]);
+                tv_city.setText(addressArr[3]);
             }
         }
     }

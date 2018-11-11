@@ -15,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
@@ -25,8 +27,12 @@ import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.CategoryClient;
+import com.example.myfuckingpc.gigshub1.api.EventClient;
 import com.example.myfuckingpc.gigshub1.model.Category;
 import com.example.myfuckingpc.gigshub1.model.CategoryItem;
+import com.example.myfuckingpc.gigshub1.model.Event;
+import com.example.myfuckingpc.gigshub1.model.EventItem;
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,10 +55,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private EditText searchText;
     private RecyclerView recyclerView;
     private EventSearchAdapter adapter;
+    //
     private List<EventSearch> listEvent;
-    private RelativeLayout rl_rock, rl_pop, rl_edm;
     List<EventSearch> data1, data2, data3;
     private Spinner spn_category, spn_type;
+    private ImageView search;
+
+    //
+    private List<EventItem> searchedList;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -71,14 +81,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //
-        View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
+        final View inputFragmentView = inflater.inflate(R.layout.fragment_search, container, false);
+        recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
         spn_type = inputFragmentView.findViewById(R.id.spn_search_type);
         spn_category = inputFragmentView.findViewById(R.id.spn_search_category);
         searchText = inputFragmentView.findViewById(R.id.edt_search);
-        String[] typeArr = {"Title","Location","Category"};
+        String[] typeArr = {"Title","City","Category"};
         ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,typeArr);
         adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_type.setAdapter(adapterCategory);
+        search = inputFragmentView.findViewById(R.id.iv_search_event);
         //
         CategoryClient service = ApiUtils.categoryClient();
         Call<Category> call = service.getAllCategory();
@@ -125,44 +137,133 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+        //handle search
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchByText = searchText.getText().toString();
+                switch (spn_type.getSelectedItem().toString()){
+                    case "Title":
+                        EventClient serviceTitle = ApiUtils.eventClient();
+                        Call<Event> callTitle = serviceTitle.searchByTitle(searchByText);
+                        callTitle.enqueue(new Callback<Event>() {
+                            @Override
+                            public void onResponse(Call<Event> call, Response<Event> response) {
+                                if(response.isSuccessful()){
+                                    searchedList = response.body().getData();
+                                    adapter = new EventSearchAdapter(searchedList);
+                                    recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recyclerView.setLayoutManager(mLayoutManager);
+                                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                else {
+                                    Toast.makeText(getActivity(), "No result", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Event> call, Throwable t) {
+                                Toast.makeText(getActivity(), "Please check your network connection", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        break;
+                    case "City":
+                        EventClient serviceCity = ApiUtils.eventClient();
+                        Call<Event> callCity = serviceCity.searchByCity(searchByText);
+                        callCity.enqueue(new Callback<Event>() {
+                            @Override
+                            public void onResponse(Call<Event> call, Response<Event> response) {
+                                if(response.isSuccessful()){
+                                    searchedList = response.body().getData();
+                                    adapter = new EventSearchAdapter(searchedList);
+                                    recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recyclerView.setLayoutManager(mLayoutManager);
+                                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                else {
+                                    Toast.makeText(getActivity(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Event> call, Throwable t) {
+                                Toast.makeText(getActivity(), "No result.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                        break;
+                    case "Category":
+                        String category = spn_category.getSelectedItem().toString();
+                        EventClient serviceCategory = ApiUtils.eventClient();
+                        Call<Event> callCategory = serviceCategory.searchByCategory(category);
+                        callCategory.enqueue(new Callback<Event>() {
+                            @Override
+                            public void onResponse(Call<Event> call, Response<Event> response) {
+                                if(response.isSuccessful()){
+                                    searchedList = response.body().getData();
+                                    adapter = new EventSearchAdapter(searchedList);
+                                    recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recyclerView.setLayoutManager(mLayoutManager);
+                                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                                    recyclerView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                else {
+                                    Toast.makeText(getActivity(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Event> call, Throwable t) {
+                                Toast.makeText(getActivity(), "No result.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        });
+                }
+            }
+        });
         // Inflate the layout for this fragment
-        data1 = new ArrayList<>();
-        data1.add(new EventSearch("Music contest in Ho Chi Minh City", "One of the best music event in Ho Chi Minh City. Join it with us", "Sat, Dec 20, 2018", R.drawable.pop_event1));
-        data1.add(new EventSearch("Pop Festival in Da Nang", "Beautiful time to participate on of the best music concert of the year", "Mon, Jul 2, 2018", R.drawable.pop_event2));
-        data1.add(new EventSearch("Viral Fest Asia", "Award competition for young singer for asia singer, band. Now return to Bankok, Thailand", "Sat, Jan 30, 2019", R.drawable.pop_event3));
-        data1.add(new EventSearch("Hyperplay", "Day trips to world class attractions, and a chance to compete for the Grand Prize against the best of Southeast Asia", "Thu, Sep 13, 2019", R.drawable.pop_event4));
-
-        data2 = new ArrayList<>();
-        data2.add(new EventSearch("Countdown NYE", "There are few better ways to welcome in the new year than at a huge Insomniac party. Brought to San Bernardino by the incredible minds behind Electric Daisy Carnival, Nocturnal Wonderland, Escape, Life is Beautiful, Dreamstate and Middlelands", "Sun, Dec 31, 2018", R.drawable.edm_event1));
-        data2.add(new EventSearch("Electric Zoo", "Randall's Island, East Manhattan, parks a full-scale electronic festival right in the heart of New York City", "Sun, Mar 2, 2019", R.drawable.edm_event2));
-        data2.add(new EventSearch("Ultra Music Festival", "Kicking off festival season with a bang, you could easily make a case for Ultra Music Festival being the best festival in the country. ", "Sun, Mar 29, 2019", R.drawable.edm_event3));
-
-        data3 = new ArrayList<>();
-        data3.add(new EventSearch("Rock Concert 2018 Vietnam", "Rock Concert 2018 với chủ đề “Battleship” (tạm dịch là Chiến hạm) sẽ ra mắt khán giả yêu rock năm đầu tiên với 2 live-show vào các ngày 26-4 tại sân vận động Hàng Đẫy (Hà Nội) ", "Mon, April 26, 2019", R.drawable.rock_event1));
-        data3.add(new EventSearch("Black Sun Empire", "Returning in late December on the beautiful west coast of Vietnam, the electronic dance music festival extravaganza EPIZODE³ will be welcoming the bigges", "Sun, Dec 20, 2018", R.drawable.rock_event2));
-        data3.add(new EventSearch("Vietnam’s Epizode festival enlists ", "The end-of-year EDM showdown is on! Vietnam’s Epizode festival is coming back with an epic 2017 edition", "Sat, Jan 20, 2019", R.drawable.rock_event3));
-
-
-
-
-        listEvent = new ArrayList<>();
-        adapter = new EventSearchAdapter(listEvent);
-        recyclerView = inputFragmentView.findViewById(R.id.rv_search_list_event);
-        recyclerView.setVisibility(View.VISIBLE);
-//        listPopMusic();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("TYPE", 3);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                String userInfo = SavedToken.getUserInfo(getActivity());
+                String[] infoArr = userInfo.split("[|]");
+                String username = infoArr[1];
+                String ownerUsername = searchedList.get(position).getOwnerName();
+                int REQ_DETAIL = 1;
+                if(username.equals(ownerUsername)){
+                    REQ_DETAIL = 2;
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", searchedList.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", searchedList.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -170,7 +271,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
             }
         }));
+
         return inputFragmentView;
+
+        //handle search
     }
 
     @Override
@@ -180,28 +284,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void listPopMusic() {
-        listEvent.clear();
-        listEvent.addAll(data1);
-        adapter.notifyDataSetChanged();
-    }
-
-    private void listRockMusic() {
-        listEvent.clear();
-        listEvent.addAll(data2);
-        adapter.notifyDataSetChanged();
-    }
-
-    private void listEDMMusic() {
-        listEvent.clear();
-        listEvent.addAll(data3);
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
 
-        }
     }
 }

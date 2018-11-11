@@ -41,6 +41,12 @@ public class EventItem {
     @SerializedName("OwnerName")
     @Expose
     private String ownerName;
+    @SerializedName("OwnderFullname")
+    @Expose
+    private Object ownderFullname;
+    @SerializedName("ICusVerified")
+    @Expose
+    private Boolean iCusVerified;
     @SerializedName("Date")
     @Expose
     private String date;
@@ -148,6 +154,22 @@ public class EventItem {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public Object getOwnderFullname() {
+        return ownderFullname;
+    }
+
+    public void setOwnderFullname(Object ownderFullname) {
+        this.ownderFullname = ownderFullname;
+    }
+
+    public Boolean getICusVerified() {
+        return iCusVerified;
+    }
+
+    public void setICusVerified(Boolean iCusVerified) {
+        this.iCusVerified = iCusVerified;
     }
 
     public String getDate() {

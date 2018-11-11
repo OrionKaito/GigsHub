@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.myfuckingpc.gigshub1.Activity.CreateGigsActivity;
@@ -158,14 +159,14 @@ public class HomeFragment extends Fragment {
                     mAdapter.notifyDataSetChanged();
                 }
                 else {
-
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-
+                Toast.makeText(getActivity(), "Please check your network connection", Toast.LENGTH_SHORT).show();
             }
         });
 

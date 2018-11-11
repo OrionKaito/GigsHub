@@ -19,7 +19,7 @@ public interface UserClient {
 
     @FormUrlEncoded
     @POST("/api/Account/Register")
-    Call<ResponseBody> register(@Field("Email") String email, @Field("Username") String username, @Field("Password") String password, @Field("ConfirmPassword") String confirmPassword);
+    Call<ResponseBody> register(@Field("Email") String email, @Field("Username") String username,@Field("Fullname") String fullname, @Field("Password") String password, @Field("ConfirmPassword") String confirmPassword);
 
 
 }

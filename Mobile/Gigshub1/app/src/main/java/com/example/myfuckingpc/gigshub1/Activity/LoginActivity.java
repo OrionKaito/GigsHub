@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private String token,
             verify_username = null;
     private PopupWindow pw, pw_verify;
-    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password, edt_register_verify_code ;
+    private EditText edt_register_email, edt_register_username, edt_register_password, edt_register_confirm_password, edt_register_verify_code, edt_register_fullname ;
     private RelativeLayout dim_backgroud;
     private Button btn_verify;
 
@@ -164,12 +164,13 @@ public class LoginActivity extends AppCompatActivity {
         edt_register_username = v.findViewById(R.id.edt_register_username);
         edt_register_password = v.findViewById(R.id.edt_register_password);
         edt_register_confirm_password = v.findViewById(R.id.edt_register_confirm_password);
+        edt_register_fullname = v.findViewById(R.id.edt_register_fullname);
 
         String email = edt_register_email.getText().toString();
         String username = edt_register_username.getText().toString();
         String password = edt_register_password.getText().toString();
         String confirmPassword = edt_register_confirm_password.getText().toString();
-
+        String fullname = edt_register_fullname.getText().toString();
         //validateRegister
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         int isHaveSpace;
@@ -196,6 +197,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Username can't contain WHITE SPACE", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (fullname.equals("")) {
+            Toast.makeText(this, "Please enter your Full Name", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(password.equals("")){
             Toast.makeText(this, "Please enter Password.", Toast.LENGTH_SHORT).show();
             return;
@@ -220,7 +225,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.show();
-        Call<ResponseBody> call = userClient.register(email, username,password,confirmPassword);
+        Call<ResponseBody> call = userClient.register(email, username,fullname,password,confirmPassword);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

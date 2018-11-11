@@ -12,9 +12,16 @@ import android.widget.Toast;
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.AttendClient;
 import com.example.myfuckingpc.gigshub1.api.EventClient;
+import com.example.myfuckingpc.gigshub1.model.Event;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
+import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,9 +36,11 @@ public class DetailGigsActivity extends AppCompatActivity {
     private static final int USER = 1;
     private static final int OWNER = 2;
     private LinearLayout ll_action;
-    private LinearLayout ll_update;
+    private LinearLayout ll_update, ll_not_interest, ll_join;
     private ImageView iv_price;
-    EventItem eventItem = new EventItem();
+    private List<EventItem> eventItems;
+    private List<Event> eventList;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,42 +62,39 @@ public class DetailGigsActivity extends AppCompatActivity {
         artist = findViewById(R.id.tv_gigs_details_artist);
         numberAttender = findViewById(R.id.tv_gigs_details_number_of_attender);
         hostedUsername = findViewById(R.id.tv_gigs_hosted_name);
+        ll_not_interest = findViewById(R.id.ll_detail_not_interest);
+        ll_join = findViewById(R.id.ll_detail_join);
+        String[] userInfoArr = SavedToken.getUserInfo(this).split("[|]");
+        token = userInfoArr[0];
         //get event information
+        eventList = new ArrayList<>();
         final EventClient service = ApiUtils.eventClient();
-        Call<EventItem> call = service.getEventById(eventId);
-        call.enqueue(new Callback<EventItem>() {
+        Call<Event> call = service.getEventById(eventId);
+        call.enqueue(new Callback<Event>() {
             @Override
-            public void onResponse(Call<EventItem> call, Response<EventItem> response) {
-                if (response.isSuccessful()) {
-                    eventItem = response.body();
-                    String url = eventItem.getImgPath();
-                    LoadImageInternet load = new LoadImageInternet(ssv_image);
-                    load.execute(url);
-                    title.setText(eventItem.getTitle());
-                    datetime.setText(eventItem.getDate()+"\n"+eventItem.getTime());
-                    location.setText(eventItem.getAddress()+", "+eventItem.getCity());
-                    description.setText(eventItem.getDescription());
-                    category.setText(eventItem.getCategory());
-                    if(eventItem.getPrice() != 0){
-                        price.setText("Tiket price: "+eventItem.getPrice().toString()+"$");
-                    }
-                    artist.setText(eventItem.getArtist());
-                    numberAttender.setText(eventItem.getNumberOfAttender()+" people will go");
-                    hostedUsername.setText(eventItem.getOwnerName());
-
-
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                eventItems = response.body().getData();
+                String url = eventItems.get(0).getImgPath();
+                LoadImageInternet load = new LoadImageInternet(ssv_image);
+                load.execute(url);
+                title.setText(eventItems.get(0).getTitle());
+                datetime.setText(eventItems.get(0).getDate()+"\n"+eventItems.get(0).getTime());
+                location.setText(eventItems.get(0).getAddress()+", "+eventItems.get(0).getCity());
+                description.setText(eventItems.get(0).getDescription());
+                category.setText(eventItems.get(0).getCategory());
+                if(eventItems.get(0).getPrice() != 0){
+                    price.setText("Tiket price: "+eventItems.get(0).getPrice().toString()+"$");
                 }
-                else {
-                    Toast.makeText(DetailGigsActivity.this, "CONNECTED", Toast.LENGTH_SHORT).show();
-                }
+                artist.setText(eventItems.get(0).getArtist());
+                numberAttender.setText(eventItems.get(0).getNumberOfAttender()+" people will go");
+                hostedUsername.setText(eventItems.get(0).getOwnerName());
             }
 
             @Override
-            public void onFailure(Call<EventItem> call, Throwable t) {
+            public void onFailure(Call<Event> call, Throwable t) {
                 Toast.makeText(DetailGigsActivity.this, "K", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         if (typeUser == OWNER) {
             ll_action.setVisibility(View.GONE);
@@ -104,6 +110,37 @@ public class DetailGigsActivity extends AppCompatActivity {
             ll_action.setVisibility(View.VISIBLE);
             ll_update.setVisibility(View.GONE);
         }
+        ll_not_interest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        ll_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AttendClient service = ApiUtils.attend(token);
+                Call<ResponseBody> call = service.attend(eventId);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(DetailGigsActivity.this, "Successful follow: "+eventItems.get(0).getTitle() , Toast.LENGTH_SHORT).show();
+                            onBackPressed();
+                        }
+                        else {
+                            Toast.makeText(DetailGigsActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(DetailGigsActivity.this, "Network fail.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     public void clickToUpdateEvent(View view) {
