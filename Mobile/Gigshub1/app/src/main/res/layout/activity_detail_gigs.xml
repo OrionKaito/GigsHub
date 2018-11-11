@@ -216,7 +216,7 @@
                 android:layout_below="@id/tv_gigs_title"
                 android:layout_width="19dp"
                 android:layout_height="19dp"
-                android:src="@drawable/ic_verified_user"
+                android:src="@drawable/ic_not_verified_user"
                 />
             <TextView
                 android:id="@+id/tv_gigs_details_number_of_attender"

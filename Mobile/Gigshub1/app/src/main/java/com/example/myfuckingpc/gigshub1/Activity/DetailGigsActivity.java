@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
-import com.example.myfuckingpc.gigshub1.UpdateGigsActivity;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.AttendClient;
 import com.example.myfuckingpc.gigshub1.api.EventClient;
@@ -38,7 +37,7 @@ public class DetailGigsActivity extends AppCompatActivity {
     private static final int OWNER = 2;
     private LinearLayout ll_action;
     private LinearLayout ll_update, ll_not_interest, ll_join;
-    private ImageView iv_price;
+    private ImageView iv_price, iv_verify;
     private List<EventItem> eventItems;
     private List<Event> eventList;
     private String token;
@@ -65,6 +64,7 @@ public class DetailGigsActivity extends AppCompatActivity {
         hostedUsername = findViewById(R.id.tv_gigs_hosted_name);
         ll_not_interest = findViewById(R.id.ll_detail_not_interest);
         ll_join = findViewById(R.id.ll_detail_join);
+        iv_verify = findViewById(R.id.iv_gigs_verified_user);
         String[] userInfoArr = SavedToken.getUserInfo(this).split("[|]");
         token = userInfoArr[0];
         //get event information
@@ -86,9 +86,13 @@ public class DetailGigsActivity extends AppCompatActivity {
                 if(eventItems.get(0).getPrice() != 0){
                     price.setText("Tiket price: "+eventItems.get(0).getPrice().toString()+"$");
                 }
+
                 artist.setText(eventItems.get(0).getArtist());
                 numberAttender.setText(eventItems.get(0).getNumberOfAttender()+" people will go");
                 hostedUsername.setText(eventItems.get(0).getOwnerName());
+                if(eventItems.get(0).getICusVerified()){
+                    iv_verify.setImageResource(R.drawable.ic_verified_user);
+                }
             }
 
             @Override
@@ -147,7 +151,10 @@ public class DetailGigsActivity extends AppCompatActivity {
     }
 
     public void clickToUpdateEvent(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("EventID",eventId);
         Intent intent = new Intent(this, UpdateGigsActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

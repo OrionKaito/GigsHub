@@ -22,6 +22,7 @@ import com.example.myfuckingpc.gigshub1.api.UserClient;
 import com.example.myfuckingpc.gigshub1.api.VerifyClient;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 import com.example.myfuckingpc.gigshub1.model.User;
+import com.example.myfuckingpc.gigshub1.model.UserInfomation;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
@@ -91,10 +92,10 @@ public class LoginActivity extends AppCompatActivity {
         fields.put("grant_type", "password");
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.show();
-        Call<User> call = userClient.login(fields);
-        call.enqueue(new Callback<User>() {
+        Call<UserInfomation> call = userClient.login(fields);
+        call.enqueue(new Callback<UserInfomation>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserInfomation> call, Response<UserInfomation> response) {
                 if(response.isSuccessful()){
                     token = response.body().getAccessToken();
                     String username = response.body().getUserName();
@@ -133,15 +134,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     progressDialog.dismiss();
                 }
-
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserInfomation> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
+
     }
 
     public void clickToRegister(View view) {

@@ -27,7 +27,7 @@ public interface EventClient {
 
     @GET("/api/event/searchbycategory")
     Call<Event> searchByCategory(@Query("strSeach") String category);
-    Call<EventItem> getEventById(@Query("Id") long eventId);
+
 
 
 }

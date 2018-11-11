@@ -5,37 +5,58 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserInfomation {
 
-    @SerializedName("Id")
+    @SerializedName("access_token")
     @Expose
-    private Integer id;
-    @SerializedName("UserName")
+    private String accessToken;
+    @SerializedName("token_type")
+    @Expose
+    private String tokenType;
+    @SerializedName("expires_in")
+    @Expose
+    private Integer expiresIn;
+    @SerializedName("roles")
+    @Expose
+    private String roles;
+    @SerializedName("userName")
     @Expose
     private String userName;
-    @SerializedName("Fullname")
+    @SerializedName(".issued")
     @Expose
-    private Object fullname;
-    @SerializedName("Email")
+    private String issued;
+    @SerializedName(".expires")
     @Expose
-    private String email;
-    @SerializedName("Phonenumber")
-    @Expose
-    private Object phonenumber;
-    @SerializedName("Gender")
-    @Expose
-    private Object gender;
-    @SerializedName("Address")
-    @Expose
-    private Object address;
-    @SerializedName("DateOfBirth")
-    @Expose
-    private String dateOfBirth;
+    private String expires;
 
-    public Integer getId() {
-        return id;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public Integer getExpiresIn() {
+        return expiresIn;
+    }
+
+    public void setExpiresIn(Integer expiresIn) {
+        this.expiresIn = expiresIn;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getUserName() {
@@ -46,52 +67,20 @@ public class UserInfomation {
         this.userName = userName;
     }
 
-    public Object getFullname() {
-        return fullname;
+    public String getIssued() {
+        return issued;
     }
 
-    public void setFullname(Object fullname) {
-        this.fullname = fullname;
+    public void setIssued(String issued) {
+        this.issued = issued;
     }
 
-    public String getEmail() {
-        return email;
+    public String getExpires() {
+        return expires;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Object getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(Object phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    public Object getGender() {
-        return gender;
-    }
-
-    public void setGender(Object gender) {
-        this.gender = gender;
-    }
-
-    public Object getAddress() {
-        return address;
-    }
-
-    public void setAddress(Object address) {
-        this.address = address;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setExpires(String expires) {
+        this.expires = expires;
     }
 
 }

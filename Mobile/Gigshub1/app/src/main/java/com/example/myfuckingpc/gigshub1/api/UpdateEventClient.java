@@ -10,10 +10,9 @@ import retrofit2.http.Part;
 
 public interface UpdateEventClient {
     @Multipart
-    @POST("/api/event/create")
+    @POST("/api/event/update")
     Call<ResponseBody> upload(
-            @Part("EventId") RequestBody eventId,
-            @Part("Title") RequestBody title,
+            @Part("EventId") Integer eventId,
             @Part("City")RequestBody city,
             @Part("Address")RequestBody address,
             @Part("Description")RequestBody description,
@@ -25,4 +24,5 @@ public interface UpdateEventClient {
 
             @Part MultipartBody.Part img
     );
+
 }

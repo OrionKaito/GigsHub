@@ -169,7 +169,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onFailure(Call<Event> call, Throwable t) {
-                                Toast.makeText(getActivity(), "Please check your network connection", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "No result.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         });
@@ -192,7 +192,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                                     adapter.notifyDataSetChanged();
                                 }
                                 else {
-                                    Toast.makeText(getActivity(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "No result.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             }
@@ -223,7 +223,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                                     adapter.notifyDataSetChanged();
                                 }
                                 else {
-                                    Toast.makeText(getActivity(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "No result.", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                             }

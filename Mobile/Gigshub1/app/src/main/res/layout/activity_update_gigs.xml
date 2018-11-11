@@ -93,8 +93,8 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/et_update_event_title"
+                <TextView
+                    android:id="@+id/tv_update_event_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Input your event title (Can't edit after created)"
@@ -248,6 +248,7 @@
             android:weightSum="2">
 
             <LinearLayout
+                android:id="@+id/btn_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -259,7 +260,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_save"
+
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_going" />

@@ -52,10 +52,8 @@
             android:id="@+id/iv_is_verified"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/ic_verified_user"
-            android:visibility="visible" />
+            android:src="@drawable/ic_not_verified_user" />
     </LinearLayout>
-
     <RatingBar
         android:id="@+id/rb_gigs_star"
         style="@style/RatingBar"
@@ -76,7 +74,6 @@
         android:stepSize="0.1"
         android:transformPivotX="0dp"
         android:transformPivotY="0dp" />
-
     <TextView
         android:id="@+id/tv_gigs_number"
         android:layout_width="match_parent"

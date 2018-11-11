@@ -18,20 +18,29 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.Activity.ChooseMethodToAddBudget;
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
+import com.example.myfuckingpc.gigshub1.Activity.EditProfileActivity;
 import com.example.myfuckingpc.gigshub1.Activity.FollowActivity;
 import com.example.myfuckingpc.gigshub1.Activity.LoginActivity;
 import com.example.myfuckingpc.gigshub1.Activity.RequestVerificationActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
-import com.example.myfuckingpc.gigshub1.EventSearch;
+import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
+import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CustomerClient;
+import com.example.myfuckingpc.gigshub1.api.EditProfileClient;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
+import com.example.myfuckingpc.gigshub1.model.User;
+import com.example.myfuckingpc.gigshub1.model.UserItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,9 +49,10 @@ public class PersonalFragment extends Fragment {
     ImageView addBudget, logout;
     private RecyclerView recyclerView;
     private List<EventItem> listEvent;
+    private List<UserItem> userItems;
     private CircleImageView civ_image;
     private EventSearchAdapter adapter;
-    private ImageView iv_verify, iv_followee, iv_follower;
+    private ImageView iv_verify, iv_followee, iv_follower, iv_edit_profile;
     private Intent intent;
     private TextView tv_verify, tv_name, tv_number_event, tv_numbers_event_title;
     public static final int FOLLOWER = 1;
@@ -50,6 +60,7 @@ public class PersonalFragment extends Fragment {
     public static final int VERIFIED = 1;
     public static final int NOT_VERIFY = 2;
     public static int typeUser;
+    private String token = null;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -87,6 +98,15 @@ public class PersonalFragment extends Fragment {
         tv_number_event = view.findViewById(R.id.tv_numbers_event);
         tv_numbers_event_title = view.findViewById(R.id.tv_numbers_event_title);
         tv_name = view.findViewById(R.id.tv_name_user);
+        iv_edit_profile = view.findViewById(R.id.iv_edit_profile);
+        //
+        iv_edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         iv_followee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +142,36 @@ public class PersonalFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        //get user info
+        String[] userInfoArr = SavedToken.getUserInfo(getContext()).split("[|]");
+        token = userInfoArr[0];
+        userItems = new ArrayList<>();
+        CustomerClient customerClient = ApiUtils.getCustomerClient(token);
+        Call<User> call = customerClient.getUserInformation();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                userItems = response.body().getData();
+                tv_name.setText(userItems.get(0).getFullname().toString());
+                if(userItems.get(0).getImgPath() != null){
+                    String url = userItems.get(0).getImgPath().toString();
+                    LoadImageInternet load = new LoadImageInternet(civ_image);
+                    load.execute(url);
+                }
+                if(userItems.get(0).getIsVerified()== true){
+                    iv_verify.setImageResource(R.drawable.ic_verified_user);
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+
         listEvent = new ArrayList<>();
         recyclerView = view.findViewById(R.id.rv_personal_list_event);
         adapter = new EventSearchAdapter(listEvent);

@@ -1,5 +1,6 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
+import com.example.myfuckingpc.gigshub1.FileUtils.ReadPath;
+import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.CategoryClient;
 import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
@@ -69,29 +72,32 @@ public class UpdateGigsActivity extends AppCompatActivity {
     private TextView tv_datetime, tv_date_time;
 
     private List<Bitmap> listImage;
-    private ImageView ssv_image;
     private ImageView iv_update_gigs_image;
-    private TextView tv_gigs_update_date , category;
-    List<CategoryItem> categoryItemList = new ArrayList<>();
+    private TextView tv_gigs_update_date,tv_title;
     String[] categoryArr;
     Map<String, Integer> categoryMaps = new HashMap<>();
     private DatePickerDialog datePickerDialog;
-    private EditText tv_title, tv_description, tv_price, tv_city, tv_address, tv_artist;
-    private LinearLayout ll_camera_event;
+    private EditText tv_description, tv_price, tv_city, tv_address, tv_artist;
+    private LinearLayout ll_camera_event, btn_save_event;
     private LinearLayout ll_create_event;
     String IMAGE_PATH;
     Uri selectedImage;
     private RadioGroup rb_price;
     boolean isSale;
     private Spinner spn_category;
-    private Button btn_save_event;
-    private EventItem eventItem = new EventItem();
+    private List<EventItem> eventItems;
+    List<CategoryItem> categoryList = new ArrayList<>();
+    private long eventId= 0;
+    ProgressDialog progressDialog;
+    private String dateInput = null;
+    private String timeInput = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_gigs);
-        ll_camera_event = this.findViewById(R.id.ll_camera_create);
-        iv_update_gigs_image = this.findViewById(R.id.iv_update_gigs_image);
+        progressDialog = new ProgressDialog(this);
+        ll_camera_event = this.findViewById(R.id.ll_camera_update);
+        iv_update_gigs_image = this.findViewById(R.id.iv_update_gigs);
         ll_camera_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,30 +133,33 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 }
             }
         });
+        //category
         spn_category = this.findViewById(R.id.spn_gigs_update_category);
         CategoryClient service = ApiUtils.categoryClient();
         Call<Category> call = service.getAllCategory();
         call.enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if(response.isSuccessful()){
-                    categoryItemList = response.body().getData();
-                    categoryArr = new String[categoryItemList.size()];
-                    for(int i = 0 ; i < categoryItemList.size(); i++){
-                        categoryArr[i] = categoryItemList.get(i).getName();
-                        categoryMaps.put(categoryItemList.get(i).getName(), categoryItemList.get(i).getId());
+                if (response.isSuccessful()) {
+                    categoryList = response.body().getData();
+                    categoryArr = new String[categoryList.size()];
+                    for(int i = 0; i<categoryList.size();i++){
+                        categoryArr[i] = categoryList.get(i).getName();
+                        categoryMaps.put(categoryList.get(i).getName(),categoryList.get(i).getId());
+
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext() , android.R.layout.simple_spinner_item , categoryArr);
-                    adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-                    spn_category.setAdapter(adapter);
-                } else {
+                    ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getApplication(),android.R.layout.simple_spinner_item,categoryArr);
+                    adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                    spn_category.setAdapter(adapterCategory);
+                }
+                else {
                     return;
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                 return;
+                return;
             }
         });
 
@@ -158,39 +167,41 @@ public class UpdateGigsActivity extends AppCompatActivity {
 
 
 
-        tv_title = this.findViewById(R.id.et_update_event_title);
+        tv_title = this.findViewById(R.id.tv_update_event_title);
         tv_city = this.findViewById(R.id.et_update_event_city);
         tv_address = this.findViewById(R.id.et_update_event_address);
         tv_description = this.findViewById(R.id.et_update_event_description);
         tv_artist = this.findViewById(R.id.et_update_event_artist);
         tv_date_time = this.findViewById(R.id.tv_gigs_update_date);
-        category = this.findViewById(R.id.tv_category);
+
 
 
 
         //get data to form
-        Bundle bundle = new Bundle();
-        long eventId = bundle.getLong("EventId");
-        final EventClient Eventservice = ApiUtils.eventClient();
-        Call<EventItem> callEventServeice = Eventservice.getEventById(eventId);
-        callEventServeice.enqueue(new Callback<EventItem>() {
+        eventItems = new ArrayList<>();
+        Bundle bundle = getIntent().getExtras();
+        eventId = bundle.getLong("EventID");
+        final EventClient eventService = ApiUtils.eventClient();
+        Call<Event> callEventService = eventService.getEventById(eventId);
+        callEventService.enqueue(new Callback<Event>() {
             @Override
-            public void onResponse(Call<EventItem> call, Response<EventItem> response) {
-                if(response.isSuccessful()){
-                    eventItem = response.body();
-                    String url = eventItem.getImgPath();
-                    LoadImageInternet load = new LoadImageInternet(ssv_image);
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                if (response.isSuccessful()) {
+                    eventItems = response.body().getData();
+                    String url = eventItems.get(0).getImgPath();
+                    LoadImageInternet load = new LoadImageInternet(iv_update_gigs_image);
                     load.execute(url);
-                    tv_title.setText(eventItem.getTitle());
-                    tv_datetime.setText(eventItem.getDate() +"\n" + eventItem.getTime());
-                    tv_city.setText(eventItem.getCity());
-                    tv_description.setText(eventItem.getDescription());
-                    tv_datetime.setText(eventItem.getDate());
-                    tv_address.setText(eventItem.getAddress());
-                    tv_artist.setText(eventItem.getArtist());
-                    category.setText(eventItem.getCategory());
-                    if(eventItem.getPrice() != 0) {
-                        tv_price.setText(eventItem.getPrice() + "$");
+                    tv_title.setText(eventItems.get(0).getTitle());
+                    tv_date_time.setText(eventItems.get(0).getDate() +" " + eventItems.get(0).getTime());
+                    tv_city.setText(eventItems.get(0).getCity());
+                    tv_description.setText(eventItems.get(0).getDescription());
+                    tv_address.setText(eventItems.get(0).getAddress());
+                    tv_artist.setText(eventItems.get(0).getArtist());
+                    String categoryString = eventItems.get(0).getCategory();
+                    final int categoryInt = categoryMaps.get(categoryString);
+                    spn_category.setSelection(categoryInt);
+                    if(eventItems.get(0).getPrice() != 0) {
+                        tv_price.setText(eventItems.get(0).getPrice() + "$");
                     }
                 }else {
                     Toast.makeText(getApplicationContext(), "CONNECTED", Toast.LENGTH_SHORT).show();
@@ -198,10 +209,11 @@ public class UpdateGigsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<EventItem> call, Throwable t) {
+            public void onFailure(Call<Event> call, Throwable t) {
                 Toast.makeText(getApplicationContext() , "K", Toast.LENGTH_SHORT).show();
             }
         });
+
         btn_save_event = this.findViewById(R.id.btn_save);
         btn_save_event.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,9 +238,9 @@ public class UpdateGigsActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         date_time = (dayOfMonth + "/" + monthOfYear + "/" + year);
-                        timePicker();
                     }
                 }, mYear, mMonth, mDay);
+        timePicker();
         datePickerDialog.show();
     }
 
@@ -253,40 +265,44 @@ public class UpdateGigsActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         SimpleDateFormat formatter2 = new SimpleDateFormat("EEE, dd/MM/yyyy HH:mm");
+                        SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                        dateInput = formatter3.format(date);
                         tv_date_time.setText(formatter2.format(date));
                     }
                 }, mHour, mMinute, true);
         timePickerDialog.show();
     }
-    //éo hiểu gì phần này luôn
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == 123) {
-//            if(resultCode == 123){
-//                if(resultCode == 123) {
-//                    //pick image from gallery
-//                    Uri selectedImage = data.getData();
-//                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-//
-//                    //get the cursor
-//                    Cursor cursor = this.getContentResolver().query(selectedImage , filePathColumn , null , null ,null);
-//                    // Move to first row
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    String imgDecodableString = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//                }
-//            }
-//        }
-//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 123) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
+                    //pick image from gallery
+                    selectedImage = data.getData();
+                    IMAGE_PATH = ReadPath.getPath(getApplication(), selectedImage);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                    // Get the cursor
+                    Cursor cursor = getApplication().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    // Move to first row
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString);
+                    iv_update_gigs_image.setImageBitmap(bitmap);
+
+                }
+            }
+        }
+    }
 
     private void updateEvent(){
-        Bundle bundle = new Bundle();
-        final long eventId = bundle.getLong("EventId");
-        final UpdateEventClient updateEventClient = ApiUtils.updateEventClient(eventId);
+        String[] userInfoArr = SavedToken.getUserInfo(this).split("[|]");
+        String token = userInfoArr[0];
+        final UpdateEventClient updateEventClient = ApiUtils.updateEventClient(token);
         if(IMAGE_PATH == null){
             Toast.makeText(getApplicationContext() , "Please choose an image", Toast.LENGTH_SHORT).show();
             return;
@@ -295,13 +311,19 @@ public class UpdateGigsActivity extends AppCompatActivity {
         final RequestBody requestFile = RequestBody.create(MediaType.parse(this.getContentResolver().getType(selectedImage)), file);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
-        final String eventID = Long.toString(eventId);
+        final int eventID = (int) eventId;
         final String titleString = tv_title.getText().toString();
         final String cityString = tv_city.getText().toString();
         final String addressString = tv_address.getText().toString();
         final String descriptionString = tv_description.getText().toString();
         final String artistString = tv_artist.getText().toString();
-        final String datetimeString = tv_gigs_update_date.getText().toString().substring(6);
+        final String datetimeString = tv_gigs_update_date.getText().toString();
+        //SimpleDateFormat formarterDate = new SimpleDateFormat("yyyy/MM/dd");
+        //SimpleDateFormat formarterTime = new SimpleDateFormat("HH:mm");
+        //dateInput = formarterDate.format(eventItems.get(0).getDate());
+        //timeInput = formarterTime.format(eventItems.get(0).getTime());
+        final String datetimeStringInput = dateInput+" "+timeInput;
+
         double priceDouble = 0;
         if(isSale == true){
             priceDouble = Double.parseDouble(tv_price.getText().toString());
@@ -344,7 +366,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
         }
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update Event");
         builder.setMessage("Please check your event's information carefully. \n" +
                 "Do you want to update this event?");
@@ -359,21 +381,21 @@ public class UpdateGigsActivity extends AppCompatActivity {
         builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                final RequestBody eventId = RequestBody.create(okhttp3.MultipartBody.FORM , eventID);
-                final RequestBody title = RequestBody.create(okhttp3.MultipartBody.FORM, titleString);
+
+
                 RequestBody city = RequestBody.create(okhttp3.MultipartBody.FORM, cityString);
                 RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
                 RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
                 RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
-                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, datetimeString);
-                final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
+                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, dateInput);
+
                 progressDialog.show();
-                Call<ResponseBody> call = updateEventClient.upload(eventId,title,city,address,description,artist,datetime,isSale, finalPriceDouble,categoryInt,body);
+                Call<ResponseBody> call = updateEventClient.upload(eventID,city,address,description,artist,datetime,isSale, finalPriceDouble,categoryInt,body);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Update Success!", Toast.LENGTH_SHORT).show();
                             tv_title.setText("");
                             tv_address.setText("");
                             tv_artist.setText("");
