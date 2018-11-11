@@ -2,9 +2,12 @@ package com.example.myfuckingpc.gigshub1.Activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -14,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.myfuckingpc.gigshub1.DirectionsJSONParser;
 import com.example.myfuckingpc.gigshub1.R;
@@ -47,6 +51,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private LatLng myPosition, destination;
     private LatLngBounds.Builder builder;
     private ImageView iv_back;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
         mapFragment.getMapAsync(this);
+        address = getIntent().getStringExtra("Address");
 
     }
 
@@ -107,15 +113,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             // Creating a LatLng object for the current location
 
             myPosition = new LatLng(latitude, longitude);
-            destination = new LatLng(10.762622, 106.660172);
+            if (address != null) {
+                destination = getLocationFromAddress(getApplicationContext(), address);
+            } else {
+                destination = myPosition;
+            }
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(destination, 15);
+            mMap.moveCamera(cameraUpdate);
             mMap.addMarker(new MarkerOptions()
                     .position(destination)
                     .title("Hello world"));
 //            String url = getDirectionsUrl(myPosition, destination);
 //            DownloadTask downloadTask = new DownloadTask();
 //            downloadTask.execute(url);
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(destination, 15);
-            mMap.moveCamera(cameraUpdate);
+
             return;
         }
     }
@@ -147,6 +158,42 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
+    public LatLng getLocationFromAddress(Context context, String inputtedAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng resLatLng = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(inputtedAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            if (address.size() == 0) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            resLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(resLatLng, 15);
+        mMap.moveCamera(cameraUpdate);
+        mMap.addMarker(new MarkerOptions()
+                .position(resLatLng)
+                .title("Hello world"));
+
+        return resLatLng;
+    }
 
     /**
      * A class to parse the Google Places in JSON format

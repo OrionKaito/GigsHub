@@ -14,6 +14,7 @@ import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
 import com.example.myfuckingpc.gigshub1.EventSearch;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
+import com.example.myfuckingpc.gigshub1.model.EventItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 public class UserFollowActivity extends AppCompatActivity {
     private RecyclerView rv_list;
     private EventSearchAdapter adapter;
-    private List<EventSearch> eventList;
+    private List<EventItem> eventList;
     private Intent intent;
     private TextView tv_follow_type;
     private boolean isFollow;
@@ -65,9 +66,6 @@ public class UserFollowActivity extends AppCompatActivity {
 
     private void listFollow() {
         eventList.clear();
-        List<EventSearch> data = new ArrayList<>();
-        data.add(new EventSearch("Viral Fest Asia", "Award competition for young singer for asia singer, band. Now return to Bankok, Thailand", "Sat, Jan 30, 2019", R.drawable.pop_event3));
-        eventList.addAll(data);
         adapter.notifyDataSetChanged();
     }
 
