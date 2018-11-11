@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Attendance.cs" />
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Event.cs" />
     <Compile Include="Model\EventCategory.cs" />

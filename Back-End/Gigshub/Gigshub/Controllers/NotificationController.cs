@@ -1,5 +1,6 @@
 ﻿using Gigshub.Model.Model;
 using Gigshub.Service;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Web.Http;
@@ -19,6 +20,31 @@ namespace Gigshub.Controllers
             this._notificationService = _notificationService;
             this._userNotificationService = _userNotificationService;
             this._customerService = _customerService;
+        }
+
+        [HttpGet]
+        [Route("api/notification/getnumberofnotification", Name = "GetNumberOfNotification")]
+        public IHttpActionResult GetNumberOfNotification()
+        {
+            var name = User.Identity.Name;
+            var cusInDb = _customerService.GetByName(name);
+
+            if (cusInDb == null)
+            {
+                return NotFound(); //status code 404
+            }
+
+            //begin get data
+            try
+            {
+                var result = _userNotificationService.GetNumberOfNotification(cusInDb.Id);
+                return Ok(result); //status code 200
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to get data"); //status code 400
+            }
+            //end get data
         }
 
         [HttpGet]

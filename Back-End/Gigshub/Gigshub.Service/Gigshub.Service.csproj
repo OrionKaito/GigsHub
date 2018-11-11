@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttendanceService.cs" />
+    <Compile Include="CommentService.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="EventCategoryService.cs" />
     <Compile Include="EventImageService.cs" />
