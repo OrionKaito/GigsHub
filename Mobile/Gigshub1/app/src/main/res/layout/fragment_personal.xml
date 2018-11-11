@@ -56,7 +56,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_thai"
+            android:src="@drawable/ic_ninja"
             app:civ_border_color="#FF000000" />
 
         <LinearLayout

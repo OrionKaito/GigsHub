@@ -130,6 +130,42 @@
                     android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_follwed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_detail_unattend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_black_border"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_close" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ropa_sans"
+                    android:padding="10dp"
+                    android:text="Unattend"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
