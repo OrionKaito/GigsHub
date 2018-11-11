@@ -3,6 +3,7 @@ using Gigshub.Model.Model;
 using Gigshub.Service;
 using Gigshub.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -126,7 +127,12 @@ namespace Gigshub.Controllers
                     return Ok("There is not any event yet!"); // status code 200
                 }
 
-                return Ok(result);
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
             }
             catch (Exception)
             {
@@ -170,7 +176,14 @@ namespace Gigshub.Controllers
                 {
                     return Ok("There is not any event yet!"); // status code 200
                 }
-                return Ok(result);
+
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
+
             }
             catch (Exception)
             {
@@ -213,7 +226,16 @@ namespace Gigshub.Controllers
                 ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
             };
             //end get data
-            return Ok(result);
+
+            List<EventViewModel> haiz = new List<EventViewModel>();
+            haiz.Add(result);
+
+            var data = new DataEventViewModel
+            {
+                Data = haiz,
+            };
+
+            return Ok(data);
         }
 
         [HttpGet]
@@ -250,7 +272,12 @@ namespace Gigshub.Controllers
                     return Ok("There are no matching event!"); // status code 200
                 }
 
-                return Ok(result);
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
             }
             catch (Exception)
             {
@@ -293,7 +320,12 @@ namespace Gigshub.Controllers
                     return Ok("There are no matching event!"); // status code 200
                 }
 
-                return Ok(result);
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
             }
             catch (Exception)
             {
@@ -336,7 +368,12 @@ namespace Gigshub.Controllers
                     return Ok("There are no matching event!"); // status code 200
                 }
 
-                return Ok(result);
+                var data = new DataEventViewModel
+                {
+                    Data = result,
+                };
+
+                return Ok(data);
             }
             catch (Exception)
             {

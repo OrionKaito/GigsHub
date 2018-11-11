@@ -1,7 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gigshub.ViewModel
 {
+
+    public class DataCustomerViewModel
+    {
+        public IEnumerable<CustomerViewModel> Data { get; set; }
+    }
+
     public class CustomerViewModel : CustomerCreateModel
     {
         public long Id { get; set; }
@@ -17,7 +24,7 @@ namespace Gigshub.ViewModel
         public string Phonenumber { get; set; }
         public string Gender { get; set; }
         public string Address { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
     }
 
     public class CustomerUpdateModel

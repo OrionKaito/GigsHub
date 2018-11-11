@@ -5,6 +5,7 @@ using Gigshub.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -57,8 +58,16 @@ namespace Gigshub.Controllers
             }
 
             Mapper.Map(cusInDb, result);
+
+            List<CustomerViewModel> haiz = new List<CustomerViewModel>();
+            haiz.Add(result);
+
+            var data = new DataCustomerViewModel
+            {
+                Data = haiz,
+            };
             //end get data
-            return Ok(result); //sta    tus code 200
+            return Ok(data); //sta    tus code 200
         }
 
         [HttpGet]
@@ -75,8 +84,15 @@ namespace Gigshub.Controllers
             }
 
             Mapper.Map(cusInDb, result);
+
+            List<CustomerViewModel> haiz = new List<CustomerViewModel>();
+            haiz.Add(result);
+
+            var data = new DataCustomerViewModel{
+                Data = haiz,
+            };
             //end get data
-            return Ok(result); //status code 200
+            return Ok(data); //status code 200
         }
 
         [HttpGet]
@@ -93,26 +109,47 @@ namespace Gigshub.Controllers
             }
 
             Mapper.Map(cusInDb, result);
+
+            List<CustomerViewModel> haiz = new List<CustomerViewModel>();
+            haiz.Add(result);
+
+            var data = new DataCustomerViewModel
+            {
+                Data = haiz,
+            };
             //end get data
-            return Ok(result); //status code 200
+            return Ok(data); //status code 200
         }
 
         [HttpGet]
         [Route("api/customer/searchlikefullname", Name = "SearchLikeFullname")]
         public IHttpActionResult SearchLikeFullname(string fullname)
         {
-            var result = new CustomerViewModel();
             //begin get data
-            var cusInDb = _customerService.SearchLikeFullName(fullname);
+            var cusInDb = _customerService.SearchLikeFullName(fullname).Select(k => new CustomerViewModel {
+                Id = k.Id,
+                Address = k.Address,
+                DateOfBirth = k.DateOfBirth,
+                Email = k.Email,
+                Fullname = k.Fullname,
+                Gender = k.Gender,
+                ImgPath = k.ImgPath,
+                IsVerified = k.IsVerified,
+                Phonenumber = k.Phonenumber,
+                UserName = k.UserName,
+            });
 
             if (cusInDb == null)
             {
                 return BadRequest("There are no matching customer!"); //status code 400
             }
 
-            Mapper.Map(cusInDb, result);
+            var data = new DataCustomerViewModel
+            {
+                Data = cusInDb,
+            };
             //end get data
-            return Ok(result); //status code 200
+            return Ok(data); //status code 200
         }
 
         [HttpPost]

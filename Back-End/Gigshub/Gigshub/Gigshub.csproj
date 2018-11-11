@@ -280,6 +280,7 @@
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\EventCategoryViewModel.cs" />
     <Compile Include="ViewModel\EventViewModel.cs" />
+    <Compile Include="ViewModel\FollowingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
