@@ -205,11 +205,11 @@ namespace Gigshub.Controllers
             var model = new CustomerUpdateModel
             {
                 Id = custInDb.Id,
-                Address = httpRequest["Address"],
-                DateOfBirth = Convert.ToDateTime(httpRequest["Datetime"]),
+                //Address = httpRequest["Address"],
+                //DateOfBirth = Convert.ToDateTime(httpRequest["Datetime"]),
                 Fullname = httpRequest["Fullname"],
-                Gender = httpRequest["Gender"],
-                Phonenumber = httpRequest["Phonenumber"],
+                //Gender = httpRequest["Gender"],
+                //Phonenumber = httpRequest["Phonenumber"],
             };
 
             try

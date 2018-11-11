@@ -239,6 +239,52 @@ namespace Gigshub.Controllers
         }
 
         [HttpGet]
+        [Route("api/event/getbyidupdate", Name = "GetByIdUPdate")]
+        public IHttpActionResult GetByIdUPdate(long Id)
+        {
+            //begin get data
+            var Event = _eventService.GetByID(Id);
+            if (Event == null)
+            {
+                return BadRequest("Event not exist"); //status code 400
+            }
+
+            var name = _customerService.GetByID(Event.OwnerID).UserName;
+
+            var result = new EventViewUpdateModel
+            {
+                Id = Event.Id,
+                Title = Event.Title,
+                City = Event.City,
+                Address = Event.Address,
+                Description = Event.Description,
+                Artist = Event.Artist,
+                NumberOfAttender = Event.NumberOfAttender,
+                Rating = Event.Rating,
+                IsDeleted = Event.IsDeleted,
+                IsSale = Event.IsSale,
+                Price = Event.Price,
+                OwnerName = Event.Owner.UserName,
+                OwnderFullname = Event.Owner.Fullname,
+                ICusVerified = Event.Owner.IsVerified,
+                DateTime = Event.DateTime,
+                Category = Event.Category.Name,
+                ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
+            };
+            //end get data
+
+            List<EventViewUpdateModel> haiz = new List<EventViewUpdateModel>();
+            haiz.Add(result);
+
+            var data = new DateEventViewUpdateModel
+            {
+                Data = haiz,
+            };
+
+            return Ok(data);
+        }
+
+        [HttpGet]
         [Route("api/event/searchliketitle", Name = "SearchLikeTitle")]
         public IHttpActionResult SearchLikeTitle(string strSeach)
         {

@@ -31,9 +31,9 @@ namespace Gigshub.ViewModel
     {
         public long Id { get; set; }
         public string Fullname { get; set; }
-        public string Phonenumber { get; set; }
-        public string Gender { get; set; }
-        public string Address { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        //public string Phonenumber { get; set; }
+        //public string Gender { get; set; }
+        //public string Address { get; set; }
+        //public DateTime DateOfBirth { get; set; }
     }
 }
