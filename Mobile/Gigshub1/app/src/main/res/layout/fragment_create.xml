@@ -151,11 +151,11 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
+                    android:textSize="18sp"
                     android:id="@+id/et_create_event_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ex: Hà Nội / New York"
                     android:maxLines="1" />
 
                 <TextView
@@ -168,11 +168,11 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
+                    android:textSize="18sp"
                     android:id="@+id/et_create_event_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ex: 1 Cong Hoa street, Tan Binh district"
                     android:maxLines="1" />
 
                 <TextView

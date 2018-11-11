@@ -9,14 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myfuckingpc.gigshub1.EventSearch;
+import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
+import com.example.myfuckingpc.gigshub1.model.EventItem;
 
 import java.util.List;
 
 public class EventSearchAdapter extends RecyclerView.Adapter<EventSearchAdapter.MyViewHolder> {
-    private List<EventSearch> searchList;
+    private List<EventItem> searchList;
 
-    public EventSearchAdapter(List<EventSearch> searchList) {
+    public EventSearchAdapter(List<EventItem> searchList) {
         this.searchList = searchList;
     }
 
@@ -43,11 +45,13 @@ public class EventSearchAdapter extends RecyclerView.Adapter<EventSearchAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull EventSearchAdapter.MyViewHolder myViewHolder, int i) {
-        EventSearch event = searchList.get(i);
-        myViewHolder.date.setText(event.getDatetime());
+        EventItem event = searchList.get(i);
+        myViewHolder.date.setText(event.getDate()+"\n"+event.getTime());
         myViewHolder.description.setText(event.getDescription());
         myViewHolder.title.setText(event.getTitle());
-        myViewHolder.image.setBackgroundResource(event.getImage());
+        String url = event.getImgPath();
+        LoadImageInternet load = new LoadImageInternet(myViewHolder.image);
+        load.execute(url);
     }
 
     @Override

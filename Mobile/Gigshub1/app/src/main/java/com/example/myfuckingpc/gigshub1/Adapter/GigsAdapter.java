@@ -70,7 +70,7 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         if(gigs.getIsSale()== true){
             holder.price.setText("Ticket Price:"+gigs.getPrice().toString()+"$");
         }
-
+        holder.time.setText(gigs.getDate()+","+gigs.getTime());
 
 
     }

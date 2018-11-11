@@ -27,4 +27,8 @@ public class ApiUtils {
     public static VerifyClient verifyClient() {
         return RetrofitClient.getClient(BASE_URL).create(VerifyClient.class);
     }
+    public static AttendClient attend(String token) {
+        String bearer_token = "Bearer "+ token;
+        return RetrofitClient.createClientWithHeaderToken(BASE_URL, bearer_token).create(AttendClient.class);
+    }
 }

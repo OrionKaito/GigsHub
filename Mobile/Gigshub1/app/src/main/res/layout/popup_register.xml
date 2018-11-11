@@ -34,6 +34,16 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Full name: "
+        android:font="@font/ropa_sans"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edt_register_fullname"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Password: "
         android:font="@font/ropa_sans"/>
     <EditText
