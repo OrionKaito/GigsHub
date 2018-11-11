@@ -153,6 +153,7 @@ public class DetailGigsActivity extends AppCompatActivity {
 
     public void clickToOpenMap(View view) {
         Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("Address",eventItems.get(0).getAddress()+","+eventItems.get(0).getCity());
         startActivity(intent);
     }
 
