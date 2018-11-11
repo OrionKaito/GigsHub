@@ -1,4 +1,4 @@
-package com.example.myfuckingpc.gigshub1;
+package com.example.myfuckingpc.gigshub1.Activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.myfuckingpc.gigshub1.DirectionsJSONParser;
+import com.example.myfuckingpc.gigshub1.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

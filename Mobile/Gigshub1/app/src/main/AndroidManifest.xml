@@ -71,6 +71,9 @@
             android:name=".Activity.CommentActivity"
             android:theme="@style/MyActionBar.ActionBar"></activity>
         <activity
+            android:name=".Activity.MapActivity"
+            android:theme="@style/MyActionBar.ActionBar"/>
+        <activity
             android:name=".Activity.RequestVerificationActivity"
             android:theme="@style/MyActionBar.ActionBar" />
         <activity

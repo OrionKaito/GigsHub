@@ -9,9 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
-import com.example.myfuckingpc.gigshub1.MapActivity;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.EventClient;
@@ -114,8 +112,8 @@ public class DetailGigsActivity extends AppCompatActivity {
     }
 
     public void clickToOpenMap(View view) {
-//        Intent intent = new Intent(this, MapActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
     }
 
     public void clickToOpenComment(View view) {
