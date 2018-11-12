@@ -16,12 +16,12 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         final Intent intentLogin = new Intent(this, LoginActivity.class);
         final Intent intentMain = new Intent(this, MainActivity.class);
-
+        final Intent intentAdmin = new Intent(this, AdminActivity.class);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 arrInfo = SavedToken.getUserInfo(getApplicationContext()).split("[|]");
-                if(arrInfo.length==1){
+                if(arrInfo.length< 2){
                     startActivity(intentLogin);
                     finish();
                 }
@@ -30,6 +30,10 @@ public class SplashActivity extends AppCompatActivity {
                     String username = arrInfo[1].toString();
                     if(token.equals("") || username.equals("")){
                         startActivity(intentLogin);
+                        finish();
+                    }
+                    else if(username.equals("admin")){
+                        startActivity(intentAdmin);
                         finish();
                     }
                     else {

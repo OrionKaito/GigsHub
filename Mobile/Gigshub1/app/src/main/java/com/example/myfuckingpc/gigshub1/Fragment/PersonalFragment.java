@@ -27,8 +27,10 @@ import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
+import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
 import com.example.myfuckingpc.gigshub1.api.CustomerClient;
 import com.example.myfuckingpc.gigshub1.api.EditProfileClient;
+import com.example.myfuckingpc.gigshub1.model.Event;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 import com.example.myfuckingpc.gigshub1.model.User;
@@ -54,7 +56,7 @@ public class PersonalFragment extends Fragment {
     private EventSearchAdapter adapter;
     private ImageView iv_verify, iv_followee, iv_follower, iv_edit_profile;
     private Intent intent;
-    private TextView tv_verify, tv_name, tv_number_event, tv_numbers_event_title;
+    private TextView tv_verify, tv_name, tv_number_event, tv_numbers_event_title, tv_user_verify_status;
     public static final int FOLLOWER = 1;
     public static final int FOLLOWING = 2;
     public static final int VERIFIED = 1;
@@ -95,7 +97,7 @@ public class PersonalFragment extends Fragment {
         iv_verify = view.findViewById(R.id.iv_verify_request);
         tv_verify = view.findViewById(R.id.tv_user_verify_status);
         recyclerView = view.findViewById(R.id.rv_personal_list_event);
-        tv_number_event = view.findViewById(R.id.tv_numbers_event);
+        tv_number_event = view.findViewById(R.id.tv_numbers_event_attend);
         tv_numbers_event_title = view.findViewById(R.id.tv_numbers_event_title);
         tv_name = view.findViewById(R.id.tv_name_user);
         iv_edit_profile = view.findViewById(R.id.iv_edit_profile);
@@ -153,15 +155,16 @@ public class PersonalFragment extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 userItems = response.body().getData();
                 tv_name.setText(userItems.get(0).getFullname().toString());
-                if(userItems.get(0).getImgPath() != null){
+                if (userItems.get(0).getImgPath() != null) {
                     String url = userItems.get(0).getImgPath().toString();
                     LoadImageInternet load = new LoadImageInternet(civ_image);
                     load.execute(url);
                 }
-                if(userItems.get(0).getIsVerified()== true){
+                if (userItems.get(0).getIsVerified() == true) {
                     iv_verify.setImageResource(R.drawable.ic_verified_user);
-                }
+                    tv_verify.setText("Verified");
 
+                }
 
 
             }
@@ -171,24 +174,61 @@ public class PersonalFragment extends Fragment {
 
             }
         });
-
+        //get attend list
         listEvent = new ArrayList<>();
         recyclerView = view.findViewById(R.id.rv_personal_list_event);
-        adapter = new EventSearchAdapter(listEvent);
-        recyclerView.setVisibility(View.VISIBLE);
-//        listPopMusic();
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        CreateEventClient serviceGetAttendEvent = ApiUtils.createEventClient(token);
+        Call<Event> callAttend = serviceGetAttendEvent.getAttendEvent();
+        callAttend.enqueue(new Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                if (response.isSuccessful()) {
+                    listEvent = response.body().getData();
+                    adapter = new EventSearchAdapter(listEvent);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    tv_number_event.setText(listEvent.size() + "");
+                } else {
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+                return;
+            }
+        });
+
+
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("TYPE", 2);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                String userInfo = SavedToken.getUserInfo(getActivity());
+                String[] infoArr = userInfo.split("[|]");
+                String username = infoArr[1];
+                String ownerUsername = listEvent.get(position).getOwnerName();
+                int REQ_DETAIL = 1;
+                if(username.equals(ownerUsername)){
+                    REQ_DETAIL = 2;
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", listEvent.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("TYPE", REQ_DETAIL);
+                    bundle.putLong("EventId", listEvent.get(position).getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -215,7 +255,7 @@ public class PersonalFragment extends Fragment {
                 builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SavedToken.setUserInfo(getContext(),"");
+                        SavedToken.setUserInfo(getContext(), "");
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }

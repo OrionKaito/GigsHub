@@ -102,8 +102,15 @@ public class LoginActivity extends AppCompatActivity {
                     String userInfo = token +"|"+ username;
                     SavedToken.setUserInfo(getApplicationContext(),userInfo);
                     progressDialog.dismiss();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    if(username.equals("admin")){
+                        Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
                 else {
                     String message = null;

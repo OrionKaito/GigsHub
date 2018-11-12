@@ -16,7 +16,7 @@ public class LoadImageInternet extends AsyncTask<String, Void, Bitmap> {
     }
     @Override
     protected Bitmap doInBackground(String... urls) {
-        String pathToFile = "http://192.168.1.213:8080"+urls[0];
+        String pathToFile = "http://10.82.138.138:8080"+urls[0];
         Bitmap bitmap = null;
         try {
             InputStream in = new java.net.URL(pathToFile).openStream();

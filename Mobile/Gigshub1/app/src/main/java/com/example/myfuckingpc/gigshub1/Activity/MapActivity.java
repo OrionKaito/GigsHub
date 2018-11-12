@@ -176,6 +176,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
 
             Address location = address.get(0);
+
+
             location.getLatitude();
             location.getLongitude();
 

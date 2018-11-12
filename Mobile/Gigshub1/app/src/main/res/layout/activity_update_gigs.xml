@@ -277,6 +277,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_delete_event"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

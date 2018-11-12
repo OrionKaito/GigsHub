@@ -323,7 +323,7 @@ public class CreateFragment extends Fragment {
                         }
                         else{
 
-                            Toast.makeText(getActivity(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), response.message().toString(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }

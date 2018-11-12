@@ -133,11 +133,11 @@ public class DetailGigsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(DetailGigsActivity.this, "Successful follow: "+eventItems.get(0).getTitle() , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailGigsActivity.this, "Successful attend: "+eventItems.get(0).getTitle() , Toast.LENGTH_SHORT).show();
                             onBackPressed();
                         }
                         else {
-                            Toast.makeText(DetailGigsActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailGigsActivity.this, "You followed this event.", Toast.LENGTH_SHORT).show();
                         }
                     }
 

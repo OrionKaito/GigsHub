@@ -73,12 +73,12 @@ public class UpdateGigsActivity extends AppCompatActivity {
 
     private List<Bitmap> listImage;
     private ImageView iv_update_gigs_image;
-    private TextView tv_gigs_update_date,tv_title;
+    private TextView tv_gigs_update_date,tv_title, tv_delete;
     String[] categoryArr;
     Map<String, Integer> categoryMaps = new HashMap<>();
     private DatePickerDialog datePickerDialog;
     private EditText tv_description, tv_price, tv_city, tv_address, tv_artist;
-    private LinearLayout ll_camera_event, btn_save_event;
+    private LinearLayout ll_camera_event, btn_save_event, ll_detete;
     private LinearLayout ll_create_event;
     String IMAGE_PATH;
     Uri selectedImage;
@@ -96,6 +96,35 @@ public class UpdateGigsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_gigs);
         progressDialog = new ProgressDialog(this);
+
+        tv_delete = findViewById(R.id.tv_delete_event);
+        tv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] userInfoArr = SavedToken.getUserInfo(getApplication()).split("[|]");
+                String token = userInfoArr[0];
+                CreateEventClient deleteService = ApiUtils.createEventClient(token);
+                Call<ResponseBody> call = deleteService.delete(eventId);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(UpdateGigsActivity.this, "Delete Success.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(UpdateGigsActivity.this, "Delete Fail.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(UpdateGigsActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         ll_camera_event = this.findViewById(R.id.ll_camera_update);
         iv_update_gigs_image = this.findViewById(R.id.iv_update_gigs);
         ll_camera_event.setOnClickListener(new View.OnClickListener() {
