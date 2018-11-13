@@ -10,10 +10,10 @@ namespace Gigshub.Controllers
 {
     public class CommentController : ApiController
     {
-        private readonly ICommentSerivce _commentSerivce;
+        private readonly ICommentService _commentSerivce;
         private readonly IEventService _eventService;
 
-        public CommentController(ICommentSerivce _commentSerivce,
+        public CommentController(ICommentService _commentSerivce,
             IEventService _eventService)
         {
             this._commentSerivce = _commentSerivce;

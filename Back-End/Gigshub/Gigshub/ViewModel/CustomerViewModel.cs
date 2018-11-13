@@ -9,6 +9,16 @@ namespace Gigshub.ViewModel
         public IEnumerable<CustomerViewModel> Data { get; set; }
     }
 
+    public class CustomerProfileViewModel
+    {
+        public long Id { get; set; }
+        public string ImgPath { get; set; }
+        public Boolean IsVerified { get; set; }
+        public int NumOfFollowee { get; set; }
+        public int NumOfFollower { get; set; }
+        public int NumOfAttendEvent { get; set; }
+    }
+
     public class CustomerViewModel : CustomerCreateModel
     {
         public long Id { get; set; }

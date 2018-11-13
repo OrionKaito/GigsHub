@@ -30,6 +30,7 @@ namespace Gigshub.Data
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserNotifcation> UserNotifcations { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public virtual void Commit()
         {
@@ -55,6 +56,11 @@ namespace Gigshub.Data
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Attendance>()
+                .HasRequired(k => k.Event)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Comment>()
                 .HasRequired(k => k.Event)
                 .WithMany()
                 .WillCascadeOnDelete(false);

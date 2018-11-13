@@ -2,18 +2,17 @@
 using Gigshub.Data.Repositories;
 using Gigshub.Model.Model;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Gigshub.Service
 {
-    public interface ICommentSerivce
+    public interface ICommentService
     {
         IEnumerable<Comment> GetByEventId(long eventId);
         void Create(Comment comment);
         void Save();
     }
 
-    public class CommentService
+    public class CommentService : ICommentService
     {
         #region Properties
 

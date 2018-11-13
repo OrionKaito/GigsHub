@@ -18,6 +18,8 @@ namespace Gigshub.Controllers
     public class CustomerController : ApiController
     {
         private readonly ICustomerService _customerService;
+        private readonly IFollowingService _followingService;
+        private readonly IAttendanceService _attendanceService;
         private ApplicationUserManager _userManager;
         private readonly string DIRECTORY_PATH = "/Images/Customer/";
 
@@ -33,9 +35,13 @@ namespace Gigshub.Controllers
             }
         }
 
-        public CustomerController(ICustomerService _customerService)
+        public CustomerController(ICustomerService _customerService,
+            IFollowingService _followingService,
+            IAttendanceService _attendanceService)
         {
             this._customerService = _customerService;
+            this._followingService = _followingService;
+            this._attendanceService = _attendanceService;
         }
 
         public CustomerController(ApplicationUserManager userManager)
@@ -57,14 +63,14 @@ namespace Gigshub.Controllers
                 return NotFound(); //status code 404
             }
 
-            Mapper.Map(cusInDb, result);
-
-            List<CustomerViewModel> haiz = new List<CustomerViewModel>();
-            haiz.Add(result);
-
-            var data = new DataCustomerViewModel
+            var data = new CustomerProfileViewModel
             {
-                Data = haiz,
+                Id = cusInDb.Id,
+                ImgPath = cusInDb.ImgPath,
+                IsVerified = cusInDb.IsVerified,
+                NumOfFollowee = _followingService.GetByFollowerId(cusInDb.Id).Count(),
+                NumOfFollower = _followingService.GetByFolloweeId(cusInDb.Id).Count(),
+                NumOfAttendEvent = _attendanceService.GetByCusId(cusInDb.Id).Count(),
             };
             //end get data
             return Ok(data); //sta    tus code 200

@@ -24,8 +24,9 @@ namespace Gigshub.Controllers
         [Route("api/attendance/attend", Name = "AttendEvent")]
         public IHttpActionResult Attend(long eventId)
         {
-            //var name = User.Identity.Name;
-            var cusInDb = _customerService.GetByName("admin");
+            var name = User.Identity.Name;
+            var cusInDb = _customerService.GetByName(name);
+            var eventInDb = _eventService.GetByID(eventId);
 
             if (cusInDb == null)
             {
@@ -37,7 +38,7 @@ namespace Gigshub.Controllers
                 return BadRequest("You already attend this event"); //status code 400
             }
 
-            if (_eventService.GetByID(eventId).IsDeleted == true)
+            if (eventInDb.IsDeleted == true)
             {
                 return NotFound(); //status code 404
             }
@@ -50,6 +51,7 @@ namespace Gigshub.Controllers
 
             try
             {
+                eventInDb.NumberOfAttender = eventInDb.NumberOfAttender + 1;
                 _attendanceService.Create(attendance);
                 _attendanceService.Save();
             }
@@ -63,17 +65,18 @@ namespace Gigshub.Controllers
 
         [HttpPost]
         [Route("api/attendance/unattend", Name = "UnAttendEvent")]
-        public IHttpActionResult UnAttend(long followeeId)
+        public IHttpActionResult UnAttend(long eventId)
         {
-            //var name = User.Identity.Name;
-            var cusInDb = _customerService.GetByName("admin");
+            var name = User.Identity.Name;
+            var cusInDb = _customerService.GetByName(name);
+            var eventInDb = _eventService.GetByID(eventId);
 
             if (cusInDb == null)
             {
                 return NotFound(); //status code 404
             }
 
-            var attend = _attendanceService.Get(cusInDb.Id, followeeId);
+            var attend = _attendanceService.Get(cusInDb.Id, eventId);
 
             if (attend == null)
             {
@@ -82,6 +85,7 @@ namespace Gigshub.Controllers
             //begin delete data
             try
             {
+                eventInDb.NumberOfAttender = eventInDb.NumberOfAttender - 1;
                 _attendanceService.Delete(attend.Id);
                 _attendanceService.Save();
             }
