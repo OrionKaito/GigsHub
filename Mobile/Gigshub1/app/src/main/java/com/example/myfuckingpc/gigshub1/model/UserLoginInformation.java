@@ -3,7 +3,7 @@ package com.example.myfuckingpc.gigshub1.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserInfomation {
+public class UserLoginInformation {
 
     @SerializedName("access_token")
     @Expose
@@ -82,5 +82,4 @@ public class UserInfomation {
     public void setExpires(String expires) {
         this.expires = expires;
     }
-
 }

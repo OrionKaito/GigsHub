@@ -1,7 +1,6 @@
 package com.example.myfuckingpc.gigshub1.api;
 
-import com.example.myfuckingpc.gigshub1.model.User;
-import com.example.myfuckingpc.gigshub1.model.UserInfomation;
+import com.example.myfuckingpc.gigshub1.model.UserLoginInformation;
 
 import java.util.Map;
 
@@ -16,7 +15,7 @@ public interface UserClient {
 
     @FormUrlEncoded
     @POST("/token")
-    Call<UserInfomation> login(@FieldMap Map<String, String> fields);
+    Call<UserLoginInformation> login(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
     @POST("/api/Account/Register")

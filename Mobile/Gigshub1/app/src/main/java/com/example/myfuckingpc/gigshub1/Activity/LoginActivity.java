@@ -21,8 +21,7 @@ import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.UserClient;
 import com.example.myfuckingpc.gigshub1.api.VerifyClient;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
-import com.example.myfuckingpc.gigshub1.model.User;
-import com.example.myfuckingpc.gigshub1.model.UserInfomation;
+import com.example.myfuckingpc.gigshub1.model.UserLoginInformation;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.security.ProviderInstaller;
@@ -92,24 +91,18 @@ public class LoginActivity extends AppCompatActivity {
         fields.put("grant_type", "password");
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.show();
-        Call<UserInfomation> call = userClient.login(fields);
-        call.enqueue(new Callback<UserInfomation>() {
+        Call<UserLoginInformation> call = userClient.login(fields);
+        call.enqueue(new Callback<UserLoginInformation>() {
             @Override
-            public void onResponse(Call<UserInfomation> call, Response<UserInfomation> response) {
+            public void onResponse(Call<UserLoginInformation> call, Response<UserLoginInformation> response) {
                 if(response.isSuccessful()){
                     token = response.body().getAccessToken();
                     String username = response.body().getUserName();
                     String userInfo = token +"|"+ username;
                     SavedToken.setUserInfo(getApplicationContext(),userInfo);
                     progressDialog.dismiss();
-                    if(username.equals("admin")){
-                        Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-                        startActivity(intent);
-                    }
-                    else {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
 
                 }
                 else {
@@ -144,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<UserInfomation> call, Throwable t) {
+            public void onFailure(Call<UserLoginInformation> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Please check your network connection.", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }

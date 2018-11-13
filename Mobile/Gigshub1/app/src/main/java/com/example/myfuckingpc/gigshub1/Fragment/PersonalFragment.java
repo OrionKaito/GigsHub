@@ -23,17 +23,15 @@ import com.example.myfuckingpc.gigshub1.Activity.FollowActivity;
 import com.example.myfuckingpc.gigshub1.Activity.LoginActivity;
 import com.example.myfuckingpc.gigshub1.Activity.RequestVerificationActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.EventSearchAdapter;
-import com.example.myfuckingpc.gigshub1.FileUtils.LoadImageInternet;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
 import com.example.myfuckingpc.gigshub1.api.ApiUtils;
 import com.example.myfuckingpc.gigshub1.api.CreateEventClient;
 import com.example.myfuckingpc.gigshub1.api.CustomerClient;
-import com.example.myfuckingpc.gigshub1.api.EditProfileClient;
 import com.example.myfuckingpc.gigshub1.model.Event;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
-import com.example.myfuckingpc.gigshub1.model.User;
+import com.example.myfuckingpc.gigshub1.model.UserLoginInformation;
 import com.example.myfuckingpc.gigshub1.model.UserItem;
 
 import java.util.ArrayList;
@@ -52,9 +50,10 @@ public class PersonalFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<EventItem> listEvent;
     private List<UserItem> userItems;
+    private List<UserLoginInformation> userInformation;
     private CircleImageView civ_image;
     private EventSearchAdapter adapter;
-    private ImageView iv_verify, iv_followee, iv_follower, iv_edit_profile;
+    private ImageView iv_verify, iv_followee, iv_follower, iv_edit_profile, iv_my_gigs, iv_attend_gigs;
     private Intent intent;
     private TextView tv_verify, tv_name, tv_number_event, tv_numbers_event_title, tv_user_verify_status;
     public static final int FOLLOWER = 1;
@@ -90,6 +89,8 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final String[] userInfoArr = SavedToken.getUserInfo(getContext()).split("[|]");
+        token = userInfoArr[0];
         civ_image = view.findViewById(R.id.civ_personal_image);
         iv_followee = view.findViewById(R.id.iv_list_follow);
         iv_follower = view.findViewById(R.id.iv_list_follower);
@@ -99,9 +100,47 @@ public class PersonalFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_personal_list_event);
         tv_number_event = view.findViewById(R.id.tv_numbers_event_attend);
         tv_numbers_event_title = view.findViewById(R.id.tv_numbers_event_title);
-        tv_name = view.findViewById(R.id.tv_name_user);
+        tv_name = view.findViewById(R.id.tv_personal_full_name);
         iv_edit_profile = view.findViewById(R.id.iv_edit_profile);
-        //
+        iv_my_gigs = view.findViewById(R.id.iv_numbers_my_gigs);
+        iv_attend_gigs = view.findViewById(R.id.iv_numbers_event);
+
+
+
+        //handle on click
+        iv_attend_gigs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listEvent = new ArrayList<>();
+                listEvent.clear();
+                recyclerView = getActivity().findViewById(R.id.rv_personal_list_event);
+                CreateEventClient serviceGetAttendEvent = ApiUtils.createEventClient(token);
+                Call<Event> callAttend = serviceGetAttendEvent.getAttendEvent();
+                callAttend.enqueue(new Callback<Event>() {
+                    @Override
+                    public void onResponse(Call<Event> call, Response<Event> response) {
+                        if (response.isSuccessful()) {
+                            listEvent = response.body().getData();
+                            adapter = new EventSearchAdapter(listEvent);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                            recyclerView.setLayoutManager(mLayoutManager);
+                            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            tv_number_event.setText(listEvent.size() + "");
+                        } else {
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Event> call, Throwable t) {
+                        return;
+                    }
+                });
+            }
+        });
         iv_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,63 +184,40 @@ public class PersonalFragment extends Fragment {
             }
         });
         //get user info
-        String[] userInfoArr = SavedToken.getUserInfo(getContext()).split("[|]");
-        token = userInfoArr[0];
-        userItems = new ArrayList<>();
+        //userItems = new ArrayList<>();
+        userInformation = new ArrayList<>();
         CustomerClient customerClient = ApiUtils.getCustomerClient(token);
-        Call<User> call = customerClient.getUserInformation();
-        call.enqueue(new Callback<User>() {
+        Call<UserLoginInformation> call = customerClient.getUserInformation();
+        call.enqueue(new Callback<UserLoginInformation>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                userItems = response.body().getData();
-                tv_name.setText(userItems.get(0).getFullname().toString());
-                if (userItems.get(0).getImgPath() != null) {
-                    String url = userItems.get(0).getImgPath().toString();
-                    LoadImageInternet load = new LoadImageInternet(civ_image);
-                    load.execute(url);
-                }
-                if (userItems.get(0).getIsVerified() == true) {
-                    iv_verify.setImageResource(R.drawable.ic_verified_user);
-                    tv_verify.setText("Verified");
+            public void onResponse(Call<UserLoginInformation> call, Response<UserLoginInformation> response) {
+                //if(response.isSuccessful()){
 
-                }
-
-
+                //    tv_name.setText(response.body().);
+                //    if (userItems.get(0).getImgPath() != null) {
+                //        String url = userItems.get(0).getImgPath().toString();
+                //        LoadImageInternet load = new LoadImageInternet(civ_image);
+                //        load.execute(url);
+                //    }
+                //    if (userItems.get(0).getIsVerified() == true) {
+                //        iv_verify.setImageResource(R.drawable.ic_verified_user);
+                //        tv_verify.setText("Verified");
+//
+                //    }
+                //}
+                //else {
+                //    return;
+                //}
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
+            public void onFailure(Call<UserLoginInformation> call, Throwable t) {
+                Toast.makeText(getContext(), "Please check your network connection", Toast.LENGTH_SHORT).show();
             }
         });
+
         //get attend list
-        listEvent = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.rv_personal_list_event);
-        CreateEventClient serviceGetAttendEvent = ApiUtils.createEventClient(token);
-        Call<Event> callAttend = serviceGetAttendEvent.getAttendEvent();
-        callAttend.enqueue(new Callback<Event>() {
-            @Override
-            public void onResponse(Call<Event> call, Response<Event> response) {
-                if (response.isSuccessful()) {
-                    listEvent = response.body().getData();
-                    adapter = new EventSearchAdapter(listEvent);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    tv_number_event.setText(listEvent.size() + "");
-                } else {
-                    return;
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Event> call, Throwable t) {
-                return;
-            }
-        });
 
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {

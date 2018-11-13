@@ -32,10 +32,6 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intentLogin);
                         finish();
                     }
-                    else if(username.equals("admin")){
-                        startActivity(intentAdmin);
-                        finish();
-                    }
                     else {
                         startActivity(intentMain);
                         finish();

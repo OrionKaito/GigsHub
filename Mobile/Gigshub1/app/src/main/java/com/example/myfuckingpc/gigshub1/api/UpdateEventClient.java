@@ -12,7 +12,7 @@ public interface UpdateEventClient {
     @Multipart
     @POST("/api/event/update")
     Call<ResponseBody> upload(
-            @Part("EventId") Integer eventId,
+            @Part("Id") Integer eventId,
             @Part("City")RequestBody city,
             @Part("Address")RequestBody address,
             @Part("Description")RequestBody description,

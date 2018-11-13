@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,9 +44,15 @@ import com.example.myfuckingpc.gigshub1.model.Category;
 import com.example.myfuckingpc.gigshub1.model.CategoryItem;
 import com.example.myfuckingpc.gigshub1.model.Event;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
+import com.example.myfuckingpc.gigshub1.model.EventUpdate;
+import com.example.myfuckingpc.gigshub1.model.EventUpdateItem;
 import com.example.myfuckingpc.gigshub1.model.SavedToken;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,11 +82,11 @@ public class UpdateGigsActivity extends AppCompatActivity {
 
     private List<Bitmap> listImage;
     private ImageView iv_update_gigs_image;
-    private TextView tv_gigs_update_date,tv_title, tv_delete;
+    private TextView tv_gigs_update_date, tv_title, tv_delete,tv_address, tv_city;
     String[] categoryArr;
     Map<String, Integer> categoryMaps = new HashMap<>();
     private DatePickerDialog datePickerDialog;
-    private EditText tv_description, tv_price, tv_city, tv_address, tv_artist;
+    private EditText tv_description, tv_price, tv_artist;
     private LinearLayout ll_camera_event, btn_save_event, ll_detete;
     private LinearLayout ll_create_event;
     String IMAGE_PATH;
@@ -86,11 +95,12 @@ public class UpdateGigsActivity extends AppCompatActivity {
     boolean isSale;
     private Spinner spn_category;
     private List<EventItem> eventItems;
-    List<CategoryItem> categoryList = new ArrayList<>();
-    private long eventId= 0;
+    private List<CategoryItem> categoryList = new ArrayList<>();
+    private long eventId = 0;
     ProgressDialog progressDialog;
     private String dateInput = null;
     private String timeInput = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +122,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
                             Toast.makeText(UpdateGigsActivity.this, "Delete Success.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
-                        }
-                        else {
+                        } else {
                             Toast.makeText(UpdateGigsActivity.this, "Delete Fail.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -133,29 +142,29 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                startActivityForResult(galleryIntent , 123);
+                startActivityForResult(galleryIntent, 123);
             }
         });
-    tv_gigs_update_date = this.findViewById(R.id.tv_gigs_update_date);
-    tv_gigs_update_date.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            datePicker();
-        }
-    });
+        tv_gigs_update_date = this.findViewById(R.id.tv_gigs_update_date);
+        tv_gigs_update_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePicker();
+            }
+        });
 
-    rb_price = this.findViewById(R.id.rb_price);
-    tv_price = this.findViewById(R.id.et_update_event_price);
+        rb_price = this.findViewById(R.id.rb_update_price);
+        tv_price = this.findViewById(R.id.et_update_event_price);
         rb_price.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int checked = rb_price.getCheckedRadioButtonId();
-                switch (checked){
-                    case R.id.rb_free:
+                switch (checked) {
+                    case R.id.rb_update_free:
                         isSale = false;
                         tv_price.setVisibility(View.GONE);
                         break;
-                    case R.id.rb_not_free:
+                    case R.id.rb_update_not_free:
                         isSale = true;
                         tv_price.setVisibility(View.VISIBLE);
                         break;
@@ -163,6 +172,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
             }
         });
         //category
+        categoryList = new ArrayList<>();
         spn_category = this.findViewById(R.id.spn_gigs_update_category);
         CategoryClient service = ApiUtils.categoryClient();
         Call<Category> call = service.getAllCategory();
@@ -172,16 +182,15 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     categoryList = response.body().getData();
                     categoryArr = new String[categoryList.size()];
-                    for(int i = 0; i<categoryList.size();i++){
+                    for (int i = 0; i < categoryList.size(); i++) {
                         categoryArr[i] = categoryList.get(i).getName();
-                        categoryMaps.put(categoryList.get(i).getName(),categoryList.get(i).getId());
+                        categoryMaps.put(categoryList.get(i).getName(), categoryList.get(i).getId());
 
                     }
-                    ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(getApplication(),android.R.layout.simple_spinner_item,categoryArr);
+                    ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(UpdateGigsActivity.this, android.R.layout.simple_spinner_item, categoryArr);
                     adapterCategory.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
                     spn_category.setAdapter(adapterCategory);
-                }
-                else {
+                } else {
                     return;
                 }
             }
@@ -195,7 +204,6 @@ public class UpdateGigsActivity extends AppCompatActivity {
 
 
 
-
         tv_title = this.findViewById(R.id.tv_update_event_title);
         tv_city = this.findViewById(R.id.et_update_event_city);
         tv_address = this.findViewById(R.id.et_update_event_address);
@@ -204,44 +212,49 @@ public class UpdateGigsActivity extends AppCompatActivity {
         tv_date_time = this.findViewById(R.id.tv_gigs_update_date);
 
 
-
-
         //get data to form
         eventItems = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         eventId = bundle.getLong("EventID");
         final EventClient eventService = ApiUtils.eventClient();
-        Call<Event> callEventService = eventService.getEventById(eventId);
+        Call<Event> callEventService = eventService.getEventByIdForUpdate(eventId);
         callEventService.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
                 if (response.isSuccessful()) {
                     eventItems = response.body().getData();
-                    String url = eventItems.get(0).getImgPath();
+                    String url = eventItems.get(0).getImgPath().toString();
                     LoadImageInternet load = new LoadImageInternet(iv_update_gigs_image);
                     load.execute(url);
                     tv_title.setText(eventItems.get(0).getTitle());
-                    tv_date_time.setText(eventItems.get(0).getDate() +" " + eventItems.get(0).getTime());
+                    tv_date_time.setText(eventItems.get(0).getDate()+" "+eventItems.get(0).getTime());
                     tv_city.setText(eventItems.get(0).getCity());
                     tv_description.setText(eventItems.get(0).getDescription());
                     tv_address.setText(eventItems.get(0).getAddress());
                     tv_artist.setText(eventItems.get(0).getArtist());
                     String categoryString = eventItems.get(0).getCategory();
-                    final int categoryInt = categoryMaps.get(categoryString);
-                    spn_category.setSelection(categoryInt);
-                    if(eventItems.get(0).getPrice() != 0) {
-                        tv_price.setText(eventItems.get(0).getPrice() + "$");
+                    for(int i = 0; i<categoryArr.length;i++){
+                        if(categoryString.equals(categoryArr[i].toString())){
+                            spn_category.setSelection(i);
+                        }
                     }
-                }else {
+
+                    if (eventItems.get(0).getPrice() > 0) {
+                        rb_price.check(R.id.rb_update_not_free);
+                        tv_price.setVisibility(View.VISIBLE);
+                        tv_price.setText(eventItems.get(0).getPrice()+"");
+                    }
+                } else {
                     Toast.makeText(getApplicationContext(), "CONNECTED", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-                Toast.makeText(getApplicationContext() , "K", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "K", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         btn_save_event = this.findViewById(R.id.btn_save);
         btn_save_event.setOnClickListener(new View.OnClickListener() {
@@ -250,7 +263,6 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 updateEvent();
             }
         });
-
 
 
     }
@@ -266,7 +278,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        date_time = (dayOfMonth + "/" + monthOfYear + "/" + year);
+                        date_time = (dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
                     }
                 }, mYear, mMonth, mDay);
         timePicker();
@@ -305,7 +317,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 123) {
+        if (requestCode == 123) {
             if (resultCode == Activity.RESULT_OK) {
                 if (resultCode == Activity.RESULT_OK) {
                     //pick image from gallery
@@ -328,35 +340,39 @@ public class UpdateGigsActivity extends AppCompatActivity {
         }
     }
 
-    private void updateEvent(){
+    private void updateEvent() {
         String[] userInfoArr = SavedToken.getUserInfo(this).split("[|]");
         String token = userInfoArr[0];
         final UpdateEventClient updateEventClient = ApiUtils.updateEventClient(token);
-        if(IMAGE_PATH == null){
-            Toast.makeText(getApplicationContext() , "Please choose an image", Toast.LENGTH_SHORT).show();
+        File file = null;
+        if (IMAGE_PATH == null) {
             return;
         }
-        File file = new File(IMAGE_PATH);
+        else{
+            file = new File(IMAGE_PATH);
+        }
+
         final RequestBody requestFile = RequestBody.create(MediaType.parse(this.getContentResolver().getType(selectedImage)), file);
         final MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
 
         final int eventID = (int) eventId;
-        final String titleString = tv_title.getText().toString();
         final String cityString = tv_city.getText().toString();
         final String addressString = tv_address.getText().toString();
         final String descriptionString = tv_description.getText().toString();
         final String artistString = tv_artist.getText().toString();
         final String datetimeString = tv_gigs_update_date.getText().toString();
-        //SimpleDateFormat formarterDate = new SimpleDateFormat("yyyy/MM/dd");
-        //SimpleDateFormat formarterTime = new SimpleDateFormat("HH:mm");
-        //dateInput = formarterDate.format(eventItems.get(0).getDate());
-        //timeInput = formarterTime.format(eventItems.get(0).getTime());
-        final String datetimeStringInput = dateInput+" "+timeInput;
+        String datetimeStringInput = null;
+        if (dateInput == null) {
+            datetimeStringInput = tv_date_time.getText().toString();
+        } else {
+            datetimeStringInput = dateInput;
+        }
+
 
         double priceDouble = 0;
-        if(isSale == true){
+        if (isSale == true) {
             priceDouble = Double.parseDouble(tv_price.getText().toString());
-            if(priceDouble == 0){
+            if (priceDouble == 0) {
                 Toast.makeText(getApplicationContext(), "If price is 0$, WHY don't you choose FREE option?", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -365,10 +381,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
         String categoryString = spn_category.getSelectedItem().toString();
         final int categoryInt = categoryMaps.get(categoryString);
         ///validate
-        if(titleString.equals("")){
-            Toast.makeText(getApplicationContext(), "Please enter event's TITLE.", Toast.LENGTH_LONG).show();
-            return;
-        }
+
         if (datetimeString.equals(" edit date of event")) {
             Toast.makeText(getApplicationContext(), "Please enter event's Date Time.", Toast.LENGTH_LONG).show();
             return;
@@ -389,7 +402,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please enter event's Artist.", Toast.LENGTH_LONG).show();
             return;
         }
-        if(priceDouble<0){
+        if (priceDouble < 0) {
             Toast.makeText(getApplicationContext(), "Price MUST BE greater than 0.", Toast.LENGTH_LONG).show();
             return;
         }
@@ -407,6 +420,7 @@ public class UpdateGigsActivity extends AppCompatActivity {
             }
         });
         final double finalPriceDouble = priceDouble;
+        final String finalDatetimeStringInput = datetimeStringInput;
         builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -416,28 +430,21 @@ public class UpdateGigsActivity extends AppCompatActivity {
                 RequestBody address = RequestBody.create(okhttp3.MultipartBody.FORM, addressString);
                 RequestBody artist = RequestBody.create(okhttp3.MultipartBody.FORM, artistString);
                 RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
-                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, dateInput);
+                RequestBody datetime = RequestBody.create(okhttp3.MultipartBody.FORM, finalDatetimeStringInput);
 
                 progressDialog.show();
-                Call<ResponseBody> call = updateEventClient.upload(eventID,city,address,description,artist,datetime,isSale, finalPriceDouble,categoryInt,body);
+                Call<ResponseBody> call = updateEventClient.upload(eventID, city, address, description, artist, datetime, isSale, finalPriceDouble, categoryInt, body);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Update Success!", Toast.LENGTH_SHORT).show();
-                            tv_title.setText("");
-                            tv_address.setText("");
-                            tv_artist.setText("");
-                            tv_city.setText("");
-                            tv_description.setText("");
-                            tv_gigs_update_date.setText("Tap to edit date of event");
-                            iv_update_gigs_image.setImageBitmap(null);
-                            tv_price.setText("");
+                            Intent intent = new Intent(UpdateGigsActivity.this,MainActivity.class);
+                            startActivity(intent);
                             progressDialog.dismiss();
-                        }
-                        else{
+                        } else {
 
-                            Toast.makeText(getApplicationContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }

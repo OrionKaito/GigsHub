@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Create Event"
+                android:text="Update event"
                 android:textSize="20sp"
                 android:fontFamily="@font/ropa_sans"
                 android:textColor="@color/black"
@@ -98,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Input your event title (Can't edit after created)"
+                    android:textSize="18sp"
                     android:maxLines="3" />
 
                 <TextView
@@ -127,11 +128,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_update_event_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="ex: Hà Nội / New York"
+                    android:textSize="18sp"
                     android:maxLines="1" />
 
                 <TextView
@@ -144,11 +146,12 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_update_event_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="ex: 1 Cong Hoa street, Tan Binh district"
+                    android:textSize="18sp"
                     android:maxLines="1" />
 
                 <TextView
@@ -211,18 +214,18 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <RadioGroup
-                    android:id="@+id/rb_price"
+                    android:id="@+id/rb_update_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
-                        android:id="@+id/rb_free"
+                        android:id="@+id/rb_update_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Free"
                         android:checked="true"/>
                     <RadioButton
-                        android:id="@+id/rb_not_free"
+                        android:id="@+id/rb_update_not_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Not Free"/>
@@ -231,7 +234,7 @@
                     android:id="@+id/et_update_event_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Input ticket price in $(ex: 20$)"
+                    android:hint="Input ticket price in $(ex: 20)"
                     android:inputType="number"
                     android:visibility="gone"
                     />
@@ -300,7 +303,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ropa_sans"
                     android:padding="10dp"
-                    android:text="Delete Events"
+                    android:text="Cancel Events"
                     android:textColor="@color/white"
                     android:onClick="clickToDeleteEvent"
                     android:textSize="20sp" />

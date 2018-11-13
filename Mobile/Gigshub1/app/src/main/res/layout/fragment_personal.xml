@@ -14,7 +14,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/tv_name_user"
+            android:id="@+id/tv_personal_full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trần Đức Thái"
@@ -22,6 +22,22 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_verify_request"
+            android:layout_centerVertical="true"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_toRightOf="@+id/tv_personal_full_name"
+            android:layout_marginLeft="2dp"
+            android:src="@drawable/ic_not_verified_user"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_user_verify_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_verify_request"
+            android:text="Not verified"
+            />
         <ImageView
             android:id="@+id/iv_logout"
             android:layout_width="25dp"
@@ -73,6 +89,8 @@
                 android:weightSum="4">
 
                 <TextView
+                    android:id="@+id/tv_personal_my_gigs_title"
+                    android:text="My Gigs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -111,11 +129,12 @@
                 android:weightSum="4">
 
                 <ImageView
-                    android:id="@+id/iv_verify_request"
+                    android:id="@+id/iv_numbers_my_gigs"
+                    android:src="@drawable/ic_my_gigs"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_not_verified_user" />
+                     />
 
                 <ImageView
                     android:id="@+id/iv_list_follower"
@@ -148,12 +167,12 @@
                 android:weightSum="4">
 
                 <TextView
-                    android:id="@+id/tv_user_verify_status"
+                    android:id="@+id/tv_personal_my_gigs_number"
+                    android:text="0"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Not verified" />
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/txtFollower"

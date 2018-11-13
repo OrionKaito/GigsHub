@@ -2,6 +2,7 @@ package com.example.myfuckingpc.gigshub1.api;
 
 import com.example.myfuckingpc.gigshub1.model.Event;
 import com.example.myfuckingpc.gigshub1.model.EventItem;
+import com.example.myfuckingpc.gigshub1.model.EventUpdate;
 
 import java.util.List;
 
@@ -15,9 +16,12 @@ import retrofit2.http.Query;
 public interface EventClient {
     @GET("api/event/getall")
     Call<Event> getAll();
-
+    //normal call
     @GET("api/event/getbyid")
     Call<Event> getEventById(@Query("Id") long eventId);
+    //for update call
+    @GET("api/event/getbyidupdate")
+    Call<Event> getEventByIdForUpdate(@Query("Id") long eventId);
 
     @GET("/api/event/searchliketitle")
     Call<Event> searchByTitle(@Query("strSeach") String title);

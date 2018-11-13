@@ -27,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailGigsActivity extends AppCompatActivity {
-    private TextView title, datetime, description, location, category, price, artist, numberAttender, hostedUsername;
+    private TextView title, datetime, description, location, category, price, artist, numberAttender, hostedUsername, is_cancel;
     private ImageView ssv_image;
     private int[] setImage;
     private int typeUser;
@@ -65,6 +65,7 @@ public class DetailGigsActivity extends AppCompatActivity {
         ll_not_interest = findViewById(R.id.ll_detail_not_interest);
         ll_join = findViewById(R.id.ll_detail_join);
         iv_verify = findViewById(R.id.iv_gigs_verified_user);
+        is_cancel = findViewById(R.id.tv_is_cancel);
         String[] userInfoArr = SavedToken.getUserInfo(this).split("[|]");
         token = userInfoArr[0];
         //get event information
@@ -79,7 +80,7 @@ public class DetailGigsActivity extends AppCompatActivity {
                 LoadImageInternet load = new LoadImageInternet(ssv_image);
                 load.execute(url);
                 title.setText(eventItems.get(0).getTitle());
-                datetime.setText(eventItems.get(0).getDate()+"\n"+eventItems.get(0).getTime());
+                datetime.setText(eventItems.get(0).getTime()+"\n"+eventItems.get(0).getDate());
                 location.setText(eventItems.get(0).getAddress()+", "+eventItems.get(0).getCity());
                 description.setText(eventItems.get(0).getDescription());
                 category.setText(eventItems.get(0).getCategory());
@@ -89,9 +90,17 @@ public class DetailGigsActivity extends AppCompatActivity {
 
                 artist.setText(eventItems.get(0).getArtist());
                 numberAttender.setText(eventItems.get(0).getNumberOfAttender()+" people will go");
-                hostedUsername.setText(eventItems.get(0).getOwnerName());
+                if(eventItems.get(0).getOwnderFullname()!=null){
+                    hostedUsername.setText(eventItems.get(0).getOwnderFullname()+"");
+                }
+                else {
+                    hostedUsername.setText(eventItems.get(0).getOwnerName());
+                }
                 if(eventItems.get(0).getICusVerified()){
                     iv_verify.setImageResource(R.drawable.ic_verified_user);
+                }
+                if(eventItems.get(0).getIsDeleted()==true){
+                    is_cancel.setVisibility(View.VISIBLE);
                 }
             }
 

@@ -62,8 +62,12 @@ public class GigsAdapter extends RecyclerView.Adapter<GigsAdapter.MyViewHolder> 
         LoadImageInternet load = new LoadImageInternet(holder.image);
         load.execute(url);
         //Bitmap dr = ReadImage.LoadImageFromWebOperations("http://192.168.1.213:8080"+gigs.getImgPath());
-
-        holder.hosted.setText(gigs.getOwnerName());
+        if(gigs.getOwnderFullname()!=null){
+            holder.hosted.setText(gigs.getOwnderFullname()+"");
+        }
+        else {
+            holder.hosted.setText(gigs.getOwnerName());
+        }
         holder.artist.setText("Artist: "+gigs.getArtist());
         holder.category.setText("Category: "+gigs.getCategory());
         if(gigs.getIsSale()== true){

@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
 
         ivNotification = view.findViewById(R.id.iv_notification);
-        ivAddEvents = getActivity().findViewById(R.id.iv_add_gigs);
+        //ivAddEvents = getActivity().findViewById(R.id.iv_add_gigs);
         recyclerView = getActivity().findViewById(R.id.rv_gigshome);
         recyclerView.setVisibility(View.VISIBLE);
 //        topBar = getActivity().findViewById(R.id.ll_main_top_bar);
@@ -132,13 +132,13 @@ public class HomeFragment extends Fragment {
 
             }
         }));
-        ivAddEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateGigsActivity.class);
-                startActivity(intent);
-            }
-        });
+        //ivAddEvents.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        Intent intent = new Intent(getActivity(), CreateGigsActivity.class);
+        //        startActivity(intent);
+        //    }
+        //});
 
 
     }
