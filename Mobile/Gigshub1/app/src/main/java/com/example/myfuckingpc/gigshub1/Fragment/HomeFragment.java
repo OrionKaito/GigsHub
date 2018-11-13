@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.myfuckingpc.gigshub1.Activity.CreateGigsActivity;
 import com.example.myfuckingpc.gigshub1.Activity.DetailGigsActivity;
+import com.example.myfuckingpc.gigshub1.Activity.NotificationActivity;
 import com.example.myfuckingpc.gigshub1.Adapter.GigsAdapter;
 import com.example.myfuckingpc.gigshub1.R;
 import com.example.myfuckingpc.gigshub1.RecyclerTouchListener;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment {
     private int page;
     private LinearLayout topBar;
     private PagerSlidingTabStrip psts;
-    private ImageView ivAddEvents;
+    private ImageView ivAddEvents, ivNotification;
 
 
     public HomeFragment() {
@@ -69,11 +70,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-
-
-
     }
-
 
 
     @Override
@@ -87,7 +84,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
+        ivNotification = view.findViewById(R.id.iv_notification);
         ivAddEvents = getActivity().findViewById(R.id.iv_add_gigs);
         recyclerView = getActivity().findViewById(R.id.rv_gigshome);
         recyclerView.setVisibility(View.VISIBLE);
@@ -96,8 +93,13 @@ public class HomeFragment extends Fragment {
         psts.setVisibility(View.VISIBLE);
         setGigsList();
 
-
-
+        ivNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getActivity(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -106,7 +108,7 @@ public class HomeFragment extends Fragment {
                 String username = infoArr[1];
                 String ownerUsername = eventsList.get(position).getOwnerName();
                 int REQ_DETAIL = 1;
-                if(username.equals(ownerUsername)){
+                if (username.equals(ownerUsername)) {
                     REQ_DETAIL = 2;
                     Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
                     Bundle bundle = new Bundle();
@@ -114,8 +116,7 @@ public class HomeFragment extends Fragment {
                     bundle.putLong("EventId", eventsList.get(position).getId());
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     Intent intent = new Intent(getActivity(), DetailGigsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("TYPE", REQ_DETAIL);
@@ -141,6 +142,7 @@ public class HomeFragment extends Fragment {
 
 
     }
+
     private void setGigsList() {
 
 
@@ -157,8 +159,7 @@ public class HomeFragment extends Fragment {
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                 }
 
