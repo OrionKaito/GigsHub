@@ -105,6 +105,7 @@ namespace Gigshub.Data
                 userManager.AddToRole(SeedUser.Id, "Admin");
 
                 GetCustomer().ForEach(k => context.Customers.Add(k));
+                GetCategory().ForEach(k => context.EventCategories.Add(k));
                 base.Seed(context);
             }
 
@@ -120,6 +121,33 @@ namespace Gigshub.Data
                         DateOfBirth = DateTime.Now,
                         AccountBalance = 20000,
                         IsVerified = true,
+                    },
+                };
+            }
+
+            private static List<EventCategory> GetCategory()
+            {
+                return new List<EventCategory>
+                {
+                    new EventCategory
+                    {
+                        Name = "EDM",
+                        IsDelete = false,
+                    },
+                    new EventCategory
+                    {
+                        Name = "POP",
+                        IsDelete = false,
+                    },
+                    new EventCategory
+                    {
+                        Name = "Rock",
+                        IsDelete = false,
+                    },
+                    new EventCategory
+                    {
+                        Name = "NightCore",
+                        IsDelete = false,
                     },
                 };
             }

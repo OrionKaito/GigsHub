@@ -283,6 +283,7 @@
     <Compile Include="ViewModel\EventCategoryViewModel.cs" />
     <Compile Include="ViewModel\EventViewModel.cs" />
     <Compile Include="ViewModel\FollowingViewModel.cs" />
+    <Compile Include="ViewModel\NotificationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -8,8 +8,8 @@ namespace Gigshub.Model.Model
         public long Id { get; set; }
         public DateTime DateTime { get; set; }
         public NotificationType Type { get; set; }
-        public DateTime? OriginalDateTime { get; set; }
-        public string OriginalValue { get; set; }
+        //public DateTime? OriginalDateTime { get; set; }
+        //public string OriginalValue { get; set; }
 
         public Event Event { get; set; }
     }

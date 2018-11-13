@@ -579,7 +579,7 @@ namespace Gigshub.Controllers
             var EventInDb = _eventService.GetByID(model.Id);
             if (EventInDb == null)
             {
-                return NotFound(); //status code 404
+                return BadRequest("Event not exist"); //status code 400
             }
 
             //check authorize

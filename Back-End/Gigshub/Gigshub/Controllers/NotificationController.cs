@@ -1,5 +1,6 @@
 ﻿using Gigshub.Model.Model;
 using Gigshub.Service;
+using Gigshub.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -61,15 +62,56 @@ namespace Gigshub.Controllers
 
             //begin get data
             var userNotifcations = _userNotificationService.GetByUserId(cusInDb.Id);
-            ICollection<Notification> listData = new Collection<Notification>();
+
+            if (userNotifcations == null)
+            {
+                return Ok("There are not any notfication yet"); //status code 200
+            }
+
+            var data = new List<NotificationViewModel>();
 
             foreach (var item in userNotifcations)
             {
-                var data = _notificationService.GetById(item.Id);
-                listData.Add(data);
+                if (item.Notification.Type == NotificationType.EventCreated)
+                {
+                    var result = new NotificationViewModel
+                    {
+                        Fullname = cusInDb.Fullname,
+                        ImgPath = cusInDb.ImgPath,
+                        EventId = item.Notification.Event.Id,
+                        Content = "have Create a new event",
+                    };
+                    data.Add(result);
+                }
+                else if (item.Notification.Type == NotificationType.EventUpdated)
+                {
+                    var result = new NotificationViewModel
+                    {
+                        Fullname = cusInDb.Fullname,
+                        ImgPath = cusInDb.ImgPath,
+                        EventId = item.Notification.Event.Id,
+                        Content = "have update their event",
+                    };
+                    data.Add(result);
+                }
+                else if (item.Notification.Type == NotificationType.EventCanceled)
+                {
+                    var result = new NotificationViewModel
+                    {
+                        Fullname = cusInDb.Fullname,
+                        ImgPath = cusInDb.ImgPath,
+                        EventId = item.Notification.Event.Id,
+                        Content = "have cancel their event",
+                    };
+                    data.Add(result);
+                }
+                else
+                {
+                    return NotFound(); //status code 404
+                }
             }
             //end get data
-            return Ok(listData); //status code 200
+            return Ok(data); //status code 200
         }
     }
 }
