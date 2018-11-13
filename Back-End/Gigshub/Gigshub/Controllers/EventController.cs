@@ -251,7 +251,7 @@ namespace Gigshub.Controllers
 
             var name = _customerService.GetByID(Event.OwnerID).UserName;
 
-            var result = new EventViewUpdateModel
+            var result = new EventViewModel
             {
                 Id = Event.Id,
                 Title = Event.Title,
@@ -267,16 +267,17 @@ namespace Gigshub.Controllers
                 OwnerName = Event.Owner.UserName,
                 OwnderFullname = Event.Owner.Fullname,
                 ICusVerified = Event.Owner.IsVerified,
-                DateTime = Event.DateTime,
+                Date = Event.DateTime.ToString("MM/dd/yyyy"),
+                Time = Event.DateTime.ToString("HH:mm"),
                 Category = Event.Category.Name,
                 ImgPath = _eventImageSerivce.GetOneByEventId(Event.Id)
             };
             //end get data
 
-            List<EventViewUpdateModel> haiz = new List<EventViewUpdateModel>();
+            List<EventViewModel> haiz = new List<EventViewModel>();
             haiz.Add(result);
 
-            var data = new DateEventViewUpdateModel
+            var data = new DataEventViewModel
             {
                 Data = haiz,
             };

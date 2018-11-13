@@ -17,6 +17,7 @@ namespace Gigshub.ViewModel
         public int NumOfFollowee { get; set; }
         public int NumOfFollower { get; set; }
         public int NumOfAttendEvent { get; set; }
+        public int NumOfUserEvent { get; set; }
     }
 
     public class CustomerViewModel : CustomerCreateModel
